@@ -31,7 +31,7 @@
 \tableofcontents
 \pagebreak
 \section*{Vorwort}
-Die theoretischen Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer (vermutlich) gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür ergänzendes, motivierendes und begreifbares Material zusammenzustellen, dass mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
+Die theoretische Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer (vermutlich) gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür ergänzendes, motivierendes und begreifbares Material zusammenzustellen, dass mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
 Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettieren, um Beispiele ergänzen und mit Aufgaben versehen, wie ich sie in der Vorlesung oder weiteren Büchern antraf. Ich persönlich lerne durch Aufgaben einfach am besten und für diejenigen, denen es auch so geht, gibt es davon hier ausreichend. Lösungen finden sich im Anhang. \\\\
 \textit{Viel Erfolg!}  \\
 \begin{flushright}
@@ -41,7 +41,7 @@ Mannheim, den \today
 \pagebreak
 \part{Grundlagen der Algorithmik}
 \section{Der Algorithmusbegriff}
-Wie der Titel dieses Moduls schon verrät, befassen wir uns mit Algorithmen: Jenen nebulösen Dingen, die uns mit ähnlich Denkenden und Interessierten in Social-Media-Plattformen zusammenbringen, komplexe mathematische Berechungen ausführen und zunehmend mehr an Einfluss in unserem Leben gewinnen. Wir betrachten hier nun die Wortherkunft, definieren den Begriff anschließend und betrachten Eigenschaften eines solchen.
+Wie der Titel dieses Moduls schon verrät, befassen wir uns mit Algorithmen: Jenen nebulösen Dingen, die uns mit ähnlich Denkenden und Interessierten in Social-Media-Plattformen zusammenbringen, komplexe mathematische Berechnungen ausführen und zunehmend mehr an Einfluss in unserem Leben gewinnen. Wir betrachten hier nun die Wortherkunft, definieren den Begriff anschließend und gehen auf Eigenschaften eines solchen ein.
 \paragraph{Wortherkunft}
 Der Begriff {\glqq}Algorithmus{\grqq} besteht zum einen aus dem altgriechischen Wort \textit{arithmos} -- Zahl und zum anderen geht er zurück auf den persischen Mathematiker \textsc{al-Charismi} (780-846 n. Chr.), dessen Werk \textit{{\glqq}Algorismus{\grqq}} schon eine gewisse Nähe zum heute üblichen Begriff offenbart. \parencite{brockhaus:algorithmus}
 \paragraph{Definition}
@@ -67,14 +67,14 @@ Bei der Betrachtung von Algorithmen betrachten wir die folgenden drei Ziele:
 \paragraph{Einfachheit}
 Aus wirtschaftlichen Gründen besteht ein Interesse daran, dass ein Algorithmus so einfach wie möglich ist, beispielsweise in Bezug auf Implementierungskosten. Ein weiterer Aspekt besteht in der Prüfung auf Korrektheit: Zu einem zu komplexen Algorithmus lässt sich nur schwer feststellen, ob dieser korrekt ist.
 \paragraph{Korrektheit}
-Die Korrektheit ist die zentrale Eigenschaft eines Algorithmus -- Wenn ein Algorithmus nicht das leistet, was er vorgibt zu leisten oder von ihm erwartet wird, ist er wertlos. Die Spezifikation beschreibt das exakte Verhalten unter Angabe von einer Vorbedingung (Zustand der Daten vor der Ausführung) und einer Nachbedingung (erwünschter Zustand nach der Ausführung).
+Die Korrektheit ist die zentrale Eigenschaft eines Algorithmus -- Wenn ein Algorithmus nicht das leistet, was er vorgibt zu leisten oder was von ihm erwartet wird, ist er wertlos. Die Spezifikation beschreibt das exakte Verhalten unter Angabe von einer Vorbedingung (Zustand der Daten vor der Ausführung) und einer Nachbedingung (erwünschter Zustand nach der Ausführung).
 \begin{definition}
 Ein Algorithmus heißt \textbf{partiell korrekt}, falls aus erfüllter Vorbedingung die Nachbedingung folgt. \\
 Ein Algorithmus heißt \textbf{total korrekt}, falls er partiell korrekt ist und nach endlich vielen Schritten terminiert.
 \end{definition}
 Die Korrektheit eines Algorithmus kann manuell, per Implementierung oder mathematisch verifiziert werden, wobei letztere Variante häufig vorzuziehen ist.
 \begin{note}
-Nicht jeder Algorithmus muss für jede Eingabe terminieren. Unter dem \textbf{Halteproblem} versteht man die Frage, ob ein Algorithmus nach endlich vielen Schritten terminiert. Diese Frage ist algorithmisch nicht entscheidbar, wie Alan Turing feststellte. Stattdessen muss die Termination für jeden Algorithmus einzeln entschieden werden.
+Nicht jeder Algorithmus muss für jede Eingabe terminieren. Unter dem \textbf{Halteproblem} versteht man die Frage, ob ein Algorithmus nach endlich vielen Schritten terminiert. Diese Frage ist algorithmisch nicht entscheidbar, wie \textsc{Alan Turing} feststellte. Stattdessen muss die Termination für jeden Algorithmus einzeln entschieden werden.
 \end{note}
 \section{Effizienz / Komplexität}
 Weitaus komplexer als die Frage der Einfachheit oder Korrektheit ist jene der Komplexität selbst:
@@ -86,14 +86,14 @@ Für eine wirklich präzise Aussage über die Rechenzeit wäre es erforderlich, 
 Die Komplexität eines Algorithmus kann folglich keine genaue Angabe in einer Zeiteinheit sein, die beispielsweise aussagt, wie schnell denn nun wirklich der größte gemeinsame Teiler von 443 und 123 mithilfe des euklidischen Algorithmus berechnet werden kann, sondern ist ein abstraktes Konzept, das Vergleiche zwischen Algorithmen ermöglichen soll:
 \begin{itemize}
 \item Abstraktion konstanter Faktoren
-\item Abtsraktion unbedeutender Terme
+\item Abstraktion unbedeutender Terme
 \item Wachstumsverhalten der Laufzeit bei Veränderung der Größe der Eingabe
 \end{itemize}
 Diese Abstraktion motiviert nun den folgenden Abschnitt.
 \section{Maß der Komplexität: $O$-Notation}
 Nach dem Mathematiker \textsc{Edmund Landau} definieren wir in Bezug auf das Wachstum von Funktionen eine {\glqq}obere Schranke{\grqq} und nennen diese $O(f)$. Falls eine Funktion $g$ nicht schneller wächst als $f$, so sagen wir, dass $g \in O(f)$. Eine ebenfalls übliche, jedoch irritierende Schreibweise ist $g = O(f)$.
 \begin{definition}
-Sei $\mathbb{R_{+}} := \{ x \in \mathbb{R} \mid x > 0 \}$ und $\mathbb{R_{+}^{\mathbb{N}}} := \{f \mid f \text{ist eine Funktion der Form} f : \mathbb{N} \to \mathbb{R_{+}}\}$ \\\\
+Sei $\mathbb{R_{+}} := \{ x \in \mathbb{R} \mid x > 0 \}$ und $\mathbb{R_{+}^{\mathbb{N}}} := \{f \mid f \text{ist eine Funktion der Form } f : \mathbb{N} \to \mathbb{R_{+}}\}$ \\\\
 Sei $g \in \mathbb{R_{+}^{\mathbb{N}}}$ gegeben. Dann ist die Menge aller Funktionen, die höchstens so schnell wachsen wie $g$ definiert als: \begin{align*}
 O(g) := \{f \in \mathbb{R_{+}^{\mathbb{N}}} \mid \exists n_{0} \in \mathbb{N}: \exists c \in \mathbb{R_{+}}: \forall n \in \mathbb{N}: (n \geq n_{0} \Rightarrow f(n) \leq c \cdot g(n))\}
 \end{align*}
@@ -123,7 +123,7 @@ Die $O$-Notation eines Algorithmus lässt sich auch durch vollständige Induktio
 \begin{example}
 Behauptung: $n \in O(2^{n})$
 \begin{proof}
-Wähle $n_{0} := 0, c:= 1$. Zu zeigen: $n \leq 2^{n} \forall n \in \mathbb{N}$
+Wähle $n_{0} := 0, c:= 1$. Zu zeigen: $n \leq 2^{n} \forall n \in \mathbb{N}$\\\\
 Beweis durch Induktion nach $n$: \\
 Induktionsanfang (IA): $n = 0 \quad n = 0 \leq 1 = 2^{0} = 2^{n}$ \\
 Induktionsvoraussetzung (IV): $n \leq 2^{n}$ z.Z. $n+1 \leq 2^{n+1}$ \\
@@ -135,7 +135,7 @@ Per einfacher Induktion kann man nun zeigen:
 \end{align}
 \end{proof}
 \end{example} 
-Die Eigenschaft $f \in O(g)$ induktiv zu zeigen, ist mühsam. Stattdessen können fie folgenden Propositionen genutzt werden: 
+Die Eigenschaft $f \in O(g)$ induktiv zu zeigen, ist mühsam. Stattdessen können die folgenden Propositionen genutzt werden: 
 \begin{note}
 \begin{align}
 f \in O(f) \\
@@ -215,7 +215,7 @@ Gegegeben sei \[f(n) = 2 \cdot f(\frac{n}{2}) + O(n^{2})\]
 Daraus folgt $ a = 2, b = 2, d = 2$. \\\\
 Da $2 < 2^{2}$ trifft der erste Fall ein und wir halten fest: $f(n) \in O(n^{2})$.
 \end{example}
-Über das Mastertheorem sind eine Zahl an Rekursionsgleichungen entscheidbar, jedoch nicht jede. Für die Rekursionsgleichungen, deren Form nichtd er für das Mastertheorem benötigten entspricht, werden andere Verfahren nötig.
+Über das Mastertheorem sind eine Zahl an Rekursionsgleichungen entscheidbar, jedoch nicht jede. Für die Rekursionsgleichungen, deren Form nicht der für das Mastertheorem benötigten entspricht, werden andere Verfahren nötig.
 \subsection{Auflösungsverfahren}
 Eine gegebene Rekursionsgleichung lässt sich in eine geschlossene Form überführen, in der keine Abhängigkeit zu vorherigen Funktionswerten mehr besteht. Dafür existieren zwei Ansätze: 
 \begin{itemize}
@@ -276,10 +276,13 @@ Bestimmen Sie unter Anwendung des Mastertheorems die jeweilige Komplexitätsklas
 \item $g(n) = log(n) \cdot g(\frac{n}{2}) + 3$
 \item $h(n) = sin(n) \cdot h(\frac{n}{\frac{n}{2}}) + O(n^{3})$
 \end{itemize}
-\paragraph{Versionshinweis} Weiter Aufgaben zu Rekursionsgleichungen, praktischen Anwendungen auf Pseudo-Code und für $\Theta , \Omega$ folgen in späteren Versionen.
+\begin{flushright}
+Lösung auf Seite \pageref{a4:lsg} \\
+\end{flushright}
+\paragraph{Versionshinweis} Weitere Aufgaben zu Rekursionsgleichungen, praktischen Anwendungen auf Pseudo-Code und für $\Theta , \Omega$ folgen in späteren Versionen
 \pagebreak
 \part{Suchalgorithmen}
-Sie studieren Informatik, sind es satt, noch mehr Stunden vor Bildschirmen zu verbringen und suchen sich deshalb ein echtes, physisches Buch aus der Bibliothek Ihrer Hochschule heraus. Sie fragten nach {\glqq} Wirth: Algorithmen und Datenstrukturen{\grqq} von 1976, weil man es Ihnen in Ihrer Vorlesung empfahl, die Bibliothekarin deutet auf ein Regal und lässt sie damit allein. \\\\
+Sie studieren Informatik, sind es satt, noch mehr Stunden vor Bildschirmen zu verbringen und suchen sich deshalb ein echtes, physisches Buch aus der Bibliothek Ihrer Hochschule heraus. Sie fragten nach {\glqq}\textsc{Wirth}: Algorithmen und Datenstrukturen{\grqq} von 1976, weil man es Ihnen in Ihrer Vorlesung empfahl, die Bibliothekarin deutet auf ein Regal und lässt sie damit allein. \\\\
 Wie finden Sie das gesuchte Buch aus der Regalreihe mit etwa 300 Büchern?
 \section{Lineare Suche}
 Sie beginnen ganz links. Nun lesen Sie den Titel des ersten Buches, er passt nicht. Sie lesen den Titel des zweiten Buches, er passt ebenfalls nicht. Sie fahren fort, iterieren über das gesamte Bücherregal und brechen ab, falls Sie es gefunden haben oder am Ende angelangt sind. Dieses Verfahren ist die \textbf{Lineare Suche}.
@@ -376,7 +379,7 @@ int BruteForceSearch(char[] text, char[] pattern) {
 \paragraph{Komplexität}
 Offenbar hängt der Aufwand dieses Verfahrens ganz wesentlich davon ab, wie lang das Muster und der Text in Gänze sind. Weniger relevant hingegen ist der Aufbau des Textes, da alle Vorkommen des Musters gesucht werden. Insofern ist es nicht entscheidend, an welcher Stelle das Muster das erste Mal auftritt. \\\\
 \textit{günstigster Fall} \quad Im günstigsten Fall werden m Vergleiche benötigt, wenn nämlich die Länge des Textes kleiner als das doppelte der Länge des Musters $m$ ist und das Muster direkt am Beginn des Textes steht. $\to m$ Vergleiche 
-\\\\ \textit{schlechtester Fall}\quad Im schlechtesten Fall werden $(n-m+1) \cdot m$ Vergleiche benötigt, wobei dieser Fall allgemeingültig ist -- es werden alle Vorkommen des Musters im Text gesucht und nicht lediglich das erste. \\\\
+\\\\ \textit{ungünstigster Fall}\quad Im ungünstigsten Fall werden $(n-m+1) \cdot m$ Vergleiche benötigt, wobei dieser Fall allgemeingültig ist -- es werden alle Vorkommen des Musters im Text gesucht und nicht lediglich das erste. \\\\
 Die Laufzeit des Algorithmus liegt nun in $O(n \cdot m)$.
 \subsection{Knuth-Morris-Pratt-Algorithmus (KMP)}
 
@@ -386,5 +389,6 @@ Die Laufzeit des Algorithmus liegt nun in $O(n \cdot m)$.
 \label{a1:lsg}
 \label{a2:lsg}
 \label{a3:lsg}
+\label{a4:lsg}
 \section{Tabellen und Formeln}
 \end{document}

@@ -1,0 +1,390 @@
+\documentclass[11pt,a4paper]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{listings}
+\usepackage{upgreek}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{literature.bib}
+\author{Roman Wetenkamp}
+\title{Algorithmen \& Komplexität}
+\subtitle{Theoretische Informatik}
+
+\newtheorem{note}{Bemerkung}
+\newtheorem{definition}{Definition}
+\newtheorem{satz}{Satz}
+\newtheorem{lemma}{Lemma}
+\newtheorem{example}{Beispiel}
+\begin{document}
+\vspace{3cm}
+\maketitle
+\begin{center}
+\includegraphics[scale=0.7]{DHBW.jpg}
+\end{center}
+\pagebreak
+\tableofcontents
+\pagebreak
+\section*{Vorwort}
+Die theoretischen Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer (vermutlich) gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür ergänzendes, motivierendes und begreifbares Material zusammenzustellen, dass mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
+Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettieren, um Beispiele ergänzen und mit Aufgaben versehen, wie ich sie in der Vorlesung oder weiteren Büchern antraf. Ich persönlich lerne durch Aufgaben einfach am besten und für diejenigen, denen es auch so geht, gibt es davon hier ausreichend. Lösungen finden sich im Anhang. \\\\
+\textit{Viel Erfolg!}  \\
+\begin{flushright}
+Roman Wetenkamp \\
+Mannheim, den \today
+\end{flushright}  
+\pagebreak
+\part{Grundlagen der Algorithmik}
+\section{Der Algorithmusbegriff}
+Wie der Titel dieses Moduls schon verrät, befassen wir uns mit Algorithmen: Jenen nebulösen Dingen, die uns mit ähnlich Denkenden und Interessierten in Social-Media-Plattformen zusammenbringen, komplexe mathematische Berechungen ausführen und zunehmend mehr an Einfluss in unserem Leben gewinnen. Wir betrachten hier nun die Wortherkunft, definieren den Begriff anschließend und betrachten Eigenschaften eines solchen.
+\paragraph{Wortherkunft}
+Der Begriff {\glqq}Algorithmus{\grqq} besteht zum einen aus dem altgriechischen Wort \textit{arithmos} -- Zahl und zum anderen geht er zurück auf den persischen Mathematiker \textsc{al-Charismi} (780-846 n. Chr.), dessen Werk \textit{{\glqq}Algorismus{\grqq}} schon eine gewisse Nähe zum heute üblichen Begriff offenbart. \parencite{brockhaus:algorithmus}
+\paragraph{Definition}
+Unter einem Algorithmus verstehen wir eindeutige Verarbeitungsvorschriften zur Lösung eines Problems oder einer Problemklasse. Daran geknüpft ist der Gedanke des EVA-Prinzips: Eine Eingabe wird verarbeitet und auf Grundlage dessen wird eine Ausgabe erzeugt, ein Algorithmus ist hier für die Verarbeitung bis zur Ausgabe notwendig. \\
+Algorithmen finden in einer Vielzahl von Bereiches unseres Lebens Einsatz finden: 
+\begin{itemize}
+\item Zur Untersuchung großer Datenmengen
+\item Zur Kommunikation/Suche im Internet
+\item In bildgebenden Verfahren oder diagnostischen Anwendungen der Medizin
+\item Assistenzsystemen im Auto
+\item Bei der Partnersuche über Online-Dating-Plattformen
+\end{itemize}
+Damit finden wir intuitiv eine Begründung für die Untersuchung von Algorithmen.
+\begin{note}
+Ein \textit{Algorithmus} ist von einem \textit{Programm} unbedingt abzugrenzen: Der Algorithmus bezeichnet ein abstraktes Konzept zur Lösung eines gegebenen Problems während ein Programm die konkrete Umsetzung eines Algorithmus in einer Programmiersprache ist. 
+\end{note}
+Bei der Betrachtung von Algorithmen betrachten wir die folgenden drei Ziele:
+\begin{itemize}
+\item Korrektheit
+\item Effizienz
+\item Einfachheit
+\end{itemize}
+\paragraph{Einfachheit}
+Aus wirtschaftlichen Gründen besteht ein Interesse daran, dass ein Algorithmus so einfach wie möglich ist, beispielsweise in Bezug auf Implementierungskosten. Ein weiterer Aspekt besteht in der Prüfung auf Korrektheit: Zu einem zu komplexen Algorithmus lässt sich nur schwer feststellen, ob dieser korrekt ist.
+\paragraph{Korrektheit}
+Die Korrektheit ist die zentrale Eigenschaft eines Algorithmus -- Wenn ein Algorithmus nicht das leistet, was er vorgibt zu leisten oder von ihm erwartet wird, ist er wertlos. Die Spezifikation beschreibt das exakte Verhalten unter Angabe von einer Vorbedingung (Zustand der Daten vor der Ausführung) und einer Nachbedingung (erwünschter Zustand nach der Ausführung).
+\begin{definition}
+Ein Algorithmus heißt \textbf{partiell korrekt}, falls aus erfüllter Vorbedingung die Nachbedingung folgt. \\
+Ein Algorithmus heißt \textbf{total korrekt}, falls er partiell korrekt ist und nach endlich vielen Schritten terminiert.
+\end{definition}
+Die Korrektheit eines Algorithmus kann manuell, per Implementierung oder mathematisch verifiziert werden, wobei letztere Variante häufig vorzuziehen ist.
+\begin{note}
+Nicht jeder Algorithmus muss für jede Eingabe terminieren. Unter dem \textbf{Halteproblem} versteht man die Frage, ob ein Algorithmus nach endlich vielen Schritten terminiert. Diese Frage ist algorithmisch nicht entscheidbar, wie Alan Turing feststellte. Stattdessen muss die Termination für jeden Algorithmus einzeln entschieden werden.
+\end{note}
+\section{Effizienz / Komplexität}
+Weitaus komplexer als die Frage der Einfachheit oder Korrektheit ist jene der Komplexität selbst:
+\begin{definition}
+Die Effizienz / Komplexität eines Algorithmus ist ein Maß für die Menge an Ressourcen (Rechenzeit oder Speicherbedarf), die er benötigt.
+\end{definition}
+Dabei ist zu beachten, dass es für ein Problem häufig mehrere Algorithmen gibt, die sich in ihrer Komplexität unterscheiden. Daher muss die Komplexität für jeden Algorithmus einzeln bestimmt werden. Dieses Skript befasst sich im Wesentlichen nur mit der Rechenzeit. \\\\
+Für eine wirklich präzise Aussage über die Rechenzeit wäre es erforderlich, für jede Implementation eines Algorithmus in einer Programmiersprache einzeln festzustellen, welche Rechenzeit jede einzelne Operation auf dem spezifischen Prozessor des Testsystems benötigt. Da diese Aussagen mittlerweile aufgrund der Entwicklungen auf dem Prozessormarkt an Relevanz verlieren, verlagert sich die Betrachtung auf die Komplexität eines Algorithmus. \\\\
+Die Komplexität eines Algorithmus kann folglich keine genaue Angabe in einer Zeiteinheit sein, die beispielsweise aussagt, wie schnell denn nun wirklich der größte gemeinsame Teiler von 443 und 123 mithilfe des euklidischen Algorithmus berechnet werden kann, sondern ist ein abstraktes Konzept, das Vergleiche zwischen Algorithmen ermöglichen soll:
+\begin{itemize}
+\item Abstraktion konstanter Faktoren
+\item Abtsraktion unbedeutender Terme
+\item Wachstumsverhalten der Laufzeit bei Veränderung der Größe der Eingabe
+\end{itemize}
+Diese Abstraktion motiviert nun den folgenden Abschnitt.
+\section{Maß der Komplexität: $O$-Notation}
+Nach dem Mathematiker \textsc{Edmund Landau} definieren wir in Bezug auf das Wachstum von Funktionen eine {\glqq}obere Schranke{\grqq} und nennen diese $O(f)$. Falls eine Funktion $g$ nicht schneller wächst als $f$, so sagen wir, dass $g \in O(f)$. Eine ebenfalls übliche, jedoch irritierende Schreibweise ist $g = O(f)$.
+\begin{definition}
+Sei $\mathbb{R_{+}} := \{ x \in \mathbb{R} \mid x > 0 \}$ und $\mathbb{R_{+}^{\mathbb{N}}} := \{f \mid f \text{ist eine Funktion der Form} f : \mathbb{N} \to \mathbb{R_{+}}\}$ \\\\
+Sei $g \in \mathbb{R_{+}^{\mathbb{N}}}$ gegeben. Dann ist die Menge aller Funktionen, die höchstens so schnell wachsen wie $g$ definiert als: \begin{align*}
+O(g) := \{f \in \mathbb{R_{+}^{\mathbb{N}}} \mid \exists n_{0} \in \mathbb{N}: \exists c \in \mathbb{R_{+}}: \forall n \in \mathbb{N}: (n \geq n_{0} \Rightarrow f(n) \leq c \cdot g(n))\}
+\end{align*}
+\end{definition}
+Die $O$-Notation gibt folglich eine Menge vergleichbarer Funktionen an, die es ermöglichen, die Komplexität eines Algorithmus abzuschätzen.
+\begin{example}
+Behauptung:
+$3n^{3} + 2n^{2} + 7 \in O(n^{3})$
+\begin{proof}
+
+Gesucht ist eine Konstante $c \in \mathbb{R_{+}}$ und eine Konstante $n_{0} \in \mathbb{N}$, sodass für alle $n \in \mathbb{N}$ mit $n \geq n_{0}$ gilt: \\
+$3n^{3} + 2n^{2} + 7 \leq c \cdot n^{3}$ \\\\
+Wähle $n_{0} := 1 \text{ und } c := 12$ \footnote{Die Wahl von $c$ und $n$ erfolgt hier durch Ausprobieren -- In diesem Fall ergibt sich 12 als Summe aus den Potenzfaktoren.} \\
+Sei nun 
+\begin{align}
+& 1 \leq n \\
+(1)^{3}: \quad & 1 \leq n^{3} \\
+(2) \cdot 7: \quad & 7 \leq 7n^{3} \\
+(1) \cdot 2n^{2}: \quad & 2n^{2} \leq 2n^{3} \\
+\quad & 3n^{3} \leq 3n^{3} \\
+(3)+(4)+(5): \quad & 3n^{3} + 2n^{2} + 7 \leq 12n^{3}
+\end{align}
+Durch die Ungleichungen (3), (4) und (5) ist für jedes Polynom einzeln eine Abschätzung erfolgt. Addiert man diese Ungleichungen nun, ergibt sich (6). Damit ist gezeigt, dass die Behauptung wahr ist und die Funktion in $O(n^{3})$ liegt. Aus der Definition der $O$-Notation ergibt sich, dass jede Funktion mit höchstem Grad 3 in $O(n^{3})$ liegt, da Vorfaktoren und Konstantglieder entfallen. 
+\end{proof}
+\end{example} 
+Die $O$-Notation eines Algorithmus lässt sich auch durch vollständige Induktion beweisen.
+\begin{example}
+Behauptung: $n \in O(2^{n})$
+\begin{proof}
+Wähle $n_{0} := 0, c:= 1$. Zu zeigen: $n \leq 2^{n} \forall n \in \mathbb{N}$
+Beweis durch Induktion nach $n$: \\
+Induktionsanfang (IA): $n = 0 \quad n = 0 \leq 1 = 2^{0} = 2^{n}$ \\
+Induktionsvoraussetzung (IV): $n \leq 2^{n}$ z.Z. $n+1 \leq 2^{n+1}$ \\
+Induktionsschritt (IS): $n \mapsto n + 1$ \\
+Per einfacher Induktion kann man nun zeigen: 
+\begin{align}
+& n \leq 2^{n} \\
+\text{Daraus folgt mit IV:} \quad & n+1 \leq 2^{n} + 2^{n} = 2*2^{n} = 2^{n+1}
+\end{align}
+\end{proof}
+\end{example} 
+Die Eigenschaft $f \in O(g)$ induktiv zu zeigen, ist mühsam. Stattdessen können fie folgenden Propositionen genutzt werden: 
+\begin{note}
+\begin{align}
+f \in O(f) \\
+f \in O(g) \Rightarrow d \cdot f \in O(g) \\
+f \in O(n) \land g \in O(n) \Rightarrow f + g \in O(n) \\
+f_{1} \in O(g_{1}) \land f_{2} \in O(g_{2}) \Rightarrow f_{1} \cdot f_{2} \in O(g_{1} \cdot g_{2}) \\
+f_{1} \in O(g_{1}) \land f_{2} \in O(g_{2}) \Rightarrow \frac{f_{1}}{f_{2}} \in O(\frac{g_{1}}{g_{2}}) \\
+f \in O(g) \land g \in O(n) \Rightarrow f \in O(n)
+\end{align}
+\end{note}
+Darüber hinaus gilt folgender Satz: 
+\begin{satz}
+Seien $f, g: \mathbb{N} \to \mathbb{R_{+}}$. Dann gilt: \\
+\[f(n) \in O(g(n)) \iff (\frac{f(n)}{g(n)})_{n \in \mathbb{N}} \text{ ist beschränkt}\]
+\end{satz}
+Außerdem finden Grenzwertbetrachtungen Eingang:
+\begin{lemma}
+\begin{align}
+f \in O(g) \text{ und } g \in O(f), \text{ wenn } \lim \limits_{n \to \infty} (\frac{f(n)}{g(n)}) = c, c \neq 0 \\
+f \in O(g) \text{ und } g \notin O(f), \text{ wenn } \lim \limits_{n \to \infty} (\frac{f(n)}{g(n)}) = 0 \\
+f \notin O(g) \text{ und } g \in O(f), \text{ wenn } \lim \limits_{n \to \infty} (\frac{f(n)}{g(n)}) = \infty
+\end{align}
+\end{lemma}
+Neben der $O$-Notation gibt es zwei weitere Notationen, die im Folgenden vorgestellt werden.
+\subsection{$\Omega$-Notation}
+Neben der Menge aller Funktionen, die höchstens so schnell wächst wie die betrachtete Funktion, bezeichnen wir die Menge der Funktionen, die mindestens so schnell wächst wie die Funktion als $\Omega(n)$.
+\begin{definition} Sei $g \in \mathbb{R_{+}}$. Die Menge aller Funktionen, die mindestens so schnell wachsen wie $g$ ist: 
+\[\Omega(n) := \{ f \in \mathbb{R_{+}^{\mathbb{N}}} \mid \exists n_{0} \in \mathbb{N}: \exists c \in \mathbb{R_{+}}: \forall n \in \mathbb{N}: (n \geq n_{0} \Rightarrow F(n) \geq c \cdot g(n))\}\]
+\end{definition}
+Diese Notation fristet ein Schattendasein: In der Regel ist die $O$-Notation geeigneter, da eine Orientierung am {\glqq}Worst-Case-Szenario{\grqq} üblicher ist.
+\subsection{$\Theta$-Notation}
+Aus $O$-Notation und $\Omega$-Notation ergibt sich nun die Menge der Funktionen, die genau so schnell wachsen wie die betrachtete Funktion. Wir bezeichnen sie mit $\Theta$.
+\begin{definition}
+\[\Theta(g) = O(g) \cap \Omega(g)\]
+\end{definition}
+\subsection{Zusammenfassung}
+\begin{itemize}
+\item Die $O$-Notation umfasst alle Funktionen, die nicht schneller wachsen als $f$. Damit beschreiben wir eine obere Schranke für die Komplexitätsfunktion.
+\item Die $\Omega$-Notation umfasst alle Funktionen, die mindestens so schnell wachsen wie $f$. Dies ist eine untere Schranke.
+\item Die $\Theta$-Notation umfasst alle Funktionen, die genau so schnell wachsen wie f. Damit haben wir ein asymptotisches Maß.  
+\end{itemize}
+\begin{lemma}
+\begin{itemize}
+\item $f \in O(g) \text{ und } g \in O(f), \text{ also } f \in O(g) und f \in \Omega (g), \text{ wenn } \lim \limits_{n \to \infty} \frac{f(n)}{g(n)} = c, c \neq 0, \text{ also: } f \in \Theta (g)$
+\item $f \in O(g) \text{ und } g \notin O(f), \text{ wenn } \lim \limits_{n \to \infty} \frac{f(n)}{g(n)} = 0, \text{ also: } g \in \Omega (f) \text{ und } f \notin \Omega (g)$
+\item $ f \notin O(g) \text{ und } g \in O(f), \text{ also } g \notin \Omega (f) \text{ und } f \in \Omega (g), \text{ wenn } \lim \limits_{n \to \infty} \frac{f(n)}{g(n)} = \infty$
+\end{itemize}
+\end{lemma}
+\section{Rekursionsgleichungen}
+Nun haben wir mit den Landau-Symbolen einen mathematischen Weg gefunden, die Komplexität von Algorithmen zu beschreiben. Im Folgenden wenden wir dieses Modell auf konkrete Algorithmen an. \\\\
+Bekannte Algorithmen sind beispielsweise Such- oder Sortierverfahren. Diese sind häufig rekursiv, d.h. eine Iteration oder verarbeitet direkt das Ergebnis einer vorherigen. Dadurch ergeben sich nun sogenannte \textbf{Rekurrenzgleichungen} oder auch \textbf{Rekursionsgleichungen}.
+\begin{example}
+$T(n) = 2 \cdot T(n-) + 1$ ist eine Rekurrenzgleichung, da der Funktionswert $n$ direkt vom Funktionswert $n-1$ abhängt. Aus den Programmierkonzepten ist uns Rekursion als ein {\glqq}Wiederaufruf von sich selbst{\grqq} bekannt, dieses Muster findet sich hier in unseren betrachteten Algorithmen.
+\end{example}
+Um die Komplexität eines rekursiven Algorithmus bestimmen zu können, bedienen wir uns je nach Rekursionsgleichung unterschiedlichen Verfahren. Eines davon ist das sogenannte Mastertheorem. 
+\subsection{Mastertheorem}
+\begin{satz} Sofern alle Teilprobleme die gleiche Größe haben, können wir zwei Fälle unterscheiden: 
+\begin{itemize}
+\item Basisfall: $f(n)$ ist konstant für hinreichend kleine Werte von $n$
+\item Für größere $n$ lässt sich eine Rekursionsgleichung der folgenden Form bestimmen: 
+\[f(n) = a \cdot f(\frac{n}{b}) + O(n^{d})\]
+$a$ ist hier die Anzahl der rekursiven Aufrufe, $b$ der Verkleinerungsfaktor des Problems und $d$ der Exponent für die Laufzeit der Vorbereitung der Rekursion und/oder der Zusammensetzung der Teilprobleme beschreibt. \\\\
+Nun gilt Folgendes: \\
+\begin{align*}
+f(n) \in 
+\begin{cases}
+O(n^{d}) \quad & \text{ falls } a < b^{d} \\
+O(n^{d} \cdot log_{b}(n)) \quad & \text{ falls } a = b^{d} \\
+O(n^{log_{b}(a)}) \quad & \text{ falls } a > b^{d}
+\end{cases}
+\end{align*}
+\end{itemize}
+\end{satz}
+Mithilfe dieses Theorems kann nun die Komplexität eines rekursiven Algorithmus bestimmt werden:
+\begin{example}
+Gegegeben sei \[f(n) = 2 \cdot f(\frac{n}{2}) + O(n^{2})\] 
+Daraus folgt $ a = 2, b = 2, d = 2$. \\\\
+Da $2 < 2^{2}$ trifft der erste Fall ein und wir halten fest: $f(n) \in O(n^{2})$.
+\end{example}
+Über das Mastertheorem sind eine Zahl an Rekursionsgleichungen entscheidbar, jedoch nicht jede. Für die Rekursionsgleichungen, deren Form nichtd er für das Mastertheorem benötigten entspricht, werden andere Verfahren nötig.
+\subsection{Auflösungsverfahren}
+Eine gegebene Rekursionsgleichung lässt sich in eine geschlossene Form überführen, in der keine Abhängigkeit zu vorherigen Funktionswerten mehr besteht. Dafür existieren zwei Ansätze: 
+\begin{itemize}
+\item \textbf{bottom-up:} Aus berechneten Funktionswerten für kleine n wird eine weitere Berechnungsvorschrift ermittelt. Diese muss anschließend induktiv bewiesen werden.
+\item \textbf{top-down:} Die vorherigen Funktionswerte werden solange durch die entsprechende Gleichung ersetzt, bis der definierte Startwert eingesetzt werden kann. Anschließend wird der Term zusammengefasst und es ergibt sich eine geschlossene Rechenvorschrift. 
+\end{itemize}
+\begin{example}
+Gegeben ist die folgende Rekursionsgleichung: $f(1) = 1, f(n) = 2 \cdot f(n-1) + 1$. \\\\
+\textbf{bottom-up} \\
+\begin{align}
+f(1) = 1 \\
+f(2) = 2 \cdot 1 + 1 = 3 \\
+f(3) = 2 \cdot 3 + 1 = 7 \\
+f(4) = 2 \cdot 7 + 1 = 15
+\end{align}
+Aus den Ergebnissen wird relativ schnell eine Verwandtschaft zu den ersten Potenzen der Zahl 2 deutlich und so lässt sich nun folgende Gleichung aufstellen: 
+\[f(n) = 2^{n} - 1\]
+Diese Gleichung kann nun für die gegebenen Werte von $n$ überprüft werden und muss anschließend induktiv bewiesen werden. \\\\
+\textbf{top-down} \\
+\begin{align}
+f(n) =& \quad 2 \cdot f(n-1) + 1 \\
+=& \quad 2 \cdot (2 \cdot f(n-2) + 1) + 1 \\
+=& \quad 2 \cdot (2 \cdot (... \cdot (2 \cdot 1) + 1) ... ) + 1) + 1 \\
+\Rightarrow & \quad 2^{n-1} + 2^{n-2} + ... + 2^{n-(n-1)} + 1 \\
+=& \quad \sum_{i = 0}^{n-1} 2^{i} = \frac{2^{(n-1)+1}-1}{2-1} = 2^{n}-1 \in O(2^{n}) 
+\end{align}
+\end{example}
+Je nach Rekursionsgleichung bietet sich mitunter eines der beiden Verfahren mehr an als das andere. Vernachlässigt werden darf beim \textit{bottum-up}-Verfahren nicht, dass ein Induktionsbeweis erforderlich ist! Bei Rekursionsgleichungen mit zweifacher Rekursion (in Beziehung zu den vorherigen zwei Funktionswerten) ist ein \textit{top-down}-Verfahren deutlich komplexer und häufig nicht ratsam.
+\pagebreak
+\section{Aufgaben}
+\paragraph{Aufgabe 1} Veranschaulichen Sie die $O$-, $\Theta$- und $\Omega$-Notation anhand der Funktion $f(n) = 3n^{3} + 7n^{2} + 16$ grafisch. 
+\begin{flushright}
+Lösung auf Seite \pageref{a1:lsg}
+\end{flushright}
+\paragraph{Aufgabe 2} Geben Sie zu folgenden Funktionen jeweils die $O$-Notation an.
+\begin{enumerate}
+\item $f(n) = 6n^{4} + 3 \cdot log_{2}(n)$
+\item $f(n) = 6627816n + 13$
+\item $f(n) = \frac{72n^{3} + 27n^{2} + 8n + 9}{n!}$
+\item $f(n) = 3 \cdot f(n-1) + \frac{f(n-2)}{n^{2}}$
+\end{enumerate}
+\begin{flushright}
+Lösung auf Seite \pageref{a2:lsg}
+\end{flushright}
+\paragraph{Aufgabe 3}
+\begin{enumerate}
+\item Zeigen Sie, dass $n^{2} \in O(2n)$.
+\item Zeigen Sie, dass $n^{3} \in O(2n)$.
+\end{enumerate}
+\begin{flushright}
+Lösung auf Seite \pageref{a3:lsg} \\
+entnommen aus VL
+\end{flushright}
+\paragraph{Aufgabe 4}
+Bestimmen Sie unter Anwendung des Mastertheorems die jeweilige Komplexitätsklasse $O(n)$.
+\begin{itemize}
+\item $f(n) = 2 \cdot f(\frac{n}{2n+1}) + n^{2}$
+\item $g(n) = log(n) \cdot g(\frac{n}{2}) + 3$
+\item $h(n) = sin(n) \cdot h(\frac{n}{\frac{n}{2}}) + O(n^{3})$
+\end{itemize}
+\paragraph{Versionshinweis} Weiter Aufgaben zu Rekursionsgleichungen, praktischen Anwendungen auf Pseudo-Code und für $\Theta , \Omega$ folgen in späteren Versionen.
+\pagebreak
+\part{Suchalgorithmen}
+Sie studieren Informatik, sind es satt, noch mehr Stunden vor Bildschirmen zu verbringen und suchen sich deshalb ein echtes, physisches Buch aus der Bibliothek Ihrer Hochschule heraus. Sie fragten nach {\glqq} Wirth: Algorithmen und Datenstrukturen{\grqq} von 1976, weil man es Ihnen in Ihrer Vorlesung empfahl, die Bibliothekarin deutet auf ein Regal und lässt sie damit allein. \\\\
+Wie finden Sie das gesuchte Buch aus der Regalreihe mit etwa 300 Büchern?
+\section{Lineare Suche}
+Sie beginnen ganz links. Nun lesen Sie den Titel des ersten Buches, er passt nicht. Sie lesen den Titel des zweiten Buches, er passt ebenfalls nicht. Sie fahren fort, iterieren über das gesamte Bücherregal und brechen ab, falls Sie es gefunden haben oder am Ende angelangt sind. Dieses Verfahren ist die \textbf{Lineare Suche}.
+\paragraph{Idee}
+Durchlaufe sukzessive das Feld A, bis das gesuchte Element gefunden ist bzw. das Ende des Feldes erreicht ist.
+\paragraph{Implementierung}
+\begin{lstlisting}
+LinearSearch(A[], E) {
+	i = 0;
+	While i < A[].length {
+		If (A[i] == E) {
+			return i;			
+		}
+		i = i + 1;	
+	}
+	Return ElementNotFound
+}
+\end{lstlisting}
+\paragraph{Komplexität}
+Ganz offensichtlich ist der Aufwand dieses Suchverfahrens durch die Feldlänge (also die Anzahl der Bücher in unserem Regal) bestimmt. \\
+\textit{günstigster Fall} \quad Das gewünschte Element steht an Indexposition 0 (also dem ersten Element bzw. es ist das erste Buch im Regal) $\to$ ein Vergleich ist erforderlich
+\\
+\textit{durchschnittlicher Fall} \quad Das gewünschte Element steht an der mittleren Indexposition $\frac{n}{2}$ bei $n$ Feldelementen. $\to \frac{n}{2}$ Vergleiche sind erforderlich
+\\
+\textit{ungünstigster Fall} \quad Das gewünschte Element ist nicht im Feld vorhanden. $\to n$ Vergleiche
+\\\\
+Insgesamt ergibt sich -- da wir bei der Angabe der Komplexität durch die $O$-Notation jeweils den ungünstigsten Fall betrachten -- für die Lineare Suche eine Komplexität von $O(n)$. 
+\section{Binäre Suche}
+Sie befinden sich in der perfekten Bibliothek: Alle Bücher sind aufsteigend nach ihren Autor*innen sortiert! Dieses Wissen können Sie sich zunutze machen, in dem Sie ihr Wunschbuch mit der \textbf{binären Suche} finden: Sie teilen die Bücherreihe in zwei Hälften und betrachten nun das mittlere Buch: Muss Ihr Buch links oder rechts von dem mittleren Buch stehen (Vergleich anhand des Namens der Autoren)? Oder ist es sogar ihr Buch? Nein, das ist es nicht und der Autor Ihres Buches hat einen im Alphabet weiter hinten stehenden Anfangsbuchstaben, also betrachten Sie die Hälfte rechts des mittleren Buches. Diese Hälfte teilen Sie nun erneut, betrachten die neue Mitte und fahren fort, bis ihre Hälften aus einem Buch bestehen.
+\paragraph{Idee} Vergleiche zu suchendes Element $E$ mit der Mitte des Suchbereiches $A[m]$. Falls gefunden: Abbruch. Falls $E < A[m]$: Suche weiter in linker Hälfte. Falls $E > A[m]$: Suche weiter in rechter Hälfte. Das Weitersuchen erfolgt durch einen rekursiven Aufruf des Algorithmus mit der entsprechenden Hälfte des Feldes.
+\paragraph{Implementierung}
+\begin{lstlisting}
+BinarySearch(A[], E, indexLeft, indexRight) {
+	if (indexLeft > indexRight) {
+		return ElementNotFound	
+	}
+	else {
+		mid = (indexLeft+indexRight) / 2;
+		if (E == A[mid]) {
+			return mid;		
+		}
+		else if (E < A[mid] {
+			return BinarySearch(A[], E, indexLeft, mid-1);	
+		}
+		else {
+			return BinarySearch(A[], E, mid+1, indexRight);	
+		}
+	}
+}
+\end{lstlisting} 
+Die Parameter \texttt{indexLeft} und \texttt{indexRight} schränken jeweils das zu betrachtende Feld ein. Zu Beginn ist \texttt{indexLeft} mit $0$ und \texttt{indexRight} mit \texttt{A[].length()} initialisiert. 
+\paragraph{Komplexität}
+Hier handelt es sich um ein rekursives Verfahren, folglich werden wir eine Rekursionsgleichung erhalten und diese mit den bekannten Verfahren auswerten. Doch zunächst betrachten wir wieder Fälle: \\
+\textit{günstigster Fall}: \quad E ist das mittlere Element $\to$ 1 Vergleich\\
+\textit{ungünstigster Fall}: \quad E ist nicht im Feld \\
+Die Rekursionsgleichung mit den Parametern $a, b \text{und} d$ ergibt sich nun wie folgt:
+\begin{itemize}
+\item Es gibt einen rekursiven Aufruf, d.h. $a = 1$.
+\item Pro Rekursionsaufruf halbieren wir das Feld, daraus folgt $b = 2$.
+\item Die Vorbereitung der Rekursion verläuft konstant und ist minimal, also $d = 1$.
+\end{itemize}
+Die Rekursionsgleichung lautet nun: 
+\[f(n) = 1 \cdot f(\frac{n}{2}) + 1\]
+Für die Anwendung des Mastertheorems formen wir um:
+\[\iff f(n) = 1 \cdot f(\frac{n}{2}) + O(n^{0})\]
+Nun ergibt sich: 
+\[a = b^{d} \iff 1 = 2^{0} \Rightarrow f(n) \in O(n^{0} \cdot log_{2}(n)) = O(log(n))\]
+\section{Textsuche}
+Spätestens jetzt sollten Sie das Buch gefunden haben, wenn Sie die binäre Suche verwendet haben, vermutlich schneller als mit der linearen Suche. Jetzt haben Sie einen Arbeitsplatz gefunden, setzen sich und schlagen das Buch auf: Für ein Lesen in Ruhe haben Sie keine Zeit, daher suchen Sie sich die interessanten Teile heraus. Sie suchen, wo \textsc{Niklaus Wirth} Ihnen die $O$-Notation erklären wird. \\\\
+Formal suchen Sie folglich alle Vorkommen eines Musters (in Form einer Zeichenkette) in einem Text. Dafür betrachten wir zwei Verfahren.
+\subsection{Einfache Textsuche}
+Analog zur linearen Suche beginnen Sie einfach, Ihren gesuchten Begriff unter den Text zu legen. Stimmt der erste Buchstabe überein, vergleichen Sie den zweiten. Stellen Sie eine Differenz fest, verschieben Sie Ihr Suchwort um eine Position nach rechts. Derart fahren Sie fort, bis Sie am Ende des Textes angelangt sind.
+\paragraph{Idee}
+Beginnend beim ersten Zeichen des Textes legt man das Muster der Reihe nach an jede Stelle des Textes an und vergleicht zeichenweise von links nach rechts, ob eine Übereinstimmung vorliegt
+\paragraph{Implementierung}
+\begin{lstlisting}
+int BruteForceSearch(char[] text, char[] pattern) {
+	int n = text.length;
+	int m = pattern.length;
+	int i = 0;
+	int j = 0;
+	for (int k = 0; i <= n-m; i++) {
+		j = 0;
+		while (j < m && Text[i+j] == pattern[j]) {		
+			j++;		
+		}
+		if (j == m) {
+			return i;		
+		}
+	}
+	return ElementNotFound;
+}
+\end{lstlisting}
+\paragraph{Komplexität}
+Offenbar hängt der Aufwand dieses Verfahrens ganz wesentlich davon ab, wie lang das Muster und der Text in Gänze sind. Weniger relevant hingegen ist der Aufbau des Textes, da alle Vorkommen des Musters gesucht werden. Insofern ist es nicht entscheidend, an welcher Stelle das Muster das erste Mal auftritt. \\\\
+\textit{günstigster Fall} \quad Im günstigsten Fall werden m Vergleiche benötigt, wenn nämlich die Länge des Textes kleiner als das doppelte der Länge des Musters $m$ ist und das Muster direkt am Beginn des Textes steht. $\to m$ Vergleiche 
+\\\\ \textit{schlechtester Fall}\quad Im schlechtesten Fall werden $(n-m+1) \cdot m$ Vergleiche benötigt, wobei dieser Fall allgemeingültig ist -- es werden alle Vorkommen des Musters im Text gesucht und nicht lediglich das erste. \\\\
+Die Laufzeit des Algorithmus liegt nun in $O(n \cdot m)$.
+\subsection{Knuth-Morris-Pratt-Algorithmus (KMP)}
+
+\part{Anhang}
+\section{Lösungen}
+\subsection{Grundlagen der Algorithmik}
+\label{a1:lsg}
+\label{a2:lsg}
+\label{a3:lsg}
+\section{Tabellen und Formeln}
+\end{document}

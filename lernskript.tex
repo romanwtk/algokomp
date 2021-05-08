@@ -245,7 +245,7 @@ f(n) =& \quad 2 \cdot f(n-1) + 1 \\
 \end{example}
 Je nach Rekursionsgleichung bietet sich mitunter eines der beiden Verfahren mehr an als das andere. Vernachlässigt werden darf beim \textit{bottum-up}-Verfahren nicht, dass ein Induktionsbeweis erforderlich ist! Bei Rekursionsgleichungen mit zweifacher Rekursion (in Beziehung zu den vorherigen zwei Funktionswerten) ist ein \textit{top-down}-Verfahren deutlich komplexer und häufig nicht ratsam.
 \pagebreak
-\section{Aufgaben}
+\section*{Aufgaben}
 \paragraph{Aufgabe 1} Veranschaulichen Sie die $O$-, $\Theta$- und $\Omega$-Notation anhand der Funktion $f(n) = 3n^{3} + 7n^{2} + 16$ grafisch. 
 \begin{flushright}
 Lösung auf Seite \pageref{a1:lsg}
@@ -382,13 +382,229 @@ Offenbar hängt der Aufwand dieses Verfahrens ganz wesentlich davon ab, wie lang
 \\\\ \textit{ungünstigster Fall}\quad Im ungünstigsten Fall werden $(n-m+1) \cdot m$ Vergleiche benötigt, wobei dieser Fall allgemeingültig ist -- es werden alle Vorkommen des Musters im Text gesucht und nicht lediglich das erste. \\\\
 Die Laufzeit des Algorithmus liegt nun in $O(n \cdot m)$.
 \subsection{Knuth-Morris-Pratt-Algorithmus (KMP)}
+Ihnen ist das zu mühsam geworden, Zeichen für Zeichen des Textes und des Musters zu vergleichen. Sie sehnen sich nach einem intelligenteren, einfacheren Weg. Und, wahrlich den gibt es: Der \textbf{Knuth-Morris-Pratt}-Suchalogorithmus nach \textsc{Donald Ervin Knuth}, \textsc{James Hiram Morris} und \textsc{Vaughan Ronald Pratt}. \\\\
+Die Grundlage für diesen Algorithmus bildet die vorangegangene einfache Textsuche. Diese optimieren wir nun, in dem wir beim ersten sich unterscheidenden Zeichen von Text und Muster das Muster nicht um ein einziges Zeichen nach rechts verschieben, sondern um eine bestimmte Anzahl an Zeichen, die sich aus unserem Muster ergibt und als \textbf{Rand} bezeichnet wird.
+\begin{definition}
+Der \textbf{Rand} eines Musters $M$ mit der Länge $m$ ist eine tabellarische Auflistung aller Teilzeichenketten der Längen $0$ bis $m$ des Musters, für die jeweils die Anzahl der Zeichen eines Prefixes, das zugleich Postfix ist, bestimmt wird.
+\end{definition}
+\begin{example}
+Betrachten wir das Wort \texttt{abbababbab}. \\
+Wir beginnen eine tabellarische Auflistung: \\\\
+\begin{tabular}{|l|c|c|l|}
+\hline
+Teilzeichenkette & Länge & Rand & Bemerkung \\
+\hline
+& 0 & -1 & per Definition, für Teilschritt 2 (Suche) erforderlich \\
+\texttt{a} & 1 & 0 & per Definition \\ 
+\texttt{ab} & 2 & 0 & $a \neq b$ \\
+\texttt{abb} & 3 & 0 & \\
+\texttt{abba} & 4 & 0 & $ab \neq ba$, Palindrome haben den Rand 0 \\
+\texttt{abbab} & 5 & 2 & gleich: $ab$, Länge: 2 \\
+\texttt{abbaba} & 6 & 1 & gleich: a, Länge: 1 \\
+\texttt{abbabab} & 7 & 2 & gleich: ab, Länge: 2 \\
+\texttt{abbababb} & 8 & 3 & gleich: abb, Länge: 3 \\
+\texttt{abbababba} & 9 & 4 & gleich: abba, Länge: 4 \\
+\texttt{abbababbab} & 10 & 5 & gleich: abbab, Länge: 5 \\
+\hline 
+\end{tabular} \\\\
+Im folgenden Suchalgorithmus wird jeweils der Rand verwendet, um Verschiebungspositionen zu bestimmen. Daher ist die gesamte Tabelle erforderlich.
+\end{example} \pagebreak
+\paragraph{Implementierung} als Pseudo-Code
+\begin{lstlisting}
+Rand[0] = -1; 		/* Definition */
+Rand[1] = 0;		/* Definition */
 
+for (j = 2; j <= m; j++) {
+	while ((i >= 0) and (M[i] != M[j-1])) {
+		i = Rand[i];
+		i++;
+	}
+	Rand[j] = i;
+}
+\end{lstlisting}
+Folglich iterieren wir nun über alle möglichen Teilzeichenkettenlängen (\texttt{j}) und vergleichen jeweils mit dem vorherigen Rand (durch \texttt{i}). Wenn unser Rand maximal ist, verlassen wir die \texttt{while}-Schleife und speichern den ermittelten Rand. \\\\
+Eine Veranschaulichung der algorithmischen Rand-Bestimmung finden Sie in der Wikipedia. \parencite{KMPRand}
+\paragraph{Der Suchalgorithmus}
+Ähnlich wie bei der einfachen Textsuche beginnen Sie, indem Sie das zu suchende Muster unter den Suchraum schreiben und vergleichen Zeichen für Zeichen. Entscheidend ist nun die erste Abweichung: Sie bestimmen den \texttt{Rand[]} der Indexposition der Abweichung im Muster und verschieben ihr Muster nun mit unterer Formel. So nutzen Sie aus, dass bis zur ersten Abweichung Gleichheit bestand -- falls bei vier gleichen Zeichen ein Rand von zwei vorliegt, können Sie ihr Muster so verschieben, dass der Beginn nun dort liegt, wo zuvor das mit dem neuen Anfang identische Enge lag. Nun fahren Sie mit den neu gewonnen Index-Positionen fort, die sich aus dem Verschiebung ergeben haben. \\\\
+Die Formel für Verschiebungen ist: \\
+\texttt{Neuer Beginn des Musters (neue Suchtextposition) = Suchtextposition (aktueller Beginn des Musters) + (Anzahl übereinstimmender Zeichen -- Randlänge)}
+\begin{example}
+Sie suchen das Muster \texttt{ababaab} im Text \texttt{baabbaababaabbbabba}. \\
+\textbf{Schritt 1}: Bestimmung des Randes \\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+ 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+\hline
+-1 & 0 & 0 & 1 & 2 & 1 & 1 & 2 \\
+\end{tabular} \\\\
+\textbf{Schritt 2}: Suche \\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+0 & 1 & 2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
+\hline
+b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+\hline
+a&b&a&b&a&a&b& & & & & & & & & & & & \\
+\hline
+\end{tabular} \\
+Erste Abweichung an Index 0 $\to$ Rand[0] = -1, nach Formel oben: $0+(0-(-1)) = 1$. Also verschieben wir das Muster an Indexposition 1. \\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
+\hline
+b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+\hline
+ &a&b&a&b&a&a&b& & & & & & & & & & &  \\
+\hline
+\end{tabular} \\
+Abweichung an Index 2, Rand[2] = 0, mit Formel: $1+(1-0) = 2$. Wir verschieben also so, dass das erste Zeichen des Musters an Index 2 steht.  \\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
+\hline
+b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+\hline
+ & &a&b&a&b&a&a&b& & & & & & & & & &   \\
+\hline
+\end{tabular}\\
+Abweichung an Index 4, Rand[2] = 0, mit Formel: $2+(2-0) = 4$. Neue Indexposition des Musters: 4. \\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
+\hline
+b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+\hline
+ & & & &a&b&a&b&a&a&b& & & & & & & &    \\
+\hline
+\end{tabular}\\
+Abweichung an Index 4, Rand[0] = -1, mit Formel: $4+(0-(-1)) = 5$. Neue Indexposition: 5. \\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
+\hline
+b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+\hline
+ & & & & &a&b&a&b&a&a&b& & & & & & &    \\
+\hline
+\end{tabular}\\
+Abweichung an Index 6, Rand[1] = 0, mit Formel: $5+(1-0) = 6$. \\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
+\hline
+b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+\hline
+ & & & & & &a&b&a&b&a&a&b& & & & & &    \\
+\hline
+\end{tabular}\\
+Nun tritt keine Abweichung ein, das erste Vorkommen des Musters im Suchtext ist gefunden. Da wir nun an allen Vorkommen interessiert sind, führen wir unsere Suche fort. Dafür bestimmen wir zunächst den Rand[7] = 2. Mit der Formel folgt: $6+(7-2) = 11$. An Position 11 können wir nun unsere Suche fortsetzen.\\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
+\hline
+b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+\hline
+ & & & & & & & & & & &a&b&a&b&a&a&b&    \\
+\hline
+\end{tabular}\\
+$11+(2-0) = 13$. Damit verlassen wir den Suchtext, der Algorithmus terminiert, da kein weiteres Vorkommen gefunden wurde.
+\end{example}
+Die Stärken des KMP-Algorithmus liegen folglich in der Berücksichtigung von Rändern an Anfang und Ende des Musters, die größere Sprünge als eins (im Vergleich zur einfachen Textsuche) ermöglichen. Liegt nun ein Muster ohne jegliche oder mit wenigen Rändern vor, ist der Laufzeitgewinn marginal.
+\paragraph{Implementierung}
+als Pseudo-Code
+\begin{lstlisting}
+KnuthMorrisPrattAlgorithm(Pattern, SearchSpace, Borders) {
+	int i = 0;	/* Current position in search space */
+	int j = 0;	/* Current position in pattern */
+
+	while (i < SearchSpace.length) {
+		// Move pattern until first character of 
+		// SearchSpace and Pattern is equal
+		while (j >= 0 && SearchSpace[i] != Pattern[j]) {
+			j = Borders[j]		
+		} 
+		
+		// Now compare the next character
+		i = i + 1;
+		j = j + 1;
+
+		// End of pattern: return result		
+		if (j == (Pattern.length-1)) {
+			print(i - (Pattern.length-1));		
+		}
+	}
+}
+\end{lstlisting}
+Wie ersichtlich ist, beginnen wir damit, unser Muster unter Anwendung der Ränder an die erste Position zu verschieben, an der das erste Zeichen übereinstimmt. Nun inkrementieren wir beide Zählervariablen und betrachten folgende Zeichen, in dem wir im nächsten Schleifendurchlauf bei Abweichungen weiterverschieben, bis die Länge des Musters erreicht wurde. Dann geben wir diese Indexposition aus und fahren fort. 
+\paragraph{Komplexität} 
+Da dieser Algorithmus aus zwei Teilproblemen besteht, zerfällt auch die Komplexität: \\
+Das Bestimmen der Ränder erfolgt linear für das gesamte Muster, daraus folgt in \textsc{Landau}-Notation: $\text{Rand}(x) \in O(n)$ bei $n$ als Länge des Musters.
+Der Suchalgorithmus selbst verläuft ebenfalls linear -- insgesamt erfolgen maximal so viele Durchläufe wie der Text Zeichen enthält. Daraus folgt: $\text{KMPSearch}(x, y, R[]) \in O(m)$ \\
+Da beide Teilprobleme getrennt voneinander und aufeinander aufbauend durchlaufen werden, ergibt sich eine Komplexität des gesamten Algorithmus von $O(n + m)$. \parencite{KMPRand}
+\subsection{Boyer-Moore-Algorithmus}
+Ähnlich dem Ansatz von \textsc{Knuth}, \textsc{Morris} und \textsc{Pratt} haben auch \textsc{Robert S. Boyer} und \textsc{J Strother Moore} einen vergleichbaren Algorithmus zur effizienteren Suche von Zeichenketten in Texten entwickelt. Im Gegensatz zum KMP-Algorithmus werden dort keine Ränder bestimmt, sondern erst im Falle einer Abweichung greifen zwei Heuristiken: Die \textbf{Bad-character}- und \textbf{Good-suffix}-Heuristik, mithilfe derer ebenfalls Sprünge ermittelt werden. Dieses Verfahren hat eine Komplexität von $O(n \cdot m)$ und ist damit im Allgemeinen (dem ungünstigsten Fall) weniger effizient als der KMP. Jedoch verläuft dieses Algorithmus nicht linear, sodass in einem günstigen Fall eine geringere Laufzeit erreicht werden kann. \\\\
+
+Dieses Verfahren wird hier nicht näher dargestellt, da es nicht Teil der Vorlesung war. Weitere Informationen finden Sie bei \parencite[][S. 476 -- 478]{Grundkurs}.
+\pagebreak
+\section*{Aufgaben}
+\paragraph{Aufgabe 1} Führen Sie eine binäre Suche nach dem Element \texttt{7} in \texttt{[1, 3, 5, 8, 7, 9, 11, 12, 2, 4, 6, 10, 13, 19, 17, 18, 22]} durch. Notieren Sie jeweils Ihre Zwischenergebnisse. 
+\begin{flushright}
+Lösung auf Seite \pageref{a2.1:lsg}
+\end{flushright}
+\paragraph{Aufgabe 2} Bestimmen Sie die Ränder der folgenden Muster:
+\begin{itemize}
+\item \texttt{OTTOSMOPSKOTZT}
+\item \texttt{ANANASBANANA}
+\item \texttt{BONOBO}
+\end{itemize}
+Geben Sie jeweils an, wie sehr sich der Einsatz des KMP-Algorithmus bei diesen Mustern lohnt.
+\begin{flushright}
+Lösung auf Seite \pageref{a2.2:lsg}
+\end{flushright}
+\paragraph{Aufgabe 3} Wenden Sie den KMP-Algorithmus mit dem Muster \texttt{BONOBO} auf den Suchtext \texttt{BEINAHEBOTNOCHDASBONOBONOBOHAUSPLATZ} an. Stellen Sie Ihre Zwischenergebnisse dar.
+\begin{flushright}
+Lösung auf Seite \pageref{a2.3:lsg}
+\end{flushright}
+\paragraph{Aufgabe 4} Erläutern Sie den Algorithmus der binären Suche in Ihren eigenen Worten.
+\begin{flushright}
+Lösung auf Seite \pageref{a2.4:lsg}
+\end{flushright}
+\pagebreak
+\part{Sortieralgorithmen}
+Nach langen, qualvollen Stunden vor dem Bücherregal hassen Sie ihr Leben, ihr Studium und Sie beschließen, es wegzuwerfen -- Sie fangen in der Bibliothek als Fachkraft für Lagerlogistik an und sind nun für die korrekte Anordnung der Bücher im Regal verantwortlich. Auch hier zeigen Sie ihre geistige Brillianz, indem Sie das Problem des Sortierens auf abstrakter Ebene betrachten.
+\section{Allgemeines und Eigenschaften}
+\begin{definition}
+Ein Sortieralgorithmus verarbeitet eine Folge von Elementen $e_{1}, ..., e_{n}$ so, dass am Ende eine Ausgabe $e_{1}, ..., e_{n}$ mit $e_{1} \leq e_{2} \leq ... \leq e_{n}$ erzeugt wird.
+\end{definition} 
+Als zugrunde liegende Datenstrukturen kommen Arrays, verkettete Listen oder weitere, spezielle Datenstrukturen mit zu Mengen/Relationen ähnlichem Aufbau infrage. \\\\
+Da Sie bei Sortiervorgängen häufig Daten im \textit{{key: value}}-Format betrachten, unterscheiden wir zwischen \textbf{Schlüsseldaten}(also den keys) und \textbf{Satellitendaten}(den zugehörigen Werten). So können wie beispielsweise Wetterdaten betrachten: [{08.05.2021: 31.5}, {09.05.2021, 30.2}, {07.05.2021, 16.3}] -- Hier sind die Tage jeweils die Schlüsseldaten und die Temperaturangaben (die Gleitkommazahlen) jeweils Satellitendaten.
+\begin{definition} Ein Algorithmus sortiert Daten \textbf{stabil}, falls die Reihenfolge bereits sortierter Elemente nicht geändert wird und so insbesondere nach einem weiteren Kriterium sortierte Daten nach Ausführung des Algorithmus in diesem Kriterium ihre Sortierung beibehalten. Als \textbf{instabil} bezeichnen wir einen Sortieralgorithmus, falls das Gegenteil der Fall ist.
+\end{definition}
+Ähnlich den Suchalgorithmen unterscheiden sich auch Sortieralgorithmen in weiteren Aspekten: 
+\begin{itemize}
+\item Laufzeiteffizienz ($\to$ \textsc{Landau}-Notation)
+\item Speicherplatzeffizienz
+\item Ablaufschema: Rekursiv oder Iterativ
+\item Stabilität der Daten
+\end{itemize}
+Für die Speicherplatzeffizienz ergibt sich folgende Unterscheidung:
+\begin{definition}
+Falls ein Sortieralgorithmus parallel zur Laufzeit keinen oder einen konstanten zusätzlichen Speicherbedarf benötigt, so wird er \textbf{in-place} ausgeführt. Ein Algorithmus, der hingegen zusätzlichen Speicherbedarf in Abhängigkeit zu den Daten benötigt, wird als \textbf{out-place} bezeichnet.
+\end{definition}
+\section{Insertionsort}
+\section{Bubblesort}
+\section{Mergesort}
+\section{Quicksort}
 \part{Anhang}
-\section{Lösungen}
+\section*{Lösungen}
 \subsection{Grundlagen der Algorithmik}
 \label{a1:lsg}
 \label{a2:lsg}
 \label{a3:lsg}
 \label{a4:lsg}
-\section{Tabellen und Formeln}
+\label{a2.1:lsg}
+\label{a2.2:lsg}
+\label{a2.3:lsg}
+\label{a2.4:lsg}
+\section*{Tabellen und Formeln}
+\printbibliography
 \end{document}

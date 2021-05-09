@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage{upgreek}
 \usepackage{amsthm}
+\usepackage{ulem}
 \usepackage{graphicx}
 \usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
 \usepackage[backend=biber, style=alphabetic]{biblatex}
@@ -38,6 +39,9 @@ Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettie
 Roman Wetenkamp \\
 Mannheim, den \today
 \end{flushright}  
+\vfill
+\paragraph{Hinweis}
+Dieses Dokument ist kein Vorlesungsmaterial, hat keineswegs den Anspruch auf Vollständigkeit und enthält mit Sicherheit Fehler. Desweiteren ist es noch lange nicht vollendet (es ist infrage zustellen, ob es das je sein wird), und doch möchte ich Sie ermutigen, beizutragen! Jegliche Fehler, Probleme oder Anmerkungen können Sie mir gerne über das dazugehörige GitHub-Repository unter der URL \url{https://github.com/RWetenkamp/algokomp} zukommen lassen. Ebenso sind Sie völlig frei darin, dieses Dokument für Ihre legitimen Zwecke zu nutzen -- bitte beachten Sie dennoch Ihr Gewissen. Danke!
 \pagebreak
 \part{Grundlagen der Algorithmik}
 \section{Der Algorithmusbegriff}
@@ -546,7 +550,7 @@ Da beide Teilprobleme getrennt voneinander und aufeinander aufbauend durchlaufen
 Dieses Verfahren wird hier nicht näher dargestellt, da es nicht Teil der Vorlesung war. Weitere Informationen finden Sie bei \parencite[][S. 476 -- 478]{Grundkurs}.
 \pagebreak
 \section*{Aufgaben}
-\paragraph{Aufgabe 1} Führen Sie eine binäre Suche nach dem Element \texttt{7} in \texttt{[1, 3, 5, 8, 7, 9, 11, 12, 2, 4, 6, 10, 13, 19, 17, 18, 22]} durch. Notieren Sie jeweils Ihre Zwischenergebnisse. 
+\paragraph{Aufgabe 1} Führen Sie eine binäre Suche nach dem Element \texttt{7} in \texttt{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 17, 18, 19, 22]} durch. Notieren Sie jeweils Ihre Zwischenergebnisse. 
 \begin{flushright}
 Lösung auf Seite \pageref{a2.1:lsg}
 \end{flushright}
@@ -577,7 +581,7 @@ Ein Sortieralgorithmus verarbeitet eine Folge von Elementen $e_{1}, ..., e_{n}$ 
 \end{definition} 
 Als zugrunde liegende Datenstrukturen kommen Arrays, verkettete Listen oder weitere, spezielle Datenstrukturen mit zu Mengen/Relationen ähnlichem Aufbau infrage. \\\\
 Da Sie bei Sortiervorgängen häufig Daten im \textit{{key: value}}-Format betrachten, unterscheiden wir zwischen \textbf{Schlüsseldaten}(also den keys) und \textbf{Satellitendaten}(den zugehörigen Werten). So können wie beispielsweise Wetterdaten betrachten: [{08.05.2021: 31.5}, {09.05.2021, 30.2}, {07.05.2021, 16.3}] -- Hier sind die Tage jeweils die Schlüsseldaten und die Temperaturangaben (die Gleitkommazahlen) jeweils Satellitendaten.
-\begin{definition} Ein Algorithmus sortiert Daten \textbf{stabil}, falls die Reihenfolge bereits sortierter Elemente nicht geändert wird und so insbesondere nach einem weiteren Kriterium sortierte Daten nach Ausführung des Algorithmus in diesem Kriterium ihre Sortierung beibehalten. Als \textbf{instabil} bezeichnen wir einen Sortieralgorithmus, falls das Gegenteil der Fall ist.
+\begin{definition} Ein Algorithmus sortiert Daten \textbf{stabil}, falls die Reihenfolge bereits sortierter Elemente mit gleichem Schlüssel nicht geändert wird und so insbesondere nach einem weiteren Kriterium sortierte Daten nach Ausführung des Algorithmus in diesem Kriterium ihre Sortierung beibehalten. Als \textbf{instabil} bezeichnen wir einen Sortieralgorithmus, falls das Gegenteil der Fall ist.
 \end{definition}
 Ähnlich den Suchalgorithmen unterscheiden sich auch Sortieralgorithmen in weiteren Aspekten: 
 \begin{itemize}
@@ -590,10 +594,254 @@ Für die Speicherplatzeffizienz ergibt sich folgende Unterscheidung:
 \begin{definition}
 Falls ein Sortieralgorithmus parallel zur Laufzeit keinen oder einen konstanten zusätzlichen Speicherbedarf benötigt, so wird er \textbf{in-place} ausgeführt. Ein Algorithmus, der hingegen zusätzlichen Speicherbedarf in Abhängigkeit zu den Daten benötigt, wird als \textbf{out-place} bezeichnet.
 \end{definition}
-\section{Insertionsort}
+\section{Insertion Sort}
+Der erste Sortieralgorithmus, den wir betrachten, heißt \textbf{Insertion Sort}. Wie der Name schon andeutet, geht es darum, Elemente einzufügen -- in einen bestehenden, bereits sortierten Teil. \\\\
+Sie beginnen links in Ihrer Bücherreihe, starten mit dem zweiten Buch. Sie prüfen nun, ob es im Vergleich zum ersten richtig steht, andernfalls tauschen sie es. Nun betrachten Sie das dritte Buch und fügen es vor/zwischen/nach Buch 1 und 2 ein, je nach richtiger Position. So fahren Sie fort: Sie fügen das jeweils aktuelle Buch in die Reihe der bereits sortierten ein.
+\paragraph{Implementierung} als Pseudo-Code
+\begin{lstlisting}
+InsertionSort(Array) {
+	int i = 0;
+	while (i < (Array.length-1)) {
+		x = Array[i];
+		int y = 0;
+		while (x < Array[i-y]) {
+			y++;		
+		} 
+		Array[i-y] = x;
+		i++;
+	}
+}
+\end{lstlisting}
+\begin{example} Zu sortieren Sie das Array \texttt{[44, 55, 12, 42, 94, 18, 06, 67]}. \\\\
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+\hline
+Ausgangswerte & 44 & \uline{55} & 12 & 42 & 94 & 18 & 06 & 67 \\
+nach i = 1    & 44 & 55 & \uline{12} & 42 & 94 & 18 & 06 & 67 \\
+nach i = 2    & 12 & 44 & 55 & \uline{42} & 94 & 18 & 06 & 67 \\
+nach i = 3    & 12 & 42 & 44 & 55 & \uline{94} & 18 & 06 & 67 \\
+nach i = 4    & 12 & 42 & 44 & 55 & 94 & \uline{18} & 06 & 67 \\
+nach i = 5    & 12 & 18 & 42 & 44 & 55 & 94 & \uline{06} & 67 \\
+nach i = 6    & 06 & 12 & 18 & 42 & 44 & 55 & 94 & \uline{67} \\
+nach i = 7    & 06 & 12 & 18 & 42 & 44 & 55 & 67 & 94 \\
+\hline
+\end{tabular} \\
+Quelle: \parencite[][S. 493 ff.]{Grundkurs}
+\end{example}
+\paragraph{Komplexität}
+Im günstigsten Fall operiert dieses Verfahren auf einem bereits sortierten Feld. Dann sind -- um dies festzustellen -- $n-1$ Vergleiche erforderlich. Im schlechtesten Fall ist das Feld in genau falscher Richtung sortiert: Dann sind $\frac{n^{2}}{2}$ Vergleiche erforderlich, da die zweite Schleife auch maximal oft durchlaufen wird. \\\\
+Insgesamt ergibt sich in \textsc{Landau}-Notation: $\in O(n^{2})$
+\paragraph{Eigenschaften}
+\begin{itemize}
+\item Das Verfahren ist iterativ (erkennbar an den beiden Schleifen)
+\item Es ist stabil, da Vertauschungen nur im notwendigen Fall auftreten
+\item Das Verfahren operiert in-place, da kein bzw. nur konstanter zusätzlicher Speicher benötigt wird
+\end{itemize}
+
+Optimieren ließe sich das Verfahren durch den Einsatz von binärer Suche für die Einfügeposition -- dann reduzieren sich die Vergleiche, nicht jedoch die Verschiebungen.
 \section{Bubblesort}
+Mit \textbf{Bubble Sort} lernen wir einen weiteren Algorithmus zum Sortieren kennen: Hier vergleichen wir zunächst benachbarte Elemente und tauschen diese bei Bedarf. So durchlaufen wir das gesamte Array, bis keine Vertauschungen mehr notwendig sind und alle Elemente in der korrekten Reihenfolge angeordnet sind.
+\paragraph{Idee} Durchlaufe Feld mehrmals und tausche benachbarte Elemente bei Bedarf. Terminiere, wenn in einem Durchlauf keine Vertauschung mehr erfolgt ist.
+\begin{example}
+Zu sortieren ist das Feld \texttt{[6, 8, 2, 9, 1, 5, 4, 3]}. \\
+6 $<$ 8, aber 8 $>$ 2: \texttt{[6, 2, 8, 9, 1, 5, 4, 3]}. \\
+8 $<$ 9, aber 9 $>$ 1: \texttt{[6, 2, 8, 1, 9, 5, 4, 3]} \\
+9 $>$ 5: \texttt{[6, 2, 8, 1, 5, 9, 4, 3]} \\
+9 $>$ 4: \texttt{[6, 2, 8, 1, 5, 4, 9, 3]} \\
+9 $>$ 3: \texttt{[6, 2, 8, 1, 5, 4, 3, 9]} \\\\
+Nächste Iteration: \\
+6 $>$ 2: \texttt{[2, 6, 8, 1, 5, 4, 3, 9]} \\
+6 $<$ 8, aber 8 $>$ 1: \texttt{[2, 6, 1, 8, 5, 4, 3, 9]} \\
+8 $>$ 5: \texttt{[2, 6, 1, 5, 8, 4, 3, 9]} \\
+8 $>$ 4: \texttt{[2, 6, 1, 5, 4, 8, 3, 9]} \\
+8 $>$ 3: \texttt{[2, 6, 1, 5, 4, 3, 8, 9]} \\
+8 $<$ 9. \\\\
+Nächste Iteration:\\
+2 $<$ 6, aber 6 $>$ 1: \texttt{[2, 1, 6, 5, 4, 3, 8, 9]} \\
+6 $>$ 5: \texttt{[2, 1, 5, 6, 4, 3, 8, 9]} \\
+6 $>$ 4: \texttt{[2, 1, 5, 4, 6, 3, 8, 9]} \\
+6 $>$ 3: \texttt{[2, 1, 5, 4, 3, 6, 8, 9]} \\
+6 $<$ 8 und 8 $<$ 9. \\\\
+Nächste Iteration:\\
+2 $>$ 1: \texttt{[1, 2, 5, 4, 3, 6, 8, 9]} \\
+2 $<$ 5, aber 5 $>$ 4: \texttt{[1, 2, 4, 5, 3, 6, 8, 9]} \\
+5 $>$ 3: \texttt{[1, 2, 4, 3, 5, 6, 8, 9]} \\
+5 $<$ 6, 6 $<$ 8 und 8 $<$ 9. \\\\
+Nächste Iteration: \\
+1 $<$ 2, 2 $<$ 4, aber 4 $>$ 3: \texttt{[1, 2, 3, 4, 5, 6, 8, 9]} \\
+4 $<$ 5, 5 $<$ 6, 6 $<$ 8 und 8 $<$ 9. Terminiert.
+\end{example}
+Aus dem Beispiel können wir ableiten, dass in jeder Iteration $n-1$ Vergleiche erfolgen. Dies ist ein Indiz für die Komplexität, die wir später betrachten möchten.
+\paragraph{Implementation} als Pseudo-Code
+\begin{lstlisting}
+BubbleSort(Array) {
+	int i = 0;
+	int j = 0;
+	bool SwapFlag = True;
+	while (SwapFlag == true) {
+		SwapFlag = false;
+		while (i < (Array.length-1) {	
+			if (Array[i] > Array[i+1]) {
+				swap(Array[i], Array[i+1]);
+				SwapFlag = true;			
+			}
+		}	
+	}
+}
+\end{lstlisting}
+Die \texttt{SwapFlag} ist Terminationskriterium: Falls in einer Iteration kein Tausch mehr durchgeführt wurde, ist das Array vollständig sortiert.
+\paragraph{Komplexität}
+Im günstigsten Fall ist das Array bereits vollständig sortiert, dann werden $n-1$ Vergleiche notwendig. Im ungünstigsten Fall ist das Aray absteigend sortiert, nun sind $\frac{n^{2}}{2}$ Vergleiche erforderlich. \\\\
+Somit ergibt sich erneut eine Komplexität von $O(n^{2})$. \\\\
+Im Gegensatz zu ursprünglichen Implementierungen haben wir hier bereits eine Optimierung vorgenommen: Die SwapFlag bewirkt, dass im günstigsten Fall $O(n)$ die passende Komplexitätsklasse ist.
+\paragraph{Eigenschaften}
+\begin{itemize}
+\item Auch Bubble Sort arbeitet offensichtlich iterativ.
+\item Bubble Sort ist ebenfalls stabil.
+\item Der Speicheraufwand ist in-place.
+\end{itemize}
+Quelle und weiterführende Literatur: \parencite[][S.86 ff.]{Wirth} \parencite[][S.22]{Taschenbuch}
 \section{Mergesort}
+Die nächste Idee, wie Sie Ihr Bücherregal sortieren können: Mergesort! Sie teilen das Regal in zwei Hälften, sortieren jede Hälfte, in dem Sie diese wiederum halbieren, bis die Hälften aus einem Buch bestehen. Sortieren Sie diesen Teil, indem Sie die Bücher richtig anordnen und die Hälften so wieder von klein nach groß nach einer Art Reißverschlussprinzip verbinden, bis Sie die Gesamtheit der Elemente in sortierter Reihenfolge erhalten. 
+\begin{example} Zu sortieren: \texttt{[1, 7, 6, 2, 9, 4, 3, 8, 10, 5]}.\\
+Halbieren: \\\texttt{[1, 7, 6, 2, 9] | [4, 3, 8, 10, 5]} \\
+\texttt{[1, 7, 6][2, 9] | [4, 3, 8][10, 5]} \\
+\texttt{[1, 7][6][2][9] | [4, 3] [8][10][5]} \\
+\texttt{[1][7][6][2][9] | [4][3][8][10][5]}\\\\
+Sortieren (nach rekursiven Aufrufen): \\
+\texttt{[1][2][6][7][9] | [3][4][5][8][10]} \\\\
+Merge: \\
+\texttt{[1][2][3][4][5][6][7][8][9][10]}
+\end{example}
+\paragraph{Implementierung} als Pseudo-Code
+\begin{lstlisting}
+MergeSort(Array) {
+	if (Array.length <= 1) {
+		return Array  ;
+  	}
+  	else {
+		leftHalf = MergeSort(Array[0:(Array.length-2)]);
+		rightHalf = MergeSort(Array[(Array.length-a):-1]);
+		return merge(leftHalf, rightHalf);
+	}
+}
+merge(A[], B[], al, ar, bl, br, C[]) {
+	int i = al;
+	int j = bl;
+	for (int k = 0; k <= ar-al+br-bl+1; k++) {
+		if (i > ar) {
+			C[k] = B[j+1];
+			continue;		
+		}
+		if (j > br) {
+			C[k] = A[i+1];
+			continue;		
+		}
+		C[k] = (A[i] < B[j] ? A[i++] : B[j++];	
+	}	
+}
+\end{lstlisting} Quelle: \parencite[][S. 28]{Taschenbuch}
+\paragraph{Komplexität}
+Für Mergesort ergibt sich -- da es sich um einen rekursiven Algorithmus handelt -- eine Rekursionsgleichung:
+\[T(n) = T(\frac{n}{2}) + T(\frac{n}{2}) + n = 2T(\frac{n}{2}) + n\]
+Jeder Rekursionsteil beschreibt die Komplexität der einzelnen Hälften und $n$ das anschließende Zusammenfügen. Somit ergibt sich unter Anwendung des Mastertheorems eine Komplexität von 
+\[T(n) \in O(n \cdot log(n))\]
+\paragraph{Eigenschaften}
+\begin{itemize}
+\item rekursiv
+\item stabil
+\item Je nach Implementierung in-place oder out-place
+\end{itemize}
 \section{Quicksort}
+Willkommen in der Königksklasse: Quicksort trägt schon einen bezeichnenden, etwas anmaßenden Titel. Wir betrachten nun, ob der Algorithmus dem gerecht wird.
+\paragraph{Idee}
+Wir sortieren eine Menge an Elementen, in dem wir das erste Element $p$ (das wir als \textbf{Pivot} bezeichnen) herausgreifen und nun unser Feld/Array so verschieben, dass alle kleineren Elemente ${...} < p$ links von $p$ stehen und alle größeren rechts davon - wohlgemerkt noch nicht sortiert. Nun betrachten wir die neu gebildeten Abschnitte $(a_{0}, ..., a_{p-1})$ und $a_{p+1}, ..., a_{n})$ und verfahren auf diesen Teilstapeln oder Teilmengen rekursiv. Folglich betrachten wir erneut die jeweils ersten Elemente und verfahren ebenso. Da wir keinen die Operationen in-place ausführen, ist kein merge-Schritt notwendig.
+\begin{example} Wir betrachten ein Feld \texttt{[8, 17, 28, 15, 11, 1, 3, 20, 25, 6, 12, 5]}. \\
+Das erste Element ist folglich 8, also erhalten wir: \\
+\texttt{[1, 3, 6, 5, 8, 17, 28, 15, 11, 20, 25, 12]}.\\
+Wir betrachten nun die beiden Teilmengen \texttt{[1, 3, 6, 5]} und \texttt{[17, 28, 15, 11, 20, 25, 12]}. \\
+Da 1 offensichtlich kleinstes Element der ersten Teilmenge ist, 3 anschließend ebenfalls beim nächsten Aufruf, erhalten wir schnell \texttt{[1, 3, 5, 6]}. \\\\
+In der zweiten Menge erhalten wir \texttt{[15, 11, 12]} und \texttt{[28, 20, 25]}, die wir schnell zu \texttt{[11, 12, 15]} und \texttt{[20, 25, 28]}, zusammen \texttt{[11, 12, 15, 17, 20, 25, 28]}. \\\\
+Abschließend erhalten wir das sortierte Feld \texttt{[1, 3, 5, 6, 8, 11, 12, 15, 17, 20, 25, 28]}.
+\end{example}
+\paragraph{Implementierung} als Pseudo-Code
+\begin{lstlisting}
+QuickSort(Array, lo, hi) {
+	if (lo < hi) {
+		pivot = Array[lo];
+		i = lo;
+		j = hi+1;	
+	}
+	while (true) {
+		while (Array[++i] < pivot && i < hi) {
+					
+		}
+		while (Array[--j] > pivot && j > lo) {
+		
+		}
+		if (i < j) {
+			swap(Array, i, j);		
+		}	
+		else {
+			break;		
+		}
+	}
+	swap(Array, j, lo);
+	
+	quickSort(Array, lo, j-1);
+	quickSort(Array, j+1, hi);
+}
+swap(Array, i, j) {
+	t = Array[i];
+	Array[i] = Array[j];
+	Array[j] = t;
+}
+\end{lstlisting} abgewandelt nach \parencite[][S. 29]{Taschenbuch}
+\paragraph{Komplexität}
+Offensichtlich handelt es sich bei Quicksort ebenfalls um einen rekursiven Sortieralgorithmus. Im günstigsten Fall ergibt sich eine Komplexität von $O(n \cdot log(n))$, da dann das Pivot-Element genau der Median ist und so beide Hälften glatt rekursiv abgearbeitet werden können. Im schlechtesten Fall beträgt die Komplexität $O(n^{2})$, da dann das Pivot-Element jeweils das kleinste oder größte ist. \\\\
+Wir geben die Komplexität von Quicksort im Durchschnittsfall mit $O(n \cdot log(n))$ an, behalten allerdings im Kopf, dass in einem ungünstigen Fall eine deutlich schlechtere Laufzeit in Kauf genommen werden muss.
+\paragraph{Eigenschaften}
+\begin{itemize}
+\item rekursiv
+\item nicht stabil
+\item in-place, da kein Hilfsfeld benötigt wird
+\item optimierbar beispielsweise durch Einfügen einer Schranke, bis zu der Insertion Sort genutzt wird (z.B. bei einer geringen zweistelligen Anzahl von Elementen) oder durch 3-Way-Partitioning, bei dem neben $<, >$ auch der Fall $=$ betrachtet wird. Dies ist logischerweise nur dann sinnvoll, falls es mehrere Elemente mit gleichen Schlüsseln gibt und diese bevorzugt als Pivot-Element genutzt werden.
+\end{itemize}
+\section{Weitere Sortieralgorithmen}
+Auf weitere Sortieralgorithmen wie z.B. Selection Sort \parencite{Taschenbuch}, Shellsort oder Shakesort \parencite{Wirth} und \parencite{Grundkurs} kann hier nicht näher eingegangen werden. In genannten Büchern finden Sie nähere Informationen zu diesen Algorithmen.
+\pagebreak
+\section*{Aufgaben}
+\paragraph{Aufgabe 1} Sortieren Sie das Feld \texttt{[56, 10, 15, 98, 99, 12, 30, 80]} aufsteigend. Notieren Sie Zwischenschritte
+\begin{itemize}
+\item Insertion Sort
+\item Bubblesort
+\item Quicksort
+\item Mergesort
+\end{itemize}
+\begin{flushright}
+Lösung auf Seite \pageref{a3.1:lsg} \\
+entnommen aus \parencite{GrUeb}
+\end{flushright}
+\paragraph{Aufgabe 2} 
+Beschreiben Sie Quicksort mit eigenen Worten.
+\begin{flushright}
+Lösung auf Seite \pageref{a3.2:lsg}
+\end{flushright}
+\paragraph{Aufgabe 3} 
+Begründen Sie, mit welchen Verfahren Sie folgende Felder in optimaler Laufzeit aufsteigend sortieren können.
+\begin{itemize}
+\item \texttt{[1, 9, 2, 8, 3, 7, 4, 6, 5]}
+\item \texttt{[9, 7, 7, 2, 5, 4, 7, 3, 1]}
+\item \texttt{[9, 8, 7, 6, 5, 4, 3, 2, 1]}
+\end{itemize}
+\begin{flushright}
+Lösung auf Seite \pageref{a3.3:lsg}
+\end{flushright}
+\paragraph{Aufgabe 4}
+Entwickeln Sie für Mergesort und Quicksort eine anschauliche Darstellungsform.
+\begin{flushright}
+Lösung auf Seite \pageref{a3.4:lsg}
+\end{flushright}
+\pagebreak
 \part{Anhang}
 \section*{Lösungen}
 \subsection{Grundlagen der Algorithmik}
@@ -605,6 +853,10 @@ Falls ein Sortieralgorithmus parallel zur Laufzeit keinen oder einen konstanten 
 \label{a2.2:lsg}
 \label{a2.3:lsg}
 \label{a2.4:lsg}
+\label{a3.1:lsg}
+\label{a3.2:lsg}
+\label{a3.3:lsg}
+\label{a3.4:lsg}
 \section*{Tabellen und Formeln}
 \printbibliography
 \end{document}

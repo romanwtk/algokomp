@@ -5,6 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{makeidx}
+\usepackage{hyperref}
 \usepackage{listings}
 \usepackage{upgreek}
 \usepackage{amsthm}
@@ -48,19 +49,20 @@ Dieses Dokument ist kein Vorlesungsmaterial, hat keineswegs den Anspruch auf Vol
 Wie der Titel dieses Moduls schon verrät, befassen wir uns mit Algorithmen: Jenen nebulösen Dingen, die uns mit ähnlich Denkenden und Interessierten in Social-Media-Plattformen zusammenbringen, komplexe mathematische Berechnungen ausführen und zunehmend mehr an Einfluss in unserem Leben gewinnen. Wir betrachten hier nun die Wortherkunft, definieren den Begriff anschließend und gehen auf Eigenschaften eines solchen ein.
 \paragraph{Wortherkunft}
 Der Begriff {\glqq}Algorithmus{\grqq} besteht zum einen aus dem altgriechischen Wort \textit{arithmos} -- Zahl und zum anderen geht er zurück auf den persischen Mathematiker \textsc{al-Charismi} (780-846 n. Chr.), dessen Werk \textit{{\glqq}Algorismus{\grqq}} schon eine gewisse Nähe zum heute üblichen Begriff offenbart. \parencite{brockhaus:algorithmus}
-\paragraph{Definition}
-Unter einem Algorithmus verstehen wir eindeutige Verarbeitungsvorschriften zur Lösung eines Problems oder einer Problemklasse. Daran geknüpft ist der Gedanke des EVA-Prinzips: Eine Eingabe wird verarbeitet und auf Grundlage dessen wird eine Ausgabe erzeugt, ein Algorithmus ist hier für die Verarbeitung bis zur Ausgabe notwendig. \\
-Algorithmen finden in einer Vielzahl von Bereiches unseres Lebens Einsatz finden: 
+\begin{definition}
+Unter einem Algorithmus verstehen wir eindeutige Verarbeitungsvorschriften zur Lösung eines Problems oder einer Problemklasse. Daran geknüpft ist der Gedanke des EVA-Prinzips: Eine Eingabe wird verarbeitet und auf Grundlage dessen wird eine Ausgabe erzeugt, ein Algorithmus ist hier für die Verarbeitung bis zur Ausgabe notwendig. 
+\end{definition}
+Algorithmen finden in einer Vielzahl von Bereiches unseres Lebens Einsatz: 
 \begin{itemize}
 \item Zur Untersuchung großer Datenmengen
 \item Zur Kommunikation/Suche im Internet
 \item In bildgebenden Verfahren oder diagnostischen Anwendungen der Medizin
-\item Assistenzsystemen im Auto
+\item In Assistenzsystemen im Auto
 \item Bei der Partnersuche über Online-Dating-Plattformen
 \end{itemize}
 Damit finden wir intuitiv eine Begründung für die Untersuchung von Algorithmen.
 \begin{note}
-Ein \textit{Algorithmus} ist von einem \textit{Programm} unbedingt abzugrenzen: Der Algorithmus bezeichnet ein abstraktes Konzept zur Lösung eines gegebenen Problems während ein Programm die konkrete Umsetzung eines Algorithmus in einer Programmiersprache ist. 
+Ein \textit{Algorithmus} ist von einem \textit{Programm} unbedingt abzugrenzen: Der Algorithmus bezeichnet ein abstraktes Konzept zur Lösung eines gegebenen Problems während ein Programm die konkrete Umsetzung eines Algorithmus in einer Programmiersprache ist. (Implementierung) 
 \end{note}
 Bei der Betrachtung von Algorithmen betrachten wir die folgenden drei Ziele:
 \begin{itemize}
@@ -102,7 +104,7 @@ Sei $g \in \mathbb{R_{+}^{\mathbb{N}}}$ gegeben. Dann ist die Menge aller Funkti
 O(g) := \{f \in \mathbb{R_{+}^{\mathbb{N}}} \mid \exists n_{0} \in \mathbb{N}: \exists c \in \mathbb{R_{+}}: \forall n \in \mathbb{N}: (n \geq n_{0} \Rightarrow f(n) \leq c \cdot g(n))\}
 \end{align*}
 \end{definition}
-Die $O$-Notation gibt folglich eine Menge vergleichbarer Funktionen an, die es ermöglichen, die Komplexität eines Algorithmus abzuschätzen.
+Die $O$-Notation gibt folglich eine Menge vergleichbarer Funktionen an, die es ermöglicht, die Komplexität eines Algorithmus abzuschätzen.
 \begin{example}
 Behauptung:
 $3n^{3} + 2n^{2} + 7 \in O(n^{3})$
@@ -128,7 +130,7 @@ Die $O$-Notation eines Algorithmus lässt sich auch durch vollständige Induktio
 Behauptung: $n \in O(2^{n})$
 \begin{proof}
 Wähle $n_{0} := 0, c:= 1$. Zu zeigen: $n \leq 2^{n} \forall n \in \mathbb{N}$\\\\
-Beweis durch Induktion nach $n$: \\
+\uline{Beweis durch Induktion nach $n$:} \\
 Induktionsanfang (IA): $n = 0 \quad n = 0 \leq 1 = 2^{0} = 2^{n}$ \\
 Induktionsvoraussetzung (IV): $n \leq 2^{n}$ z.Z. $n+1 \leq 2^{n+1}$ \\
 Induktionsschritt (IS): $n \mapsto n + 1$ \\
@@ -179,7 +181,7 @@ Aus $O$-Notation und $\Omega$-Notation ergibt sich nun die Menge der Funktionen,
 \begin{itemize}
 \item Die $O$-Notation umfasst alle Funktionen, die nicht schneller wachsen als $f$. Damit beschreiben wir eine obere Schranke für die Komplexitätsfunktion.
 \item Die $\Omega$-Notation umfasst alle Funktionen, die mindestens so schnell wachsen wie $f$. Dies ist eine untere Schranke.
-\item Die $\Theta$-Notation umfasst alle Funktionen, die genau so schnell wachsen wie f. Damit haben wir ein asymptotisches Maß.  
+\item Die $\Theta$-Notation umfasst alle Funktionen, die genau so schnell wachsen wie f. Damit erhalten wir ein asymptotisches Maß.  
 \end{itemize}
 \begin{lemma}
 \begin{itemize}
@@ -190,9 +192,9 @@ Aus $O$-Notation und $\Omega$-Notation ergibt sich nun die Menge der Funktionen,
 \end{lemma}
 \section{Rekursionsgleichungen}
 Nun haben wir mit den Landau-Symbolen einen mathematischen Weg gefunden, die Komplexität von Algorithmen zu beschreiben. Im Folgenden wenden wir dieses Modell auf konkrete Algorithmen an. \\\\
-Bekannte Algorithmen sind beispielsweise Such- oder Sortierverfahren. Diese sind häufig rekursiv, d.h. eine Iteration oder verarbeitet direkt das Ergebnis einer vorherigen. Dadurch ergeben sich nun sogenannte \textbf{Rekurrenzgleichungen} oder auch \textbf{Rekursionsgleichungen}.
+Bekannte Algorithmen sind beispielsweise Such- oder Sortierverfahren. Diese sind häufig rekursiv, d.h. eine Iteration verarbeitet direkt das Ergebnis einer vorherigen. Dadurch ergeben sich nun sogenannte \textbf{Rekurrenzgleichungen} oder auch \textbf{Rekursionsgleichungen}.
 \begin{example}
-$T(n) = 2 \cdot T(n-) + 1$ ist eine Rekurrenzgleichung, da der Funktionswert $n$ direkt vom Funktionswert $n-1$ abhängt. Aus den Programmierkonzepten ist uns Rekursion als ein {\glqq}Wiederaufruf von sich selbst{\grqq} bekannt, dieses Muster findet sich hier in unseren betrachteten Algorithmen.
+$T(n) = 2 \cdot T(n-1) + 1$ ist eine Rekurrenzgleichung, da der Funktionswert $n$ direkt vom Funktionswert $n-1$ abhängt. Aus den Programmierkonzepten ist uns Rekursion als ein {\glqq}Wiederaufruf von sich selbst{\grqq} bekannt, dieses Muster findet sich hier in unseren betrachteten Algorithmen.
 \end{example}
 Um die Komplexität eines rekursiven Algorithmus bestimmen zu können, bedienen wir uns je nach Rekursionsgleichung unterschiedlichen Verfahren. Eines davon ist das sogenannte Mastertheorem. 
 \subsection{Mastertheorem}
@@ -201,7 +203,7 @@ Um die Komplexität eines rekursiven Algorithmus bestimmen zu können, bedienen 
 \item Basisfall: $f(n)$ ist konstant für hinreichend kleine Werte von $n$
 \item Für größere $n$ lässt sich eine Rekursionsgleichung der folgenden Form bestimmen: 
 \[f(n) = a \cdot f(\frac{n}{b}) + O(n^{d})\]
-$a$ ist hier die Anzahl der rekursiven Aufrufe, $b$ der Verkleinerungsfaktor des Problems und $d$ der Exponent für die Laufzeit der Vorbereitung der Rekursion und/oder der Zusammensetzung der Teilprobleme beschreibt. \\\\
+$a$ ist hier die Anzahl der rekursiven Aufrufe, $b$ der Verkleinerungsfaktor des Problems und $d$ der Exponent für die Laufzeit der Vorbereitung der Rekursion und/oder die Zusammensetzung der Teilprobleme. \\\\
 Nun gilt Folgendes: \\
 \begin{align*}
 f(n) \in 
@@ -237,7 +239,18 @@ f(4) = 2 \cdot 7 + 1 = 15
 \end{align}
 Aus den Ergebnissen wird relativ schnell eine Verwandtschaft zu den ersten Potenzen der Zahl 2 deutlich und so lässt sich nun folgende Gleichung aufstellen: 
 \[f(n) = 2^{n} - 1\]
-Diese Gleichung kann nun für die gegebenen Werte von $n$ überprüft werden und muss anschließend induktiv bewiesen werden. \\\\
+Diese Gleichung kann nun für die gegebenen Werte von $n$ überprüft werden und muss anschließend (induktiv) bewiesen werden. \\
+\begin{proof}
+Zu zeigen: $f(n) = 2 \cdot f(n-1) + 1 \in O(2^{n})$ \\
+\begin{align*}
+\text{Induktionshypothese: }& \quad f(n) = 2^{n} - 1 \quad \forall n \geq 1 \\
+\text{Induktionsanfang: }& \quad f(1) = 2^{1} - 1 = 1 \\
+\text{Induktionsvoraussetzung: }& \quad n \to n + 1 \quad f(n+1) = 2^{n+1} -1\\
+\text{Induktionsschritt: }& \quad f(n+1) = 2 \cdot f(n) + 1 = 2 \cdot (2^{n} - 1) + 1 = 2^{n+1} - 1
+\end{align*}
+nach \parencite{UniHH}
+\end{proof}
+Wir führen Induktionsbeweise für Rekurrenzgleichungen, indem wir zunächst im Induktionsanfang feststellen, dass unsere ermittelte Funktion den Rekursionsstartwert erfüllt. Ist dies nicht der Fall, brechen wir hier ab. Nun induzieren wir, in dem wir $n$ auf $n+1$ abbilden, bilden die Rekursionsgleichung für $n+1$ und setzen nun für $f(n)$ unsere geschlossene Funktion ein. Wir stellen fest, dass unsere Induktionsvoraussetzung erfüllt ist. Damit ist unsere Auflösung der Rekursionsgleichung gezeigt.\\\\
 \textbf{top-down} \\
 \begin{align}
 f(n) =& \quad 2 \cdot f(n-1) + 1 \\
@@ -286,8 +299,8 @@ Lösung auf Seite \pageref{a4:lsg} \\
 \paragraph{Versionshinweis} Weitere Aufgaben zu Rekursionsgleichungen, praktischen Anwendungen auf Pseudo-Code und für $\Theta , \Omega$ folgen in späteren Versionen
 \pagebreak
 \part{Suchalgorithmen}
-Sie studieren Informatik, sind es satt, noch mehr Stunden vor Bildschirmen zu verbringen und suchen sich deshalb ein echtes, physisches Buch aus der Bibliothek Ihrer Hochschule heraus. Sie fragten nach {\glqq}\textsc{Wirth}: Algorithmen und Datenstrukturen{\grqq} von 1976, weil man es Ihnen in Ihrer Vorlesung empfahl, die Bibliothekarin deutet auf ein Regal und lässt sie damit allein. \\\\
-Wie finden Sie das gesuchte Buch aus der Regalreihe mit etwa 300 Büchern?
+Sie studieren Informatik, sind es satt, noch mehr Stunden vor Bildschirmen zu verbringen und suchen sich deshalb ein echtes, physisches Buch aus der Bibliothek Ihrer Hochschule heraus. Sie fragten nach \glqq\textsc{Wirth}: Algorithmen und Datenstrukturen{\grqq} von 1983, weil man es Ihnen in Ihrer Vorlesung empfahl. Die Bibliothekarin deutet auf ein Regal und lässt sie damit allein. \\\\
+Wie finden Sie das gesuchte Buch in der Regalreihe mit etwa 300 Büchern?
 \section{Lineare Suche}
 Sie beginnen ganz links. Nun lesen Sie den Titel des ersten Buches, er passt nicht. Sie lesen den Titel des zweiten Buches, er passt ebenfalls nicht. Sie fahren fort, iterieren über das gesamte Bücherregal und brechen ab, falls Sie es gefunden haben oder am Ende angelangt sind. Dieses Verfahren ist die \textbf{Lineare Suche}.
 \paragraph{Idee}
@@ -754,7 +767,7 @@ Jeder Rekursionsteil beschreibt die Komplexität der einzelnen Hälften und $n$ 
 \section{Quicksort}
 Willkommen in der Königksklasse: Quicksort trägt schon einen bezeichnenden, etwas anmaßenden Titel. Wir betrachten nun, ob der Algorithmus dem gerecht wird.
 \paragraph{Idee}
-Wir sortieren eine Menge an Elementen, in dem wir das erste Element $p$ (das wir als \textbf{Pivot} bezeichnen) herausgreifen und nun unser Feld/Array so verschieben, dass alle kleineren Elemente ${...} < p$ links von $p$ stehen und alle größeren rechts davon - wohlgemerkt noch nicht sortiert. Nun betrachten wir die neu gebildeten Abschnitte $(a_{0}, ..., a_{p-1})$ und $a_{p+1}, ..., a_{n})$ und verfahren auf diesen Teilstapeln oder Teilmengen rekursiv. Folglich betrachten wir erneut die jeweils ersten Elemente und verfahren ebenso. Da wir keinen die Operationen in-place ausführen, ist kein merge-Schritt notwendig.
+Wir sortieren eine Menge an Elementen, in dem wir das erste Element $p$ (das wir als \textbf{Pivot} bezeichnen) herausgreifen und nun unser Feld/Array so verschieben, dass alle kleineren Elemente ${...} < p$ links von $p$ stehen und alle größeren rechts davon - wohlgemerkt noch nicht sortiert. Nun betrachten wir die neu gebildeten Abschnitte $(a_{0}, ..., a_{p-1})$ und $a_{p+1}, ..., a_{n})$ und verfahren auf diesen Teilstapeln oder Teilmengen rekursiv. Folglich betrachten wir erneut die jeweils ersten Elemente und verfahren ebenso. Da wir die Operationen in-place ausführen, ist kein merge-Schritt notwendig (im Gegensatz zu MergeSort).
 \begin{example} Wir betrachten ein Feld \texttt{[8, 17, 28, 15, 11, 1, 3, 20, 25, 6, 12, 5]}. \\
 Das erste Element ist folglich 8, also erhalten wir: \\
 \texttt{[1, 3, 6, 5, 8, 17, 28, 15, 11, 20, 25, 12]}.\\

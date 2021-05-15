@@ -9,6 +9,7 @@ Dem Aufbau der Vorlesung folgend, besteht dieses Skript aus folgenden Themen:
 - Komplexitätsklassen: Landau-Notation (O, Omega, Theta)
 - Suchalgorithmen: Lineare Suche, binäre Suche, einfache Textsuche, Knuth-Morris-Pratt-Algorithmus (+ Hinweis auf Boyer-Moore)
 - Sortieralgorithmen: Insertionsort, Bubblesort, Mergesort, Quicksort
+- Bäume: Wurzelbaum, binäre Bäume, Operationen auf Bäumen
 
 Weitere Themen folgen im Laufe der Zeit.
 

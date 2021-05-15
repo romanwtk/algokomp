@@ -10,6 +10,7 @@
 \usepackage{upgreek}
 \usepackage{amsthm}
 \usepackage{ulem}
+\usepackage{tikz}
 \usepackage{graphicx}
 \usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
 \usepackage[backend=biber, style=alphabetic]{biblatex}
@@ -34,7 +35,7 @@
 \pagebreak
 \section*{Vorwort}
 Die theoretische Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer (vermutlich) gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür ergänzendes, motivierendes und begreifbares Material zusammenzustellen, dass mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
-Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettieren, um Beispiele ergänzen und mit Aufgaben versehen, wie ich sie in der Vorlesung oder weiteren Büchern antraf. Ich persönlich lerne durch Aufgaben einfach am besten und für diejenigen, denen es auch so geht, gibt es davon hier ausreichend. Lösungen finden sich im Anhang. \\\\
+Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettieren, um Beispiele ergänzen und mit Aufgaben versehen, wie ich sie in der Vorlesung oder weiteren Büchern antraf. Ich persönlich lerne durch Aufgaben einfach am besten und für diejenigen, denen es auch so geht, gibt es davon hier ausreichend. Lösungen finden sich (in einigen Wochen) im Anhang. \\\\
 \textit{Viel Erfolg!}  \\
 \begin{flushright}
 Roman Wetenkamp \\
@@ -821,6 +822,30 @@ Wir geben die Komplexität von Quicksort im Durchschnittsfall mit $O(n \cdot log
 \end{itemize}
 \section{Weitere Sortieralgorithmen}
 Auf weitere Sortieralgorithmen wie z.B. Selection Sort \parencite{Taschenbuch}, Shellsort oder Shakesort \parencite{Wirth} und \parencite{Grundkurs} kann hier nicht näher eingegangen werden. In genannten Büchern finden Sie nähere Informationen zu diesen Algorithmen.
+\section{Allgemeine Komplexitätsbetrachtung von Sortieralgorithmen}
+\begin{satz}
+Ein Sortieralgorithmus, der auf Vergleichen von Datenelementen beruht, hat mindestens eine Komplexität von $O(n \cdot log(n))$.
+\end{satz}
+Um diesen Satz zu verstehen, verdeutlichen wir uns zunächst, was eine Sortierung im Allgemeinen bedeutet: \\
+Aus der Menge aller möglichen Permutationen (also Anordnungen) von den Elementen unserer Menge suchen wir genau die eine heraus, in der alle Elemente \textit{sortiert} sind, nach unserem Kriterium. Insgesamt gibt es bei $n$ Elementen $n!$ Vergleiche. \\
+\paragraph{Beweisidee}
+Wir betrachten die Menge aller Permutationen, ordnen ihnen einen Wert zu und vergleichen nun jede Permutation mit der gewünschten, also derjenigen, in dem die Elemente vollständig sortiert sind. Nun können wir eine Hälfte an Permutationen ausmachen, deren Wert {\glqq}kleiner{\grqq} ist und eine weitere Hälfte, deren Wert {\glqq}größer oder gleich{\grqq} der Permutation ist. Hier sind nun $\frac{n!}{2}$ Vergleiche erforderlich. \\
+Wir halbieren die Hälften fortlaufend und erhalten im letzten Schritt die eine verbleibende Permutation. \\
+Sie ist nach $log(n!)$ Vergleichen erreicht.
+\[O(log(n!)) \in O(n \cdot log(n))\]
+\begin{proof}
+\begin{align}
+n^n \geq n! \\
+1 \cdot 2 \cdot 3 \cdot ... \cdot (n-1) \cdot n = n \cdot (n-1) \cdot ... \cdot 3 \cdot 2 \cdot 1 \\
+(n-k) \cdot (k+1) \geq n \quad \forall 0 \leq k \leq n \\
+(n-1) \cdot ((n-1) \cdot 2) \cdot ... \cdot ((n-k) \cdot (k+1)) \cdot (1\cdot n) \geq n \cdot n \cdot ... \cdot n \\
+n! \cdot n! \geq n^n \\
+(1) \text{ und } (4): \quad \quad n^{2n} \geq n! \cdot n! \geq n^{n} \\
+2n \cdot log(n) \geq 2 \cdot log(n!) \geq n \cdot log(n) \\
+O(log(n!)) = O(n \cdot log(n))
+\end{align}
+\end{proof}
+Tatsächlich ist damit gezeigt, dass es keinen Sortieralgorithmus gibt, dessen Komplexität geringer ist als $O(n \cdot log(n))$.
 \pagebreak
 \section*{Aufgaben}
 \paragraph{Aufgabe 1} Sortieren Sie das Feld \texttt{[56, 10, 15, 98, 99, 12, 30, 80]} aufsteigend. Notieren Sie Zwischenschritte
@@ -855,6 +880,184 @@ Entwickeln Sie für Mergesort und Quicksort eine anschauliche Darstellungsform.
 Lösung auf Seite \pageref{a3.4:lsg}
 \end{flushright}
 \pagebreak
+\part{Bäume}
+Vielleicht haben Sie die letzte Aufgabe vom letzten Teil gelöst -- Mit relativ hoher Wahrscheinlichkeit werden Sie eine Struktur beschrieben oder skizziert haben, die wir im Folgenden näher betrachten: Bäume! \\\\
+Damit Sie vor lauter Bäumen den Wald (und die Wahrheit) nicht aus den Augen verlieren, widmen wir uns in aller Ausführlichkeit diesem in der Informatik sehr häufig anzutreffenden Gebilde, denken Sie beispielsweise an Ableitungs-, Entscheidungs-, Syntax- oder Codebäume.
+\section{Der Wurzelbaum}
+\begin{definition}
+Ein Wurzelbaum $B = (V, E, r)$ besteht aus einer endlichen Menge von Konten $V$, einer endlichen Menge von gerichteten Kanten $E \subset V \times V$ und aus der Wurzel $r \in V$. \\
+\begin{itemize}
+\item Ein Knoten $r$ ist ein Wurzelbaum ($B = (\{r\}, \emptyset, r)$). 
+\item Sind $B_{1} = (V_{1}, E_{1}), ..., B_{k} = (V_{k}, E_{k})$ Bäume mit den Wurzeln $r_{1}, ..., r_{k}$, so erweitern wir die Knotenmenge $V$ um eine neue Wurzel $r$ und die Kantenmenge $E$ um die Kanten $(r, r_{i}), i = 1, ... k$.\\\\
+Der Baum
+\[(V_{1} \cup ... \cup V_{n} \cup \{r\}, \{(r, r_{i}) \mid i = 1, ..., k\} \cup E_{1} \cup ... \cup E_{k}, r)\]
+ist ein Wurzelbaum.
+\end{itemize}
+\end{definition}
+
+Folglich betrachten wir hier nun also einen Baum mit einem Knoten, der den Ursprung darstellt, aus dem sich die anderen Knoten ableiten. In etwa so: \\
+\begin{example}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt]
+ \node {8}
+    child {node {2}}
+    child {node {32}
+      child {node {16}}
+      child {node {64}}
+    };
+\end{tikzpicture}
+\caption{Wurzelbaum}
+\end{figure}
+\end{example}
+\begin{definition}
+Ein Baum, der keine Knoten und Kanten besitzt, heißt \textbf{leerer Baum}.
+\end{definition}
+Zu diesen Bäumen, von denen es die unterschiedlichsten Formen gibt, betrachten wir nun eine Reihe von Eigenschaften und Begrifflichkeiten.
+\begin{definition}
+\begin{itemize}
+\item Ist $e = (v, w) \in E$, so heißt $v$ \textbf{Vater} von $w$ und $w$ \textbf{Sohn} oder \textbf{Kind} von $v$. Ein Knoten, der keine Söhne hat, heißt \textbf{Blatt}.
+\item Ein Pfad $P$ in $B$ ist eine Folge von Knoten $v_{0}, ..., v_{n}$ mit $(v_{i}, v_{i+1}) \in E, i = 0, ..., n-1. n$ heißt \textbf{Länge} von $P$.
+\item Seien $v, w \in V$. Der Knoten $w$ heißt \textbf{von Knoten $v$ aus erreichbar}, falls es einen Pfad $P$ von $v$ nach $w$ gibt.
+\item Jeden Knoten $v$ von $B$ können wir als Wurzel des Teilbaums der von $v$ aus erreichbaren Knoten betrachten. \\\\ Hat $v$ die Söhne $v_{i}, ..., v_{k}$, so heißen die Bäume $B_{1}, ..., B_{k}$ mit den Wurzeln $v_{i}, ..., v_{k}$ die \textbf{Teilbäume} von $V$.
+\item Die \textbf{Höhe} eines Knotens $v$ ist das Maximum der Längen aller Pfade, die in $v$ beginnen.
+\item Die \textbf{Tiefe} eines Knotens ist die Länge des Pfades von der Wurzel zu $v$. \\\\
+Die Knoten der Tiefe $i$ bilden die $i$-te Ebene des Baumes.
+\item Die Höhe (und auch Tiefe) eines Baumes (nicht Knotens!) ist gegeben durch die Höhe der Wurzel.
+\item Ein leerer Baum besitzt die Höhe/Tiefe $-1$.
+\item Die \textbf{Ordnung} eines Baumes ist die maximale Anzahl an Söhnen eines Knotens.
+\end{itemize}
+\end{definition}
+Zur Veranschaulichung wenden wir diese Begriffe auf den folgenden Beispielbaum an: \\
+\begin{example}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {50}
+    child {node {25}
+	  child {node {12.5}
+		child {node {6.25}}	    
+	  }	  
+	  child {node {37.5}}    
+    }
+    child {node {75}
+      child {node {62.5}}
+      child {node {87.5}}
+    };
+\end{tikzpicture}
+\caption{Beispielbaum}
+\end{figure}
+\begin{itemize}
+\item 50 ist die Wurzel des Baumes.
+\item 6.25 ist Sohn/Kind von 12.5 und Blatt, da es keine Söhne hat.
+\item 12.5 ist erreichbar von 50, da es einen Pfad gibt. Generell ist jedes Element eines Wurzelbaums von der Wurzel aus erreichbar.
+\item 87.5 ist von 6.25 aus nicht erreichbar, da es keinen Pfad gibt.
+\item Die Höhe von 75 beträgt 1. Die Tiefe von 6.25 beträgt 3.
+\item Die Höhe/Tiefe des Baumes beträgt 3.
+\item Die Ordnung des Baumes ist 2, da kein Knoten mehr als zwei Kinder hat.
+\end{itemize}
+\end{example}
+\section{Binäre Bäume}
+\begin{definition}
+Ein Baum mit der Ordnung 2 heißt \textbf{binärer Baum}. Liegen die Elemente darin in geordneter Form vor, d.h. der Wert des linken Sohnes ist stets kleiner und der Wert des rechten Sohnes ist stets größer als sein Vater, spricht man von einem \textbf{geordneten binären Baum} \parencite{Wirth} oder \textbf{binären Suchbaum}.
+\end{definition}
+Diese besonderen Bäume wollen wir nun näher betrachten, da wir in binären Bäumen algorithmisch vorgehen können und so beispielsweise Suchprobleme lösen.
+\begin{note}
+Sei $n$ die Anzahl der Knoten in einem binären Baum der Höhe $h$. Dann ist die Anzahl der Knoten $n \leq 2^{n+1}-1$ oder äquivalent dazu. Die Höhe $h$ ist mindestens $log_{2}(n+1)-1$, also $\lceil log_{2}(n+1) \rceil -1 \leq h$. Diese Schranke wird für einen binären Baum, in dem alle Ebenen vollständig besetzt sind, angenommen.
+\end{note}
+\paragraph{Implementierung}
+Wie schon eingangs erwähnt, hängen Bäume und Rekursion naturgemäß eng beieinander. Dies zeigt sich, wenn wir eine Implementierung eines binären Baums betrachten:
+\begin{lstlisting}
+struct node {
+	int key;
+	type value;
+	node left, right;
+}
+\end{lstlisting}
+Ein Knoten besteht also wiederum selbst aus Knoten, im Falle eines Blattes sind \texttt{left} und \texttt{right} dann leer. Wichtig ist die Unterscheidung zwischen \texttt{key} und \texttt{value} -- hier kann es leicht zu Unklarheiten kommen.
+\subsection{Traversierung von Binärbäumen}
+Auf Baumstrukturen lassen sich verschiedene Operationen durchführen. Grundlage dafür ist häufig ein \textit{traversieren} ({\glqq}durchlaufen{\grqq}) des Baumes. Dafür gibt es drei, jeweils rekursiv implementierte Vorgehensweisen, die unter anderem bei \parencite{Wirth} beschrieben werden: 
+\begin{itemize}
+\item \textbf{Preorder} -- W, A, B (besuche Wurzel vor den Teilbäumen)
+\item \textbf{Inorder} -- A, W, B 
+\item \textbf{Postorder} -- A, B, W (besuche Wurzel nach den Teilbäumen)
+\end{itemize}
+Grundlage dafür ist der allgemeine binäre Baum:
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+ \node {W}
+    child {node {A}}
+    child {node {B}};
+\end{tikzpicture}
+\caption{Allgemeiner binärer Baum}
+\end{figure}
+\begin{example}
+Betrachten wir den Baum aus vorangegangenem Beispiel und traversieren wir diesen in allen drei Varianten: \\\\
+\textbf{Preorder} \\
+\texttt{50, 25, 12.5, 6.25, 37.5, 75, 63.5, 87.5} \\\\
+\textbf{Inorder} \\
+\texttt{6.25, 12.5, 25, 37.5, 50, 63.5, 75, 87.5} \\\\
+\textbf{Postorder} \\
+\texttt{6.25, 37.5, 12.5, 25, 63.5, 87.5, 75, 50}
+\end{example}
+Neben den drei genannten Vorgehenweisen betrachten wir noch die klassische, den Baum in seinen Ebenen ausgebende: \textbf{levelorder}. Auf unser Beispiel bezogen wäre dies:
+\texttt{50, 25, 75, 12.5, 37.5, 63.5, 87.5, 6.25}
+\subsection{Operationen}
+Auf binären Bäumen lassen sich nun drei Operationen konstruieren: \textbf{Suchen, Einfügen} und \textbf{Löschen}.
+\paragraph{Suchen}
+Ein Baum wird durchsucht, in dem jeweils das Suchelement mit dem Wert des Knotens verglichen und anschließend mit dem linken Sohn, falls das gesuchte Element kleiner ist, oder dem rechten Sohn, falls das gesuchte Element größer ist, als neuen Knoten rekursiv fortgefahren.
+\begin{lstlisting}
+node Search(int k, node Tree) {
+	if (Tree == null) {
+		return null;	
+	}
+	else if (k == Tree.key) {
+		return Tree;	
+	}
+	else if (k < Tree.key) {
+		Search(k, Tree.left);	
+	}
+	else if (k > Tree.key) {
+		Search(k, Tree.right);	
+	}
+}
+\end{lstlisting}
+\paragraph{Einfügen}
+Ähnlich läuft das Einfügen eines Elements $k$ mit Wert $v$: 
+\begin{lstlisting}
+node Insert(int k, node Tree, type v) {
+	if (T == null) {
+		return "neuer Knoten (k, v)";	
+	}
+	else if (k < T.key) {
+		T.left =	 Insert(k, T.left, v);
+	}
+	else if (k > T.key) {
+		T.right = Insert(k, T.right, v);	
+	}
+	else if (k == T.key) {
+		T.value = v;
+	}
+	return T;
+}
+\end{lstlisting}
+Ein Einfügen kann folglich auch ein {\glqq}Wert ändern{\grqq} sein.
+\paragraph{Löschen}
+Das Löschen eines Knotens gestaltet sich etwas aufwendiger. \\
+Suche Zeiger T auf den zu löschenden Schlüssel/Knoten und unterscheide:
+\begin{itemize}
+\item Das zu löschende Element hat keine Kinder: Setze Zeiger T auf null
+\item Das zu löschende Element hat ein Kind: Ersetze T durch den Zeiger auf den Kindknoten
+\item Das zu löschende Element hat zwei Kinder: Ersetze den gelöschten Knoten durch den kleinsten Schlüssel des rechten Teilbaums.
+\end{itemize}
+Eine Implementierung davon finden Sie bei \parencite{Wirth}.
+\pagebreak
 \part{Anhang}
 \section*{Lösungen}
 \subsection{Grundlagen der Algorithmik}
@@ -862,14 +1065,18 @@ Lösung auf Seite \pageref{a3.4:lsg}
 \label{a2:lsg}
 \label{a3:lsg}
 \label{a4:lsg}
+\subsection{Suchalgorithmen}
 \label{a2.1:lsg}
 \label{a2.2:lsg}
 \label{a2.3:lsg}
 \label{a2.4:lsg}
+\subsection{Sortieralgorithmen}
 \label{a3.1:lsg}
 \label{a3.2:lsg}
 \label{a3.3:lsg}
 \label{a3.4:lsg}
+\subsection{Bäume}
 \section*{Tabellen und Formeln}
+\listoffigures
 \printbibliography
 \end{document}

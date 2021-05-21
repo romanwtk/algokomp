@@ -22,6 +22,7 @@
 \newtheorem{note}{Bemerkung}
 \newtheorem{definition}{Definition}
 \newtheorem{satz}{Satz}
+\newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{example}{Beispiel}
 \begin{document}
@@ -1057,6 +1058,152 @@ Suche Zeiger T auf den zu löschenden Schlüssel/Knoten und unterscheide:
 \item Das zu löschende Element hat zwei Kinder: Ersetze den gelöschten Knoten durch den kleinsten Schlüssel des rechten Teilbaums.
 \end{itemize}
 Eine Implementierung davon finden Sie bei \parencite{Wirth}.
+\paragraph{Komplexität}
+Für die Suche und das Löschen liegt die Komplexität im Durchschnittsfall in $O(n)$, wobei $n$ die Höhe des Baumes ist. Unter günstigen Umständen ist auch eine Komplexität von $O(log(n))$ möglich. Die Komplexität des Einfügens liegt in $O(1)$.
+\section{AVL-Bäume}
+Ein weiterer Typ von Bäumen sind die sogenannten \textbf{AVL-Bäume}, die durch einen geringen zusätzlichen Aufwand beim Einfügen/Löschen erzeugt werden und eine günstigere Komplexität besitzen.
+\begin{definition}
+Ein binärer Baum heißt \textbf{(AVL-)ausgeglichen}, falls für jeden Konten $v$ gilt: \\\\
+Die Höhen des linken und rechten Teilbaums unterscheiden sich höchstens um 1. \\Diese Differenz der Höhen heißt \textbf{Balance} von $v$.
+\[\text{Balance} = h(rT) - h(lT)\]
+Ausgeglichene, binäre Suchbäume heißen nun \textbf{AVL-Bäume}.
+\end{definition}
+\begin{example}
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {7}
+    child {node {2}
+    child {node {1}}
+    child {node {5}}}
+    child {node {8}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {9}}};
+\end{tikzpicture}
+\caption{Beispiel für einen AVL-Baum}
+\end{figure}
+Dieser Baum ist ein AVL-Baum, da er die drei Kriterien erfüllt:
+\begin{itemize}
+\item binär: Alle Knoten haben höchstens zwei Kinder, mindestens ein Knoten hat mindestens zwei Kinder
+\item Suchbaum: Alle Elemente im linken Teilbaum sind kleiner als das Wurzelelement des Teilbaums, alle Elemente im rechten Teilbaum sind größer als der Teilbaum
+\item AVL-Kriterium: Die Balancen der Teilbäume unterscheiden sich höchstens um 1.
+\end{itemize}
+Kein AVL-Baum hingegen ist der folgende:
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {E}
+    child {node {A}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {C}
+    child {node {B}}
+    child {node {D}}}}
+    child {node {F}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {H}
+    child {node {G}}
+    child[fill=none] {edge from parent[draw=none]}}};
+\end{tikzpicture}
+\caption{Kein Beispiel für einen AVL-Baum}
+\end{figure}
+Hier ist die AVL-Bedingung offensichtlich verletzt: Die Balance an den Knoten A und F ist jeweils größer als 1. Damit handelt es sich nicht um einen AVL-Baum.
+\end{example}
+Um zu ermitteln, ob es sich bei einem Baum um einen AVL-Baum handelt, prüfen wir also zunächst, ob es sich um einen binären Suchbaum handelt. Nun bestimmen wir zu jedem Knoten die Balance: Jedes Blatt hat die Balance 0, falls der rechte Teilbaum eine größere Höhe hat, ist die Balance positiv. Falls der linke Teilbaum eine größere Höhe hat, ist die Balance negativ. Eine Balance von 1 / -1 wird toleriert, alle größeren Balancen führen dazu, dass der Baum kein AVL-Baum sein kann. Ein Knoten mit Balance größer 1 genügt.
+\begin{note}
+Für die Höhe eines ausgeglichenen Baumes mit $n$ Knoten gilt:
+\[h < 1.45 \cdot log_2(n+2) - 1.33\]
+Dieses Kriterium eignet sich aus naheliegenden Gründen lediglich für eine Abschätzung. 
+\end{note}
+\paragraph{Suche}
+Da ein AVL-Baum ein binärer Suchbaum ist, verwenden wir zum Suchen die Suchfunktion eines binären Suchbaums. Das AVL-Kriterium hat keine Auswirkungen auf die Komplexität.
+\paragraph{Einfügen}
+Wir suchen nach dem einzufügenden Element $e$. Falls $e$ nicht im Baum, endet die Suche in einem Blatt. An diesem Blatt verankern wir einen neuen Knoten und füllen ihn mit $e$. \textbf{Hierbei kann die AVL-Bedingung verletzt werden!} \\
+Anschließend reorganisieren wir den Baum, um die AVL-Bedingung wiederherzustellen:
+\begin{itemize}
+\item Prüfe für jeden Knoten $n$ des Suchpfades, ob er ausgeglichen ist.
+\item Falls nicht: Rotation
+\end{itemize}
+\paragraph{Rotation}
+Rotation können wir uns vorstellen als eine Art {\glqq}Kippen{\grqq} eines Knotens, um eine Balance wiederherzustellen bzw. zu nivellieren. Wir unterscheiden zwei Rotationsarten:
+\begin{itemize}
+\item \textbf{Linksrotation (LR)} Ein rechtes Kind kann nach links rotiert werden.
+\item \textbf{Rechtsrotation (RR)} Ein linkes Kind kann nach rechts rotiert werden.
+\end{itemize}
+Rotation ist möglich, da ein vormals linkes Kind -- das kleiner als die Wurzel ist -- auch die neue Wurzel mit der vorherigen Wurzel als neues rechtes Kind -- das dann weiterhin größer ist -- sein kann. Im Prinzip ändert sich folglich jeweils nur die Verwandtschaftsbeziehung zwischen Kind und Wurzel mit dem Effekt, dass auch die Kinder neu, meistens paritätischer, angeordnet werden.
+\begin{example}
+\begin{figure}[h!]
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {7}
+    child {node {2}}
+    child {node {42}
+    child {node {24}
+    child {node {15}}}
+    child {node {72}}};
+\hspace{4cm} $\text{RR(24)} \Rightarrow$ \hspace{4cm}
+\node {7}
+    child {node {2}}
+    child {node {24}
+    child {node {15}}
+    child {node {42}
+    child {node {72}}}};
+\end{tikzpicture}
+\caption{AVL-Baum mit Rechtsrotation des Knotens 24}
+\end{figure}
+Der hier vorliegende Baum wurde am Knoten 24 nach rechts rotiert. Dadurch ist die 24 die neue Wurzel geworden, während die 42 nun eine Ebene tiefer ein Kind geworden ist. Doch auch nach dieser Rotation zeigt sich, dass die AVL-Bedingung weiterhin nicht erfüllt ist. Also ist ein weiterer Rotationsschritt notwendig:
+\begin{figure}[h!]
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {7}
+    child {node {2}}
+    child {node {24}
+    child {node {15}}
+    child {node {42}
+    child {node {72}}}};
+\hspace{4cm} $\text{LR(24)} \Rightarrow$ \hspace{4cm}
+\node {24}
+    child {node {7}
+    child {node {2}}
+    child {node {15}}}
+    child {node {42}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {72}}};
+\end{tikzpicture}
+\caption{AVL-Baum mit Linksrotation des Knotens 24}
+\end{figure}
+Nun zeigt sich, dass die AVL-Bedingung wieder erfüllt ist.
+\end{example}
+Aus dem Beispiel können wir nun die Fälle für Rotationen unterscheiden:
+\begin{itemize}
+\item Eine einfache Rotation wird dann notwendig, wenn
+\begin{itemize}
+\item in einem linken Teilbaum ein linkes Kind eingefügt wird  $\to$ einfache Rechtsrotation
+\item in einem rechten Teilbaum ein rechtes Kind eingefügt wird $\to$ einfache Linksrotation
+\end{itemize}
+\item Eine zweifache Rotation wird hingegen angewandt, falls
+\begin{itemize}
+\item in einem linken Teilbaum ein rechtes Kind eingefügt wird $\to$ Links-Rechts-Rotation
+\item in einem rechten Teilbaum ein linkes Kind eingefügt wird $\to$ Rechts-Links-Rotation
+\end{itemize}
+\end{itemize}
+\paragraph{Löschen}
+Zunächst wird wie in einem binären Suchbaum vorgegangen. Anschließend muss -- wie beim Einfügen -- die AVL-Bedingung durch Rotationen wiederhergestellt werden. \\\\
+Für die Betrachtung der Komplexität ergibt sich nun:
+\begin{theorem}
+Die Operationen Suchen, Einfügen und Löschen eines Schlüssels können in $O(log (n))$ durchgeführt werden.
+\end{theorem}
+\pagebreak
+\section*{Aufgaben}
 \pagebreak
 \part{Anhang}
 \section*{Lösungen}

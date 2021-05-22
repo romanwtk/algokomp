@@ -1204,6 +1204,132 @@ Die Operationen Suchen, Einfügen und Löschen eines Schlüssels können in $O(l
 \end{theorem}
 \pagebreak
 \section*{Aufgaben}
+\paragraph{Aufgabe 1} Gegeben ist der folgende Baum.
+\begin{itemize}
+\item Geben Sie folgende Eigenschaften an: Wurzel, Höhe des Baumes, Höhe des Knotens $E$, Ordnung des Baumes, Balance des Knotens $K$
+\item Fügen Sie den Knoten $J$ hinzu.
+\item Löschen Sie den Knoten $B$.
+\end{itemize}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {F}
+    child {node {B}
+    child {node {A}}
+    child {node {D}
+    child {node {C}}
+    child {node {E}}}}
+    child {node {K}
+    child {node {H}}
+    child {node {T}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {W}}}};
+\end{tikzpicture}
+\end{figure}
+\begin{flushright}
+Lösung auf Seite \pageref{a4.1:lsg} \\
+\end{flushright}
+\paragraph{Aufgabe 2} 
+Untersuchen und begründen Sie, ob es sich bei diesem Baum um einen AVL-Baum handelt. Fügen Sie hierzu die Balancen jedes Knotens ein. 
+\begin{flushright}
+Lösung auf Seite \pageref{a4.2:lsg}
+\end{flushright}
+\paragraph{Aufgabe 3}
+Falls es sich nicht um einen AVL-Baum handelt, ergänzen Sie den Baum zu einem AVL-Baum und führen Sie dann folgende Aufgabe aus.
+\begin{itemize}
+\item Löschen Sie den Knoten $A$.
+\item Fügen Sie den Knoten $Z$ hinzu. 
+\end{itemize}
+Falls Rotationen erforderlich sind, stellen Sie diese detailliert dar. 
+\begin{flushright}
+Lösung auf Seite \pageref{a4.3:lsg}
+\end{flushright}
+\paragraph{Aufgabe 4}
+Beschreiben Sie in Worten und Pseudocode das Vorgehen beim Suchen eines Elementes in einem binären Baum. Beurteilen Sie, ob dieses Verfahren auch in einem Baum der Ordnung 3 angewendet werden kann.
+\begin{flushright}
+Lösung auf Seite \pageref{a4.4:lsg}
+\end{flushright}
+\pagebreak
+\part{Heaps}
+Eigentlich auch zu Bäumen gehörend, betrachten wir im Folgenden die Datenstruktur \textbf{Heap}. Als Heap bezeichnen wir eine Struktur (einen {\glqq}Haufen{\grqq}) von Objekten, die über Schlüssel mit einer Priorität versehen sind. Wirth definiert Heaps in \parencite[][S. 92]{Wirth} wie folgt:
+\begin{definition}
+Ein heap ist definiert als eine Folge von Schlüsseln h[l], h[l+1], ..., h[r] mit den Relationen:
+\begin{itemize}
+\item h[i] $\leq$ h[2i]
+\item h[i] $\leq$ h[2i+1] $\forall i = 1 ... r/2$
+\end{itemize}
+\end{definition}
+Betrachten wir einen Heap als Baum, so ist $h[2i]$ das linke Kind des Knotens $h[i]$ und $h[2i+1]$ entsprechend das rechte. Somit muss jede Wurzel eines Teilbaums kleiner als ihre Kinder sein. Diese Struktur bezeichnen wir als \textbf{Min-Heap}. Invers dazu bezeichnen wir Heaps, in denen die Wurzel eines Teilbaums jeweils größer ist als ihre Kinder als \textbf{Max-Heap}. Beide Varianten finden sich in der Literatur. Da in der Vorlesung lediglich der Max-Heap eingeführt wurde, beschränken wir uns der Übersichtlichkeit halber auf diesen Typ.
+\begin{example}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=60mm]
+\tikzstyle{level 2}=[sibling distance=30mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+ \node {T}
+    child {node {S}
+    child {node {P}
+    child {node {E}}
+    child {node {I}}}
+    child {node {N}
+    child {node {H}}
+    child {node {G}}}}
+    child {node {R}
+    child {node {O}}
+    child {node {A}}};
+\end{tikzpicture}
+\caption{Binärer Max-Heap}
+\end{figure}
+\end{example}
+Wir erkennen und formulieren als Eigenschaften:
+\begin{itemize}
+\item Es handelt sich um einen (fast) vollständigen Binärbaum, d.h. die Blätter befinden sich auf höchstens zwei verschiedenen Levels.
+\item Die Blätter auf dem untersten Level sind linksbündig angeordnet.
+\end{itemize}
+\paragraph{Implementierung eines Heaps als Array}
+Ein Heap lässt sich als Feld/Array implementieren, da für die Indizes die oberen Bedingungen leicht erkannt und umgesetzt werden können. 
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=60mm]
+\tikzstyle{level 2}=[sibling distance=30mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+ \node {A[1]}
+    child {node {A[2]}
+    child {node {A[4]}
+    child {node {A[8]}}
+    child {node {A[9]}}}
+    child {node {A[5]}
+    child {node {A[10]}}
+    child {node {A[11]}}}}
+    child {node {A[3]}
+    child {node {A[6]}}
+    child {node {A[7]}}};
+\end{tikzpicture}
+\caption{Binärer Max-Heap in Array-Darstellung}
+\end{figure}
+Als Array erhalten wir damit:
+\begin{table}[h]
+\begin{tabular}{cccccccccccc}
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
+\hline
+11 & T & S & R & P & N & O & A & E & I & H & G \\
+\end{tabular}
+\end{table}
+In $A[0]$ speichern wir die Größe des Heaps, in diesem Fall 11, da es sich um 11 Elemente handelt. \\
+Wir können erneut festhalten: 
+\begin{itemize}
+\item $A[i]$ hat linkes Kind $A[2i]$
+\item $A[i]$ hat rechtes Kind $A[2i+1]$
+\item $A[i]$ hat Vater $A[\frac{i}{2}]$ (bei Ganzzahldivision)
+\item $A[i]$ befindet sich auf dem Level $\lfloor log_{2}(i) \rfloor$
+\end{itemize}
 \pagebreak
 \part{Anhang}
 \section*{Lösungen}
@@ -1223,6 +1349,10 @@ Die Operationen Suchen, Einfügen und Löschen eines Schlüssels können in $O(l
 \label{a3.3:lsg}
 \label{a3.4:lsg}
 \subsection{Bäume}
+\label{a4.1:lsg}
+\label{a4.2:lsg}
+\label{a4.3:lsg}
+\label{a4.4:lsg}
 \section*{Tabellen und Formeln}
 \listoffigures
 \printbibliography

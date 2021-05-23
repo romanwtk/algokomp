@@ -1330,6 +1330,96 @@ Wir können erneut festhalten:
 \item $A[i]$ hat Vater $A[\frac{i}{2}]$ (bei Ganzzahldivision)
 \item $A[i]$ befindet sich auf dem Level $\lfloor log_{2}(i) \rfloor$
 \end{itemize}
+\section{Herstellen der Heap-Eigenschaft}
+Um sicherzustellen, dass es sich bei einem gegebenen Baum um einen Heap handelt, unterscheiden wir zwei Szenarien.
+\begin{itemize}
+\item \textbf{Szenario 1:} Der Schlüssel eines Kindes ist größer als der Schlüssel eines Elternknotens. Dann vertauschen wir -- logischerweise -- den Schlüssel des Kindes mit dem Schlüssel des Elternknotens. Das Kind {\glqq}schwimmt nach oben{\grqq}, deshalb heißt dieses Vorgehen auch \textit{swim-up}.
+\begin{example}
+\begin{figure}[h!]
+\hspace{-2cm}
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=50mm]
+\tikzstyle{level 2}=[sibling distance=30mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+ \node {S}
+    child {node {P}
+    child {node {N}
+    child {node {E}}
+    child {node {I}}}
+    child {node {T}
+    child {node {H}}
+    child {node {G}}}}
+    child {node {R}
+    child {node {O}}
+    child {node {A}}};
+\hspace{4.5cm} $\Rightarrow$ \hspace{4.5cm}
+\node {S}
+    child {node {T}
+    child {node {N}
+    child {node {E}}
+    child {node {I}}}
+    child {node {P}
+    child {node {H}}
+    child {node {G}}}}
+    child {node {R}
+    child {node {O}}
+    child {node {A}}};
+\end{tikzpicture}
+\caption{Herstellen der Heap-Eigenschaft durch swim{\_}up(T) im ersten Schritt}
+\end{figure}
+Dieser Baum ist noch kein Heap, da der Knoten T weiterhin größer ist als S. Folglich wiederholen wir das Vorgehen, für alle Knoten, bis die alle Beziehungen zwischen Kindern und Eltern passen.
+\end{example}
+Wir implementieren die Methode \texttt{swim{\_}up} wie folgt:\\
+\begin{lstlisting}
+void swim_up(A[], int k) {
+	while (k > 1 && A[k/2] < A[k]) {
+		exchange(A[k], A[k/2]);
+		k = k / 2;	
+	}
+}
+\end{lstlisting}
+\item \textbf{Szenario 2:} Der Schlüssel eines Elternknotens ist kleiner als der Schlüssel eines/beider Kinder: Dann vertauschen wir den Schlüssel des Elternknotens mit dem Schlüssel des größeren Kindes.
+\begin{lstlisting}
+void sink(A[], int k, int heap_size) {
+	while (2 * k <=  heap_size) {
+		int j = 2 * k;
+		if (j <= n && A[j] < A[j+1]) {
+			j++;		
+		}
+		if (A[k] !< A[j]) {
+			break;		
+		}
+		exchange (A[k], A[j]);
+		k = j;	
+	}
+}
+\end{lstlisting}
+\end{itemize}
+\section{Einfügen eines Elementes}
+Das Einfügen eines Elementes in einen Heap erfolgt zunächst an der nächsten freien Position im Array. Also falls wir einen bestehenden Heap der Länge 11 betrachten, fügen wir das Element an der Position 12 ein. Anschließend wird die Heap-Eigenschaft durch \texttt{swim{\_}up} wiederhergestellt. \\\\
+Die Komplexität des Einfügens liegt in $O(log (n))$. \\\\
+Implementierung:
+\begin{lstlisting}
+void insert(A[], key_type Element) {
+	heap_size(A)++;
+	A[heap_size(A)] = Element;
+	swim_up(A, heap_size);
+}
+\end{lstlisting}
+\section{Löschen des größten Elements}
+In einem Heap ist das Löschen zunächst nur für das größte Element (also im Max-Heap die Wurzel) definiert. Wir tauschen die Wurzel mit dem letzten Element im Heap, erhalten dadurch eine neue Wurzel. Das neue letzte Element kann nun einfach entfernt werden, indem wir die Größe des Arrays um 1 verringern. Nun ist abschließend noch die Heap-Eigenschaft durch Absinken lassen der neuen Wurzel herzustellen. \\\\
+Auch diese Operation verläuft in $O(log(n))$. \\\\
+Implementierung:
+\begin{lstlisting}
+key_type del_max(A[]) {
+	key_type max = A[1];
+	exchange(A[1], A[heap_size(A)]);
+	heap_size(A)--;
+	sink(A, 1, heap_size(A));
+	return max;
+}
+\end{lstlisting}
 \pagebreak
 \part{Anhang}
 \section*{Lösungen}

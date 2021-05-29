@@ -10,6 +10,7 @@ Dem Aufbau der Vorlesung folgend, besteht dieses Skript aus folgenden Themen:
 - Suchalgorithmen: Lineare Suche, binäre Suche, einfache Textsuche, Knuth-Morris-Pratt-Algorithmus (+ Hinweis auf Boyer-Moore)
 - Sortieralgorithmen: Insertionsort, Bubblesort, Mergesort, Quicksort
 - Bäume: Wurzelbaum, binäre Bäume, Operationen auf Bäumen
+- Heaps (inkl. Heapsort)
 
 Weitere Themen folgen im Laufe der Zeit.
 

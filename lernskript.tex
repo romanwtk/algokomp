@@ -7,11 +7,13 @@
 \usepackage{makeidx}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{chngcntr}
 \usepackage{upgreek}
 \usepackage{amsthm}
 \usepackage{ulem}
 \usepackage{tikz}
 \usepackage{graphicx}
+\usetikzlibrary{positioning}
 \usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
 \usepackage[backend=biber, style=alphabetic]{biblatex}
 \addbibresource{literature.bib}
@@ -35,7 +37,7 @@
 \tableofcontents
 \pagebreak
 \section*{Vorwort}
-Die theoretische Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer (vermutlich) gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür ergänzendes, motivierendes und begreifbares Material zusammenzustellen, dass mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
+Die theoretische Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer  gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür ergänzendes, motivierendes und begreifbares Material zusammenzustellen, dass mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
 Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettieren, um Beispiele ergänzen und mit Aufgaben versehen, wie ich sie in der Vorlesung oder weiteren Büchern antraf. Ich persönlich lerne durch Aufgaben einfach am besten und für diejenigen, denen es auch so geht, gibt es davon hier ausreichend. Lösungen finden sich (in einigen Wochen) im Anhang. \\\\
 \textit{Viel Erfolg!}  \\
 \begin{flushright}
@@ -43,6 +45,8 @@ Roman Wetenkamp \\
 Mannheim, den \today
 \end{flushright}  
 \vfill
+\paragraph{Warnung}
+Das Studium an einer Dualen Hochschule unterscheidet sich von dem Studium an Universitäten oder regulären Fachhochschulen insbesondere dadurch, dass aufgrund der Dualität zwischen Theorie und Praxis meist nur die Hälfte der Zeit zur Vermittlung des Stoffes zur Verfügung steht (wenn dann auch intensiver). Daher gehen Sie bitte nicht davon aus, dass Sie dieses Skript für Klausuren in regulären Vollzeitstudiengängen vorbereitet!
 \paragraph{Hinweis}
 Dieses Dokument ist kein Vorlesungsmaterial, hat keineswegs den Anspruch auf Vollständigkeit und enthält mit Sicherheit Fehler. Desweiteren ist es noch lange nicht vollendet (es ist infrage zustellen, ob es das je sein wird), und doch möchte ich Sie ermutigen, beizutragen! Jegliche Fehler, Probleme oder Anmerkungen können Sie mir gerne über das dazugehörige GitHub-Repository unter der URL \url{https://github.com/RWetenkamp/algokomp} zukommen lassen. Ebenso sind Sie völlig frei darin, dieses Dokument für Ihre legitimen Zwecke zu nutzen -- bitte beachten Sie dennoch Ihr Gewissen. Danke!
 \pagebreak
@@ -1439,6 +1443,7 @@ void heapsort(A[]) {
 }
 \end{lstlisting}
 \begin{example}
+\centering
 Betrachten wir das ungeordnete Array 
 $\left[ \begin{array}{rrrrrrrr}
 6 & 9 & 1 & 8 & 2 & 3 & 5 & 4 
@@ -1454,7 +1459,7 @@ $\left[ \begin{array}{rrrrrrrr}
 \end{array} \right]$ \\
 $\left[ \begin{array}{rrrrrrrr}
 9 & 8 & 5 & 6 & 2 & 3 & 1 & 4
-\end{array} \right]$ \\\\
+\end{array} \right]$ \\
 Nun beginnen die Vertauschungsoperationen: \\
 $\left[ \begin{array}{rrrrrrrr}
 4 & 8 & 5 & 6 & 2 & 3 & 1 & 9
@@ -1467,7 +1472,7 @@ $\left[ \begin{array}{rrrrrrr|r}
 \end{array} \right]$ \\
 $\left[ \begin{array}{rrrrrrr|r}
 1 & 6 & 5 & 4 & 2 & 3 & 8 & 9
-\end{array} \right]$ \\\\
+\end{array} \right]$ \\
 $\left[ \begin{array}{rrrrrr|rr}
 6 & 1 & 5 & 4 & 2 & 3 & 8 & 9
 \end{array} \right]$ \\
@@ -1476,31 +1481,31 @@ $\left[ \begin{array}{rrrrrr|rr}
 \end{array} \right]$ \\
 $\left[ \begin{array}{rrrrrr|rr}
 3 & 4 & 5 & 1 & 2 & 6 & 8 & 9
-\end{array} \right]$ \\\\
+\end{array} \right]$ \\
 $\left[ \begin{array}{rrrrr|rrr}
 5 & 4 & 3 & 1 & 2 & 6 & 8 & 9
 \end{array} \right]$ \\
 $\left[ \begin{array}{rrrrr|rrr}
 2 & 4 & 3 & 1 & 5 & 6 & 8 & 9
-\end{array} \right]$ \\\\
+\end{array} \right]$ \\
 $\left[ \begin{array}{rrrr|rrrr}
 4 & 2 & 3 & 1 & 5 & 6 & 8 & 9
 \end{array} \right]$ \\
 $\left[ \begin{array}{rrrr|rrrr}
 1 & 2 & 3 & 4 & 5 & 6 & 8 & 9
-\end{array} \right]$ \\\\
+\end{array} \right]$ \\
 $\left[ \begin{array}{rrr|rrrrr}
 3 & 2 & 1 & 4 & 5 & 6 & 8 & 9
 \end{array} \right]$ \\
 $\left[ \begin{array}{rrr|rrrrr}
 1 & 2 & 3 & 4 & 5 & 6 & 8 & 9
-\end{array} \right]$ \\\\
+\end{array} \right]$ \\
 $\left[ \begin{array}{rr|rrrrrr}
 2 & 1 & 3 & 4 & 5 & 6 & 8 & 9
-\end{array} \right]$ \\\\
+\end{array} \right]$ \\
 $\left[ \begin{array}{r|rrrrrrr}
 1 & 2 & 3 & 4 & 5 & 6 & 8 & 9
-\end{array} \right]$ \\\\
+\end{array} \right]$ \\
 Im letzten Schritt haben wir das gewünschte, aufsteigend sortierte Array erhalten.
 \end{example}
 \paragraph{Komplexität}
@@ -1560,8 +1565,170 @@ Erläutern Sie, inwiefern anstatt der Funktion \texttt{sink()} die Funktion \tex
 Lösung auf Seite \pageref{a5.4:lsg}
 \end{flushright}
 \pagebreak
-\part{Anhang}
-\section*{Lösungen}
+\part{Graphentheorie}
+Nach unserem Ausflug in besondere Bäume (den Heaps) begeben wir uns nun wieder auf eine abstraktere Ebene, diesmal sogar über Bäume hinaus: Im Folgenden betrachten wir Graphen allgemein und gehen auf Themen wie Pfade, Richtungen oder die Suche nach dem kürzesten Weg ein. Sie haben sicherlich eine Intuition, wenn Sie sich durch eine Stadt bewegen, welcher denn nun der kürzeste Weg ist -- während ein Computer damit beschäftigt wäre, Optionen durchzuprobieren. Insofern erscheint es sinnvoll, dafür praktikable Algorithmen zu finden und zu behandeln.
+Doch beginnen wir von vorne. 
+\section{Typisierung und Eigenschaften}
+\begin{definition}
+Ein gerichteter Graph ist ein Paar $G = (V, E)$, wobei $V$ eine nicht-leere Menge und $E \subseteq V \times V$ ist. $V$ heißt die \textbf{Menge der Knoten} und $E$ heißt die \textbf{Menge der (gerichteten) Kanten}. Ein Knoten $v$ heißt \textbf{benachbart} oder \textbf{adjazent} zu $v$, wenn $(v, w) \in E$. $v$ heißt Anfangspunkt und $w$ heißt Endpunkt der Kante $(v, w)$. Eine Kante $(v, v)$, die also von einem Knoten auf diesen selbst gerichtet ist, bezeichnen wir als \textbf{Schleife}.
+\end{definition}
+\begin{example} 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[main/.style = {draw, circle, minimum size=1cm}]
+\node[main] (1) {5};
+\node[main] (2) [right=of 1] {7};
+\node[main] (3) [right=of 2] {3};
+\node[main] (4) [below=of 1] {11};
+\node[main] (5) [below=of 2] {8};
+\node[main] (6) [below=of 4] {2};
+\node[main] (7) [below=of 5] {9};
+\node[main] (8) [right=of 7] {10};
+\draw[->] (1) -- (4);
+\draw[->] (2) -- (4);
+\draw[->] (2) -- (5);
+\draw[->] (3) -- (5);
+\draw[->] (3) -- (8);
+\draw[->] (4) -- (6);
+\draw[->] (4) -- (7);
+\draw[->] (4) -- (8);
+\draw[->] (5) -- (7);
+\end{tikzpicture}
+\caption{Gerichteter Graph}
+\end{figure}
+\end{example}
+\begin{definition}
+Bei einem \textbf{ungerichteten} Graphen besitzen die Kanten keine Richtung. $v$ und $w$ heißen \textbf{Endpunkte} der Kante $e = \{v, w\}$. Die Kante $\{v, w\}$ heißt \textbf{inzident} zu $v$ und zu $w$. 
+\end{definition}
+Zu beiden Typen von Graphen können wir nun Eigenschaften und Kennzahlen definieren:
+\begin{definition}
+Sei $v \in V$. 
+\[U(v) := \{w \in V \mid w \text{ adjazent zu } v\}\] heißt \textbf{Umgebung} von $v$. Die Anzahl $\vert U(v) \vert$ der Elemente von $U(v)$ heißt \textbf{Grad} von $v$, kurz $\text{deg}(v)$. \\
+Die Anzahl der Knoten $\vert V \vert$ heißt Ordnung von $v$.
+\end{definition}
+Damit ergibt sich:
+\begin{itemize}
+\item $\vert V \vert$ und $\vert E \vert$ messen die Größe eines Graphen. Daher geschehen Aufwandsschätzungen über Graphen stets in Abhängigkeit zu diesen beiden Angaben.
+\item Einem gerichteten Graphen kann man einem ungerichteten Graphen zuordnen: Kante $(v, w) \to \text{Kante} \{v, w\}$.
+\item Dem einem Graphen zugeordneten gerichteten Graphen erhalten wir, wenn wir jede Kante $\{v, w\}$ durch die Kanten $(v, w) \text{und} (w, v)$ ersetzen. 
+\end{itemize}
+\begin{definition}
+Sei $G = (V, E)$ ein ungerichteter Graph.
+\begin{itemize}
+\item Ein \textbf{Pfad} P ist eine Folge von Knoten $v_0, v_1, ..., v_n$ mit der Eigenschaft $\{v_{i}, v_{i+1}\} \in E, i = 0, ..., n-1$. Dann heißt $v_0$ \textbf{Anfangspunkt} und $v_n$ \textbf{Endpunkt} von $P$. $n$ heißt \textbf{Länge} von P.
+\item $w$ heißt von $v$ \textbf{erreichbar}, falls es einen Pfad $P$ mit Ausgangspunkt $v$ und Endpunkt $w$ gibt.
+\end{itemize}
+Für gerichtete Graphen definieren wir die Begriffe analog, in einem Pfad sind die Kanten dann gerichtet enhalten.
+\end{definition}
+\begin{satz}
+Sei $G=(V, E)$ ein Graph ohne Schleifen. Dann sei $n := \vert V \vert$ und $m := \vert E \vert$.
+\begin{itemize}
+\item Für einen Graphen gilt: $0 \leq m \leq \binom{n}{2}$
+\item Für einen gerichteten Graphen gilt: $0 \leq m \leq n \cdot (n-1)$.
+\end{itemize}
+Falls Graphen mit Schleifen betrachtet werden, gilt alternativ:
+\begin{itemize}
+\item Für einen Graphen gilt: $0 \leq m \leq \binom{n}{2}+n$
+\item Für einen gerichteten Graphen gilt: $0 \leq m \leq n^{2}$.
+\end{itemize}
+\end{satz}
+Nun haben wir schon eine Vielzahl von Begrifflichkeiten zu Graphen definiert. Sie finden, das reicht? Nun ...
+\begin{definition} Für einen Graphen eines beliebigen Typs definieren wir:
+\begin{itemize}
+\item $G=(V, E)$ heißt \textbf{vollständig}, wenn jeder Knoten mit jedem anderen Knoten durch eine Kante verbunden ist.
+\item Besitzt $G$ viele Kanten ($m$ groß im Vergleich zu $\binom{n}{2}$ oder $n \cdot (n-1)$), dann heißt $G$ \textbf{dicht besetzt}.
+\item Besitzt $G$ wenige Kanten, dann heißt $G$ analog dazu \textbf{dünn besetzt}.
+\end{itemize}
+Daraus folgt: \\\\
+Für einen vollständigen Graphen gilt $\vert E \vert = n \cdot (n-1)$ im Fall eines gerichteten Graphen und $\vert E \vert = n^{2}$ für einen ungerichteten Graphen.
+\end{definition} 
+\section{Adjazenzmatrizen und -listen}
+\begin{flushright}
+{\glqq}Ein guter Nachbar ist besser als viele böse Verwandten.{\grqq} \\
+--- \textit{Ungarisches Sprichwort}
+\end{flushright}
+Falls Sie erinnern, wie wir Adjazenz definiert haben, werden Sie eine Intuition dafür haben, womit wir uns hier beschäftigen wollen: Wir betrachten Nachbarschaftsverhältnisse in Graphen. Dafür nutzen wir zwei Darstellungsformen, die Adjazenzmatrix und die Adjazenzliste. Hierbei handelt es sich tatsächlich nur um verschiedene Darstellungsformen, der Inhalt unterscheidet sich nicht.
+\begin{definition}
+Die \textbf{Adjazenzmatrix} ist eine $n \times n$-Matrix mit Koeffizienten aus $\{0, 1\}$.
+\[ adm[i, j] := \begin{cases}1 & \text{ für } (i, j) \in E \\0 & \text{ sonst }\end{cases}\]
+\end{definition}
+\begin{example}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+[main/.style = {draw, circle, minimum size=1cm}]
+\node[main] (1) {1};
+\node[main] (2) [right=of 1] {2};
+\node[main] (4) [below=of 1] {4};
+\node[main] (3) [below=of 2] {3};
+\draw (1) -- (2);
+\draw (2) -- (3);
+\draw (3) -- (4);
+\draw (1) -- (4);
+\draw (2) -- (4);
+\end{tikzpicture}
+\caption{Ungerichteter Graph zur Veranschaulichung der Adjazenzmatrix}
+\end{figure}
+Wir entnehmen der Darstellung, dass die Knoten (1, 2), (2, 3), (3, 4), (1, 4) und (2, 4) benachbart sind. Also muss an diesen Indizes der Matrix eine 1 stehen, in allen übrigen Fällen entsprechend eine 0. \\
+\begin{center}
+$\left( \begin{array}{rrrr}
+0&1&0&1 \\
+1&0&1&1 \\
+0&1&0&1 \\
+1&1&1&0
+\end{array} \right)$
+\end{center}
+Betrachten wir nun vergleichsweise diesen Graphen in einer gerichteten Variation: \\
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+[main/.style = {draw, circle, minimum size=1cm}]
+\node[main] (1) {1};
+\node[main] (2) [right=of 1] {2};
+\node[main] (4) [below=of 1] {4};
+\node[main] (3) [below=of 2] {3};
+\draw[->] (1) -- (2);
+\draw[->] (2) -- (3);
+\draw[->] (3) -- (4);
+\draw[->] (1) -- (4);
+\draw[->] (2) -- (4);
+\end{tikzpicture}
+\end{figure}
+Hier ergibt sich eine andere Matrix, da die Nachbarschaftsverhältnisse einseitig sind und wir also für jeden Knoten betrachten, auf welche Knoten er (durch einen so gerichteten Pfeil) {\glqq}zugreifen{\grqq} kann. \\
+\begin{center}
+$\left( \begin{array}{rrrr}
+0&1&0&1 \\
+0&0&1&1 \\
+0&0&0&1 \\
+0&0&0&0
+\end{array} \right)$
+\end{center}
+\end{example}
+Nun definieren wir alternativ dazu:
+\begin{definition}
+Die \textbf{Adjazenzliste} $adl[1, ..., n]$ ist ein Array von Listen. Für jeden Knoten $j \in V$ ist die Liste $adl[j]$ definiert durch $i \in adl[j]$ genau dann, wenn $(j, i) \in E$ gilt. \\\\
+Also sind in $adl[j]$ ebenfalls die zu $j$ adjazenten Knoten verzeichnet.
+\end{definition}
+\begin{example}
+Für obiges Beispiel ergibt sich nun im Fall des ungerichteten Graphen: \\\\
+\texttt{
+1: 2, 4 \\
+2: 1, 3, 4 \\
+3: 2, 4 \\
+4: 1, 2, 3}
+\\
+Und im Fall des gerichteten Graphen:
+\texttt{
+1: 2, 4 \\
+2: 3, 4 \\
+3: 4 \\
+4: }
+\end{example}
+\paragraph{Eigenschaften}
+Die Adjazenzmatrix ist speichereffizient für dicht besetzte Graphen (immer $O(n^{2})$). Die Suche nach einer bestimmten Kante verläuft in $O(1)$, ist also logischerweise sehr effizient. \\\\
+Eine Adjazenzliste hat $m$ Einträge bei gerichteten und $2 \cdot m$ Einträge bei ungerichteten Graphen. Für dünn besetzte Graphen ist sie besser geeignet.
+\pagebreak
+\part{Lösungen}
 \subsection{Grundlagen der Algorithmik}
 \label{a1:lsg}
 \label{a2:lsg}
@@ -1587,6 +1754,8 @@ Lösung auf Seite \pageref{a5.4:lsg}
 \label{a5.2:lsg}
 \label{a5.3:lsg}
 \label{a5.4:lsg}
+\pagebreak
+\part{Verzeichnisse}
 \section*{Tabellen und Formeln}
 \listoffigures
 \printbibliography

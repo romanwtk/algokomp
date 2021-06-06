@@ -306,6 +306,160 @@ Lösung auf Seite \pageref{a4:lsg} \\
 \end{flushright}
 \paragraph{Hinweis} Für einige Aufgaben kann es hilfreich sein, die Tabelle der Komplexitätsklassen auf Seite \pageref{kmplxtab} zu verwenden. Im Rahmen der Klausurvorbereitung sollten Sie außerdem die Komplexität von Algorithmen aus Pseudocode heraus angeben können.
 \pagebreak
+\section{Bestimmung von Komplexitäten}
+Nun haben wir in ausreichender Tiefe mathematisch-formal die $O$-Notation als Maß der Komplexität eingeführt. In der Praxis -- und insbesondere auch in Klausuren -- ist davon auszugehen, dass Sie einen Algorithmus in einer Programmiersprache implementiert oder als Pseudocode erhalten, zudem Sie dann aus dem Code heraus die Komplexität bestimmen sollen. \\\\
+Dies wollen wir hier näher erläutern und üben.
+\subsection{Rechengesetze der $O$-Notation}
+\begin{satz}
+Seien $d \in \mathbb{R}_{\geq 0}$ und $f, g, h: \mathbb{N}_0 \to \mathbb{R}_{\geq 0}$, dann gilt:
+\begin{align}
+ d = O(1) \\
+ f = O(f) \\
+ d \cdot f = O(f) \\
+ f + g = O(g), \text{ falls } f = O(g) \\
+ f + g = O(max\{f, g\}) \\
+ f \cdot g = O(f \cdot h), \text{ falls } g = O(h)
+\end{align}
+Quelle: \parencite[][S. 67]{AlgInfTheo}
+\end{satz}
+Mithilfe dieser Rechengesetze können wir $O$-Notationen leichter bestimmen. Sie sind die Grundlage für Vereinfachungen, die Vergleiche der Komplexität im Ende ermöglichen.
+\subsection{Komplexitätsklassen}
+Betrachten wir nun allgemein die häufigsten Komplexitätsklassen, mit denen sich bereits viele Algorithmen vergleichen lassen. Dabei sind jeweils Klassen angegeben, d.h. beispielsweise $n^4$ läge zwischen $n^3$ und $2^n$ und fällt hier in die Klasse der \textit{kubischen} Komplexitäten. Aus dieser Tabelle und den vorangegangenen Rechengesetzen lässt sich nun beispielsweise auch die Komplexität einer zusammengesetzten Funktion wie beispielsweise $f(n) = n^3 + n!$ bestimmen. Da $n!$ um ein wesentliches schneller wächst als $n^3$, fällt $f$ in die Komplexitätsklasse $n!$. 
+\label{kmplxtab}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Klasse & Bezeichnung & Rang \\
+\hline
+$O(1)$ & konstant & exzellent \\
+$O(log_x(n)$ & logarithmisch & sehr gut \\
+$O(n)$ & linear & gut \\
+$O(n \cdot log(n))$ & überlinear & gut \\
+$O(n^2)$ & quadratisch & eher ineffizient \\
+$O(n^3)$ & kubisch & ineffizient \\
+$O(2^n)$ & exponentiell & sehr ineffizient \\
+$O(n!)$ & faktoriell & extrem ineffizient \\
+\hline
+\end{tabular}
+\caption{Komplexitätsklassen nach \parencite{Grundkurs}}
+\end{table}
+Nun ergibt sich die Frage, wie wir einen gegebenen Algorithmus nun einer dieser Klassen zuordnen, ohne, dass bereits vorher eine Funktionsgleichung gegeben ist. Dafür können wir diese Tabelle nutzen, die aufschlüsselt, wo die jeweilige Komplexität in Algorithmen vorkommt.
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|p{10cm}|}
+\hline
+Klasse & Typischer Aufbau eines Algorithmus dieser Komplexität \\
+\hline
+$O(1)$ & die meisten Anweisungen werden nur einmal oder konstant oft ausgeführt (unabhängig von Eingaben) \\
+$O(log(n)$ & Lösen eine Problems durch Aufteilen in kleinere Teilprobleme, dabei wird die Laufzeit um einen konstanten Anteil verringert \\
+$O(n)$ & Falls $n$ Eingabedaten verarbeitet werden müssen, ist dies der optimale Fall, da jedes Element nur einmal bearbeitet wird \\
+$O(n \cdot log(n))$ & Lösen eines Problems durch Aufteilen in kleinere Probleme, die unabhängig voneinander gelöst und abschließend rekombiniert werden \\
+$O(n^2)$ & typisch für die paarweise Verarbeitung von $n$ Elementen $\to$ zwei verschachtelte For-Schleifen \\
+$O(n^3)$ & drei verschachtelte For-Schleifen \\
+$O(a^n)$ & Brute-Force-Lösungen (Ausprobieren aller Optionen) \\
+\hline
+\end{tabular}
+\caption{Zuordnung von Algorithmen zu Verarbeitungsschritten nach \parencite[][S. 436]{Grundkurs}}
+\end{table}
+\subsection{Komplexität von Programmierkonzepten}
+Eine einzelne Anweisung hat immer die Komplexität $O(1)$. Auch mehrere Anweisungen -- deren Anzahl jedoch nicht von der Menge der Eingabedaten $n$ abhängt -- verändern die Komplexität nicht.
+\paragraph{Schleifen} 
+Sofern jedoch eine Schleife in Abhängigkeit von $n$ (auch hier müssen nicht \textit{exakt} $n$ Schleifendurchläufe passieren, es genügt eine generelle Abhängigkeit!) durchlaufen wird, erhalten wir einen Aufwand von $O(n)$ mit $n$ = Anzahl der Daten. \\\\
+Betrachten wir nun ineinander verschachtelte Schleifen, deren Durchlaufanzahl jeweils von $n$ abhängt, so multiplizieren sich die Komplexitäten und wir erhalten beispielsweise für zwei ineinander verschachtelte For-Schleifen eine Komplexität von $O(n^2)$. Nach diesem Muster gehen wir für beliebig häufig ineinander verschachtelte Schleifen vor.
+\begin{example}
+Gegeben sei folgender Algorithmus:
+\begin{lstlisting}
+public void validateInput(int[] data) {
+	int i = 0;
+	for (dataElement in data) {
+		calculateSomething(dataElement);
+		while (i < 10) {
+			pingHost('localhost:3000/');
+			i++;		
+		}
+	}
+}
+\end{lstlisting}
+Wir betrachten zur Bestimmung der Komplexität:
+\begin{itemize}
+\item \texttt{int i = 0} ist eine einzelne Anweisung ohne Abhängigkeit zu $n$, hat also die Komplexität $O(1)$.
+\item Nun beginnt eine For-Schleife mit $n$(= Anzahl der Feldelemente) Iterationen, also mit Komplexität $O(n)$.
+\item Innerhalb der For-Schleife findet pro Iteration ein Aufruf der Funktion \texttt{calculateSomething} statt, deren Komplexität in derer der Schleife bereits inbegriffen ist (da es sich um einen einzelnen Aufruf pro Iteration handelt).
+\item Nun beginnt eine weitere Schleife -- deren Iterationsanzahl jedoch von $n$ unabhängig ist und konstant 10 beträgt. Auch der Inhalt der Schleifen ist konstant und fällt daher nicht ins Gewicht. Daher beträgt die Komplexität hier erneut $O(1)$. Da wir Klassen von Komplexität betrachten, ist $O(10)$ zwar nicht falsch, jedoch nicht sinnvoll, weil so die Vergleichbarkeit entfällt/erschwert wird.
+\item Auch \texttt{i++} ist eine Anweisung mit konstantem Zeitbedarf, also $O(1)$.
+\end{itemize}
+Nun addieren wir die einzelnen Komplexitäten und erhalten $O(n)$, da konstante Terme entfallen.
+\end{example}
+\begin{satz}
+Eine Schleife, in der die Datenmenge in jeder Iteration halbiert wird, hat eine Komplexität von $O(log(n))$.
+\end{satz}
+Neben Schleifen, deren Komplexitätsbetrachtung wir nun in aller Ausführlichkeit ausgeführt haben, widmen wir uns nun einem weiteren, in Algorithmen sehr häufig anzutreffenden Programmierkonzept:
+\paragraph{Rekursion}
+Die Komplexität von rekursiven Algorithmen zu bestimmen ist im Allgemeinen aufwendiger. Wir betrachten verschiedene Fälle:
+\begin{itemize}
+\item Falls in jedem Schritt die betrachtete Datenmenge um eins kürzer wird und die zusätzlich ausgeführte Operation einen konstanten Zeitbedarf hat, so liegt die Komplexität in $O(n)$.
+\item Ist dieser Zufallsaufwand nun nicht konstant sondern linear (verändert sich also in Abhängigkeit von $n$, so verändert sich der Aufwand und wir erhalten eine Komplexität von $O(\frac{n^2}{2}$.
+\end{itemize}
+An dieser Stelle sei auch noch einmal auf das \textbf{Master-Theorem} verwiesen, das bei Rekursionsgleichungen Anwendung findet, die gemäß {\glqq}Divide and Conquer{\grqq} (Teile und Herrsche) Probleme in kleinere Teilprobleme zerteilen, diese getrennt voneinander verarbeiten und anschließend wieder zusammensetzen. ($\to$ Mergesort, S.  \pageref{mergesort})
+\vspace{1cm}
+\section*{Aufgaben}
+\begin{itemize}
+\item Gegeben sind die folgenden Pseudocode-Darstellungen verschiedener Algorithmen. 
+\item Notieren Sie zu jeder Anweisung die entsprechende Komplexität.
+\item Geben Sie die Gesamtkomplexitätsklasse des Algorithmus in Landau-Symbolen an.
+\end{itemize}
+Verwenden Sie falls erforderlich das Master-Theorem.
+\paragraph{Aufgabe 1} \quad
+\begin{lstlisting}
+public int[] giveEvenNumbers(int[] data) {
+	int[] result;
+	for (dataElement in data) {
+		if (dataElement % 2 == 0) {
+			result.append(dataElement);		
+		}	
+	}
+	return result;
+}
+\end{lstlisting}
+\begin{flushright}
+Lösung auf Seite \pageref{a1.5:lsg}
+\end{flushright}
+\paragraph{Aufgabe 2} \quad
+\begin{lstlisting}
+for (int i = 0; i < n; i = 2 * i) {
+	for (int j = n; j > 0; j = j / 2) {
+		for (int k = 1; k < n; k = k + 1) {
+			// some constant procedures ...		
+		}	
+	}
+}
+\end{lstlisting}
+\begin{flushright}
+Lösung auf Seite \pageref{a1.6:lsg} \\
+entnommen aus \parencite{GrUeb}
+\end{flushright}
+\paragraph{Aufgabe 3} \quad
+\begin{lstlisting}
+float mittel(float a[], int start, int end) {
+	int n = end - start + 1;
+	if (n == 1) {
+		return a[start];	
+	}
+	else {
+		int mitte = n / 2 - 1;
+		float m1 = mittel(a, start, start+mitte);
+		float m2 = mittel(a, start + mitte + 1, end);
+		float m = (	m1 * (mitte + 1) + 
+		m2 * (end - (start + mitte + 1) + 1)) / n;
+		return m;	
+	}
+}
+\end{lstlisting}
+\begin{flushright}
+Lösung auf Seite \pageref{a1.7:lsg} \\
+entnommen aus \parencite{GrUeb}
+\end{flushright}
 \part{Suchalgorithmen}
 Sie studieren Informatik, sind es satt, noch mehr Stunden vor Bildschirmen zu verbringen und suchen sich deshalb ein echtes, physisches Buch aus der Bibliothek Ihrer Hochschule heraus. Sie fragten nach \glqq\textsc{Wirth}: Algorithmen und Datenstrukturen{\grqq} von 1983, weil man es Ihnen in Ihrer Vorlesung empfahl. Die Bibliothekarin deutet auf ein Regal und lässt sie damit allein. \\\\
 Wie finden Sie das gesuchte Buch in der Regalreihe mit etwa 300 Büchern?
@@ -722,6 +876,7 @@ Im Gegensatz zu ursprünglichen Implementierungen haben wir hier bereits eine Op
 \end{itemize}
 Quelle und weiterführende Literatur: \parencite[][S.86 ff.]{Wirth} \parencite[][S.22]{Taschenbuch}
 \section{Mergesort}
+\label{mergesort}
 Die nächste Idee, wie Sie Ihr Bücherregal sortieren können: Mergesort! Sie teilen das Regal in zwei Hälften, sortieren jede Hälfte, in dem Sie diese wiederum halbieren, bis die Hälften aus einem Buch bestehen. Sortieren Sie diesen Teil, indem Sie die Bücher richtig anordnen und die Hälften so wieder von klein nach groß nach einer Art Reißverschlussprinzip verbinden, bis Sie die Gesamtheit der Elemente in sortierter Reihenfolge erhalten. 
 \begin{example} Zu sortieren: \texttt{[1, 7, 6, 2, 9, 4, 3, 8, 10, 5]}.\\
 Halbieren: \\\texttt{[1, 7, 6, 2, 9] | [4, 3, 8, 10, 5]} \\
@@ -1801,6 +1956,9 @@ a < b^d \to sin(n) < (\frac{n}{2})^3\]
 Da $sin(n)$ nur Werte zwischen $-1$ und $1$ annimmt, ist die Bedingung für hinreichend große $n$ erfüllt. Damit erhalten wir: $O(n^3)$.
 \end{itemize}
 Auch bei der Anwendung des Mastertheorems ist für uns die langfristige Entwicklung des Wachstums relevant. Daher sind kleine $n$, die einen Widerspruch darstellen würden, unerheblich.
+\label{a1.5:lsg}
+\label{a1.6:lsg}
+\label{a1.7:lsg}
 \subsection{Suchalgorithmen}
 \label{a2.1:lsg}
 \label{a2.2:lsg}
@@ -1824,27 +1982,6 @@ Auch bei der Anwendung des Mastertheorems ist für uns die langfristige Entwickl
 \pagebreak
 \part{Verzeichnisse}
 \section*{Tabellen und Formeln}
-\subsection{Komplexitätsklassen}
-\label{kmplxtab}
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|}
-\hline
-Klasse & Bezeichnung & Rang \\
-\hline
-$O(1)$ & konstant & exzellent \\
-$O(log_x(n)$ & logarithmisch & sehr gut \\
-$O(n)$ & linear & gut \\
-$O(n \cdot log(n))$ & überlinear & gut \\
-$O(n^2)$ & quadratisch & eher ineffizient \\
-$O(n^3)$ & kubisch & ineffizient \\
-$O(2^n)$ & exponentiell & sehr ineffizient \\
-$O(n!)$ & faktoriell & extrem ineffizient \\
-\hline
-\end{tabular}
-\caption{Komplexitätsklassen nach \parencite{Grundkurs}}
-\end{table}
-
 \listoffigures
 \printbibliography
 \end{document}

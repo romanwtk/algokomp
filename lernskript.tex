@@ -9,6 +9,8 @@
 \usepackage{listings}
 \usepackage{chngcntr}
 \usepackage{upgreek}
+\usepackage{pgfplots}
+\pgfplotsset{compat = newest}
 \usepackage{amsthm}
 \usepackage{ulem}
 \usepackage{tikz}
@@ -278,15 +280,15 @@ Lösung auf Seite \pageref{a1:lsg}
 \item $f(n) = 6n^{4} + 3 \cdot log_{2}(n)$
 \item $f(n) = 6627816n + 13$
 \item $f(n) = \frac{72n^{3} + 27n^{2} + 8n + 9}{n!}$
-\item $f(n) = 3 \cdot f(n-1) + \frac{f(n-2)}{n^{2}}$
+\item $f(n) = 3n \cdot \frac{n!}{2} + n^n $
 \end{enumerate}
 \begin{flushright}
 Lösung auf Seite \pageref{a2:lsg}
 \end{flushright}
 \paragraph{Aufgabe 3}
 \begin{enumerate}
-\item Zeigen Sie, dass $n^{2} \in O(2n)$.
-\item Zeigen Sie, dass $n^{3} \in O(2n)$.
+\item Zeigen Sie, dass $n^{2} \in O(2^n)$.
+\item Zeigen Sie, dass $n^{3} \in O(2^n)$.
 \end{enumerate}
 \begin{flushright}
 Lösung auf Seite \pageref{a3:lsg} \\
@@ -302,7 +304,7 @@ Bestimmen Sie unter Anwendung des Mastertheorems die jeweilige Komplexitätsklas
 \begin{flushright}
 Lösung auf Seite \pageref{a4:lsg} \\
 \end{flushright}
-\paragraph{Versionshinweis} Weitere Aufgaben zu Rekursionsgleichungen, praktischen Anwendungen auf Pseudo-Code und für $\Theta , \Omega$ folgen in späteren Versionen
+\paragraph{Hinweis} Für einige Aufgaben kann es hilfreich sein, die Tabelle der Komplexitätsklassen auf Seite \pageref{kmplxtab} zu verwenden. Im Rahmen der Klausurvorbereitung sollten Sie außerdem die Komplexität von Algorithmen aus Pseudocode heraus angeben können.
 \pagebreak
 \part{Suchalgorithmen}
 Sie studieren Informatik, sind es satt, noch mehr Stunden vor Bildschirmen zu verbringen und suchen sich deshalb ein echtes, physisches Buch aus der Bibliothek Ihrer Hochschule heraus. Sie fragten nach \glqq\textsc{Wirth}: Algorithmen und Datenstrukturen{\grqq} von 1983, weil man es Ihnen in Ihrer Vorlesung empfahl. Die Bibliothekarin deutet auf ein Regal und lässt sie damit allein. \\\\
@@ -1717,7 +1719,7 @@ Für obiges Beispiel ergibt sich nun im Fall des ungerichteten Graphen: \\\\
 3: 2, 4 \\
 4: 1, 2, 3}
 \\
-Und im Fall des gerichteten Graphen:
+Und im Fall des gerichteten Graphen: \\
 \texttt{
 1: 2, 4 \\
 2: 3, 4 \\
@@ -1730,10 +1732,75 @@ Eine Adjazenzliste hat $m$ Einträge bei gerichteten und $2 \cdot m$ Einträge b
 \pagebreak
 \part{Lösungen}
 \subsection{Grundlagen der Algorithmik}
-\label{a1:lsg}
-\label{a2:lsg}
-\label{a3:lsg}
-\label{a4:lsg}
+\paragraph{Lösung zu Aufgabe 1} \label{a1:lsg}Gesucht sind die Landau-Notationen $O, \Omega, \Theta$ zur Funktion $3n^3 + 7n^2 + 16$. Zunächst bestimmen wir die $O$-Komplexitätsklasse: Da der höchste Grad des Polynoms $3$ ist und sämtliche konstanten Faktoren oder Summanden entfallen, liegt die Funktion in $O(n^3)$. \\\\Für die $\Omega$-Notation überlegen wir uns Folgendes: Der kleinste Grad des Polynoms ist $0$ ($16 \cdot n^0$). Dies ist unsere Unterschranke: Da auch hier konstante Faktoren und Summanden unberücksichtigt bleiben, erhalten wir $\Omega(1)$. \\\\Die $\Theta$-Notation umfasst nun alle Funktionen, die sowohl Teil von $O(n^3)$ als auch von $\Omega(1)$ sind. Dies ist nun keine zeichenbare Funktion, sondern viel mehr der Flächeninhalt zwischen beiden Graphen. \\\\Wir zeichnen nun ein:
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+	xmin = 0,
+	ymin = 0,
+	ymax = 50,
+    width = \textwidth,
+    height = 0.5\textwidth,
+    xlabel = {$x$},
+    ylabel = {$y$},]
+\addplot[
+    smooth,
+    thick,
+    green,
+] {x^3};
+
+\addplot[
+    smooth,
+    thick,
+    blue,
+] {3 * x^3 + 7 * x^2 + 16};
+
+\addplot[
+    smooth,
+    thick,
+    red,
+] {1};
+\legend{$O(n^3)$, $f(n)$, $\Omega(1)$}
+\end{axis}
+\end{tikzpicture}
+\caption{Skizze zu Aufgabe 1.1}
+\end{figure}
+\paragraph{Lösung zu Aufgabe 2} \label{a2:lsg}
+Anzugeben sind die $O$-Notationen zu gegebenen Funktionen.
+\begin{enumerate}
+\item $f(n) = 6n^4 + 3 \cdot log_2(n) \in O(n^4)$, da das Wachstum des Terms $n^4$ im Vergleich zu $log_2(n)$ m größten ist. Konstantglieder entfallen.
+\item $f(n) = 6627816n + 13 \in O(n)$, da Konstantglieder immer entfallen und somit $n$ das größte Wachstum verursacht.
+\item $f(n) = \frac{72n^{3} + 27n^{2} + 8n + 9}{n!} \in \frac{O(n^3}{O(n!)}$. Diese Angabe genügt, ein weiteres Auflösen ist nicht möglich oder sinnvoll. Diese Funktion kann keine typische Komplexität eines Algorithmus sein, da die Funktion gegen 0 konvergiert. Falls Sie sich an dieser Aufgabe die Zähne ausgebissen haben sollten, bitte ich um Vergebung!
+\item $f(n) = 3n \cdot \frac{n!}{2} + n^n \in O(n^n)$, da dieser letzte Summand $n^n$ das größte Wachstum aufweist. Es ist damit Teil der letzten Klasse des exponentiellen Wachstums und selbst innerhalb dieser durch $a=n$ besonders schnell wachsend. 
+\end{enumerate}
+\paragraph{Lösung zu Aufgabe 3} \label{a3:lsg}
+Aus gegebener Tabelle der Komplexitätsklassen wissen wir bereits, dass exponentielles Wachstum im Vergleich am schnellsten wächst. Hier ist nun zu zeigen, dass dies für sowohl für $n^2$ als auch für $n^3$ gilt, also beide Funktionen Teil der Komplexitätsklasse $O(2^n)$ sind (also nicht schneller wachsen als $2^n$). \\\\
+Dies beweisen wir induktiv:
+\begin{proof}
+Aus der Definition der $O$-Notation leiten wir ab, dass wir ein beliebiges $n_0$ und ein $c$ wählen können. Wir setzen $n_0 = 4$, da wir wissen, dass $4^2 \leq 2^4$ ist. $4$ ist die erste natürliche Zahl, ab der dies gilt. Dass kleinere $n$ dies noch nicht erfüllen, ist unerheblich. $c = 1$, da hier kein Konstantfaktor benötigt wird.
+\begin{align*}
+\text{Induktionsanfang} \quad & 4^2 \leq 2^4 \\
+\text{Induktionsvoraussetzung} \quad & n^2 \leq 2^n \\
+\text{Induktionsschritt} \quad & n \to n + 1 \\
+\text{Ausmult. + Einsetzen der IV} \quad & (n+1)^2 = n^2 + 2n + 1 \leq 2^n + 2n + 1 \\
+...
+\end{align*}
+Der Rest des Beweises ist in den Vorlesungsunterlagen ersichtlich. Für den zweiten Aufgabenteil gehen wir ähnlich vor.
+\end{proof}
+\paragraph{Lösung zu Aufgabe 4} \label{a4:lsg}
+Hier wenden wir das Master-Theorem an.
+\begin{itemize}
+\item $f(n) = 2 \cdot f(\frac{n}{2n+1}) + n^{2}$, daraus folgt: $a = 2, b = 2n + 1, d = 2$. Nun prüfen wir, ob gilt: \[a < b^d \to 2 < (2n+1)^2 \to 2 < 4n^2 + 2n + 1\]
+Offensichtlich gilt die Aussage und somit tritt Fall 1 des Mastertheorems ein und wir erhalten: $O(n^2)$.
+\item $g(n) = log(n) \cdot g(\frac{n}{2}) + 3$, also: $a = log(n), b = 2, d = 1$. Wir prüfen, ob die Bedingung des ersten Falls des Master-Theorems gilt:
+\[a < b^d \to log(n) < 2^1 \to log(n) < 2\]
+Offensichtlich gilt diese Bedingung nicht, da $log(n)$ für alle $n \geq 100$ größer ist als $2$. Also tritt Fall 3 des Mastertheorems ein und wir erhalten: $O(n^{log_2(log(n))})$.
+\item $h(n) = sin(n) \cdot h(\frac{n}{\frac{n}{2}}) + O(n^{3})$, also $a = sin(n), b = \frac{n}{2}, d = 3$. Wir prüfen erneut: \[
+a < b^d \to sin(n) < (\frac{n}{2})^3\]
+Da $sin(n)$ nur Werte zwischen $-1$ und $1$ annimmt, ist die Bedingung für hinreichend große $n$ erfüllt. Damit erhalten wir: $O(n^3)$.
+\end{itemize}
+Auch bei der Anwendung des Mastertheorems ist für uns die langfristige Entwicklung des Wachstums relevant. Daher sind kleine $n$, die einen Widerspruch darstellen würden, unerheblich.
 \subsection{Suchalgorithmen}
 \label{a2.1:lsg}
 \label{a2.2:lsg}
@@ -1757,6 +1824,27 @@ Eine Adjazenzliste hat $m$ Einträge bei gerichteten und $2 \cdot m$ Einträge b
 \pagebreak
 \part{Verzeichnisse}
 \section*{Tabellen und Formeln}
+\subsection{Komplexitätsklassen}
+\label{kmplxtab}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Klasse & Bezeichnung & Rang \\
+\hline
+$O(1)$ & konstant & exzellent \\
+$O(log_x(n)$ & logarithmisch & sehr gut \\
+$O(n)$ & linear & gut \\
+$O(n \cdot log(n))$ & überlinear & gut \\
+$O(n^2)$ & quadratisch & eher ineffizient \\
+$O(n^3)$ & kubisch & ineffizient \\
+$O(2^n)$ & exponentiell & sehr ineffizient \\
+$O(n!)$ & faktoriell & extrem ineffizient \\
+\hline
+\end{tabular}
+\caption{Komplexitätsklassen nach \parencite{Grundkurs}}
+\end{table}
+
 \listoffigures
 \printbibliography
 \end{document}

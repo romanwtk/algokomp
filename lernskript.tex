@@ -1886,7 +1886,7 @@ Die Adjazenzmatrix ist speichereffizient für dicht besetzte Graphen (immer $O(n
 Eine Adjazenzliste hat $m$ Einträge bei gerichteten und $2 \cdot m$ Einträge bei ungerichteten Graphen. Für dünn besetzte Graphen ist sie besser geeignet.
 \pagebreak
 \part{Lösungen}
-\subsection{Grundlagen der Algorithmik}
+\section{Grundlagen der Algorithmik}
 \paragraph{Lösung zu Aufgabe 1} \label{a1:lsg}Gesucht sind die Landau-Notationen $O, \Omega, \Theta$ zur Funktion $3n^3 + 7n^2 + 16$. Zunächst bestimmen wir die $O$-Komplexitätsklasse: Da der höchste Grad des Polynoms $3$ ist und sämtliche konstanten Faktoren oder Summanden entfallen, liegt die Funktion in $O(n^3)$. \\\\Für die $\Omega$-Notation überlegen wir uns Folgendes: Der kleinste Grad des Polynoms ist $0$ ($16 \cdot n^0$). Dies ist unsere Unterschranke: Da auch hier konstante Faktoren und Summanden unberücksichtigt bleiben, erhalten wir $\Omega(1)$. \\\\Die $\Theta$-Notation umfasst nun alle Funktionen, die sowohl Teil von $O(n^3)$ als auch von $\Omega(1)$ sind. Dies ist nun keine zeichenbare Funktion, sondern viel mehr der Flächeninhalt zwischen beiden Graphen. \\\\Wir zeichnen nun ein:
 \begin{figure}[h]
 \centering
@@ -1956,25 +1956,50 @@ a < b^d \to sin(n) < (\frac{n}{2})^3\]
 Da $sin(n)$ nur Werte zwischen $-1$ und $1$ annimmt, ist die Bedingung für hinreichend große $n$ erfüllt. Damit erhalten wir: $O(n^3)$.
 \end{itemize}
 Auch bei der Anwendung des Mastertheorems ist für uns die langfristige Entwicklung des Wachstums relevant. Daher sind kleine $n$, die einen Widerspruch darstellen würden, unerheblich.
-\label{a1.5:lsg}
-\label{a1.6:lsg}
-\label{a1.7:lsg}
-\subsection{Suchalgorithmen}
+\paragraph{Lösung zu Aufgabe 5} \label{a1.5:lsg}
+Wir betrachten die Anweisungen zunächst einzeln: \\\\
+\begin{tabular}{lrp{5cm}}
+\texttt{int[] result;} & $O(1)$ & Speicher wird reserviert \\
+\texttt{for (dataElement in data)} & $O(n)$ & In Abhängigkeit zu $n$ \\
+\texttt{if (...)} & $O(1)$ & konstanter Vergleich \\
+\texttt{result.append(dataElement} & $O(1)$ & pro Iteration konstant, wegen Obergrenzenbetrachtung fällt Bedingung nicht ins Gewicht \\
+\texttt{return result;} & $O(1)$ & konstante Ausgabe \\
+\end{tabular} \\\\
+Wir addieren nun alle Komplexitäten und erhalten $O(n + 4) \in O(n)$ als Gesamtkomplexität dieses Algorithmus.
+\paragraph{Lösung zu Aufgabe 6} \label{a1.6:lsg}
+Hier finden wir drei ineinander verschachtelte For-Schleifen:
+\begin{enumerate}
+\item Der Iterator der ersten For-Schleife wird in jedem Durchlauf verdoppelt und beginnt bei $i = 0$ bricht ab, sobald $i \geq n$. Wir suchen nun also ein $x$ mit $2^x = n$. Die Gleichung lösen wir durch den Logarithmus und erhalten entsprechend $O(log_{2}(n))$.
+\item In der zweiten Schleife halbieren wir $j$ in jedem Durchlauf. $j$ initialisieren wir mit $n$ und lassen die For-Schleife laufen, bis $j \leq 0$. Also gehen wir im Prinzip wie in der ersten Schleife vor, bloß in umgekehrter Richtung. Dennoch erhalten wir auch hier eine Komplexität von $O(log_{2}(n))$.
+\item In der dritten For-Schleife lassen wir $k$ von 1 bis $n$ laufen und inkrementieren $k$ in jeder Iteration um 1. Also finden hier insgesamt $n-1$ Durchläufe statt, was uns verdächtig stark an $O(n)$ erinnert, womit wir auch goldrichtig liegen. 
+\end{enumerate}
+Nun multiplizieren wir die Komplexitäten und erhalten die Gesamtkomplexität $O(n \cdot log_{2}(n)^2)$.
+\paragraph{Lösung zu Aufgabe 7} \label{a1.7:lsg}
+Wir erkennen, dass es sich um einen rekursiv implementierten Algorithmus handelt, da die Funktion sich zweimal selbst aufruft. Daher findet hier das \textbf{Mastertheorem} Anwendung, da es sich um ein {\glqq}Divide and Conquer{\grqq}-Problem handelt.
+\begin{itemize}
+\item Es finden zwei Rekursive Aufrufe statt, also setzen wir $a = 2$.
+\item In jedem Rekursiven Aufruf halbieren wir die Datenmenge, also gilt $b = 2$.
+\item Der Aufwand für das Zusammenfügen ist konstant, damit unerheblich und liegt daher in $O(1)$.
+\end{itemize}
+Wir setzen zusammen und stellen die Gleichung für das Mastertheorem auf:
+\[T(n) = 2 \cdot T(\frac{n}{2}) + O(n^0)\]
+Nun tritt der dritte Fall des Mastertheorems ein, da $2 > 2^0 = 1$ gilt. Wir erhalten als Gesamtkomplexität $O(n^{log_2(2)}) = O(n)$.
+\section{Suchalgorithmen}
 \label{a2.1:lsg}
 \label{a2.2:lsg}
 \label{a2.3:lsg}
 \label{a2.4:lsg}
-\subsection{Sortieralgorithmen}
+\section{Sortieralgorithmen}
 \label{a3.1:lsg}
 \label{a3.2:lsg}
 \label{a3.3:lsg}
 \label{a3.4:lsg}
-\subsection{Bäume}
+\section{Bäume}
 \label{a4.1:lsg}
 \label{a4.2:lsg}
 \label{a4.3:lsg}
 \label{a4.4:lsg}
-\subsection{Heaps}
+\section{Heaps}
 \label{a5.1:lsg}
 \label{a5.2:lsg}
 \label{a5.3:lsg}

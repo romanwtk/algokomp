@@ -1884,6 +1884,128 @@ Und im Fall des gerichteten Graphen: \\
 \paragraph{Eigenschaften}
 Die Adjazenzmatrix ist speichereffizient für dicht besetzte Graphen (immer $O(n^{2})$). Die Suche nach einer bestimmten Kante verläuft in $O(1)$, ist also logischerweise sehr effizient. \\\\
 Eine Adjazenzliste hat $m$ Einträge bei gerichteten und $2 \cdot m$ Einträge bei ungerichteten Graphen. Für dünn besetzte Graphen ist sie besser geeignet.
+\section{Suchverfahren in Graphen}
+Wie in anderen Datenstrukturen auch, sind wir interessiert daran, innerhalb von Graphen Elemente zu suchen. Hierbei brauchen wir aber zunächst -- da wir Graphen ganz verschiedenen Aufbaus betrachten -- Wege, alle Knoten eines Graphen effizient zu erreichen. Dafür unterscheiden wir \textbf{Breitensuche} und \textbf{Tiefensuche}. Bei der Breitensuche betrachten wir vorrangig benachbarte Elemente (also Adjazenten) während wir bei der Tiefensuche vorrangig untergeordnete Knoten (also Endknoten eines Pfades) betrachten.
+\subsection{Breitensuche}
+\paragraph{Idee}
+\begin{enumerate}
+\item Beginnend von einem Startknoten $S$ besuchen wir alle Nachbarn von $S$, also alle Elemente von $U(S)$.
+\item Nun fahren wir fort, in dem wir alle Nachbarn des ersten Nachbarn besuchen $(U(U_{1}(S))$ für $U_{1}(S) = $ 1. Nachbar des Startknotens, dann alle Nachbarn des zweiten Nachbarn von $S$ usw.
+\item Falls wir über diese Vorgehenweise nicht alle Knoten erreichen, setzen wir als Ausgangspunkt einen neuen, nicht besuchten Knoten und fahren solange fort, bis alle Knoten erreicht worden sind.
+\end{enumerate}
+\paragraph{Implementierung} als Pseudo-Code
+\begin{lstlisting}
+for (v in V) {
+	v.marked = false;
+}
+Q = new Queue();
+while exists s in V with (s.marked == false) {
+	s = pickStartNode();
+	s.marked = true;
+	Q.enqueue(s);
+	while (!Q.is_empty()) {
+		v = Q.dequeue();
+		visit(v);
+		for (u in v.neighbours) {
+			if (u.marked == false) {
+				u.marked = true;
+				Q.enqueue(u);			
+			}		
+		}	
+	}
+}
+\end{lstlisting}
+Wir operieren folglich auf einer \texttt{Queue}, also einer Warteschlange, die nach dem FIFO-Prinzip (First in, first out) funktioniert. Für jeden Knoten in der Warteschlange fügen wir alle Nachbarn der Wartschlange hinzu. Die Abfrage, ob ein Knoten besucht wurde oder nicht (also das Markieren) ist erforderlich, um Dopplungen zu vermeiden, die Laufzeit zu optimieren und das Terminieren sicherzustellen. \\\\
+Wir nennen dieses Verfahren Breitensuche oder \textbf{Breadth First Search}-Traversal \parencite[][S. 574ff.]{Grundkurs}.
+\subsection{Tiefensuche}
+Die Tiefensuche hat zum Ziel, zuerst die Knoten in der Tiefe zu besuchen. Sie heißt daher auch \textbf{Depth First Search}-Traversal. Die Grundlage dieses Algorithmus bildet die Datenstruktur \texttt{Stack}, auf der nach dem LIFO-Prinzip (Last in, first out) gearbeitet wird.
+\paragraph{Idee}
+\begin{enumerate}
+\item Beginnend von einem Startknoten $S$ wird der erste Nachbar von $S$ besucht. Anschließend besuchen wir dessen ersten Nachbarn und gehen soweit in die Tiefe, bis es keinen unbesuchten Nachbarn mehr auf diesem Pfad gibt.
+\item Nun kehren wir zum ersten Knoten zurück, bei dem es einen noch unbesuchten Nachbarn gibt und gehen von hier in die Tiefe, in dem wir jeweils den ersten Nachbarn des ersten Nachbarn besuchen.
+\item Dieses Verfahren führen wir fort, bis wir alle Nachbarn besucht haben.
+\end{enumerate}
+\paragraph{Implementierung} als Pseudo-Code
+\begin{lstlisting}
+for (v in V) {
+	v. marked = false;
+}
+S = new Stack();
+while exists s in V with (s.marked == false) {
+	s = pickStartNode();
+	S.push(s);
+	
+	while (!S.is_empty()) {
+		v = S.pop();
+		if (v.marked == false) {
+			visit(v);
+			v.marked = true;
+			for u in v.neighbours {
+				if (u.marked == false) {
+					S.push(u);				
+				}			
+			}		
+		}	
+	}
+}
+\end{lstlisting}
+Wir initialisieren auch hier erneut unseren Graphen, in dem wir alle Knoten als unmarkiert setzen und einen Stack erzeugen. Solange es noch unmarkierte Knoten gibt, wählen wir einen Ausgangsknoten, fügen ihn dem Stapel hinzu und besuchen den ersten Nachbarn, den ersten Nachbarn des ersten Nachbarn, und so weiter. Durch die Stapelstruktur ermöglichen wir, dass keine Elemente vergessen werden und es einen {\glqq}Weg zurück{\grqq} gibt, um die Suche fortsetzen zu können. \\\\
+In Bezug auf Klausuren ist es wichtig, jeweils Queue/Stack pro Iteration anzugeben. Nur darüber wird deutlich, ob sie die Vorgehensweise wirklich verstanden haben. \\
+\begin{example}
+Wir betrachten als folgenden Beispielgraphen das Verwandschaftsverhältnis einer typisch saarländischen Familie: \\
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+[main/.style = {draw, circle, minimum size=1cm}]
+\node[main] (1) {Otto};
+\node[main] (2) [right=of 1] {Anna};
+\node[main] (3) [below=of 1] {Sara};
+\node[main] (4) [right=of 3] {Cem};
+\node[main] (5) [right=of 4] {Tom};
+\draw[->] (1) -- (2);
+\draw[->] (1) -- (3);
+\draw[->] (2) -- (3);
+\draw[->] (3) -- (4);
+\draw[->] (2) -- (5);
+\draw[->] (5) -- (4);
+\end{tikzpicture}
+\caption{Gerichteter Beispielgraph für Breiten-/Tiefensuche}
+\end{figure} \\
+Beginnen wir mit der \textbf{Breitensuche}:
+\begin{enumerate}
+\item Als Startknoten wählen wir {\glqq}Otto{\grqq}.
+\item Wir markieren diesen Knoten und fügen ihn der Queue hinzu. \\
+\texttt{Q = \{Otto\}}, durchlaufene Knoten: \texttt{[Otto]}
+\item Wir markieren alle benachbarten Knoten und fügen sie der Queue hinzu. \\
+\texttt{Q = \{Anna, Sara\}}, durchlaufene Knoten: \texttt{[Otto]}
+\item Wir besuchen Anna, löschen sie von der Queue und fügen ihre Nachbarn hinzu (Sara nicht, da dieser Knoten schon markiert wurde). \\
+\texttt{Q = \{Sara, Tom\}}, durchlaufene Knoten: \texttt{[Otto, Anna]}
+\item Wir nehmen das nächste Element vom Stapel, also Sara, besuchen sie und markieren (und enqueuen) alle ihre Nachbarn. \\
+\texttt{Q = \{Tom, Cem\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara]}.
+\item Wir nehmen das nächste Element vom Stapel, also Tom, besuchen ihn und markieren alle seine Nachbarn. Da es keinen weiteren unmarkierten Nachbarn gibt, wird der Queue kein weiteres Element hinzugefügt. \\
+\texttt{Q = \{Cem\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara, Tom]}.
+\item Nun besuchen wir Cem, stellen fest, dass es keine Nachbarn gibt und tatsächlich auch alle Knoten besucht wurden. \\
+\texttt{Q = \{\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara, Tom, Cem]}
+\end{enumerate}
+Nun betrachten wir als zweites die \textbf{Tiefensuche}:
+\begin{enumerate}
+\item Wir wählen als Startelement erneut Otto, fügen ihn dem Stapel hinzu. \\
+\texttt{S = \{Otto\}}, durchlaufene Knoten: \texttt{[]}
+\item Wir nehmen das erste Element vom Stack, besuchen und markieren es. Nun fügen wir alle Nachbarn dem Stack hinzu. \\
+\texttt{S = \{Anna, Sara\}}, durchlaufene Knoten: \texttt{[Otto]}
+\item Wir nehmen das erste Element vom Stack, besuchen und markieren es. Nun fügen wir alle Nachbarn dem Stack hinzu. \\
+\texttt{S = \{Sara, Tom, Sara\}}, durchlaufene Knoten: \texttt{[Otto, Anna]}
+\item Wir fahren entsprechend fort. \\
+\texttt{S = \{Cem, Tom, Sara\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara]}
+\item Nun betrachten wir Cem. Cem hat keine Nachbarn (oder Verwandten) mehr. Also entfernen wir ihn vom Stack. \\
+\texttt{S = \{Tom, Sara\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara, Cem]}
+\item Nun ist Tom das nächste Element, das wir vom Stack nehmen. Tom hat als einzigen Nachbarn Cem, den wir schon markiert haben. Also fügen wir ihn nicht mehr dem Stack hinzu. \\
+\texttt{S = \{Sara\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara, Cem, Tom]}
+\item Im Stack steht als letztes noch Sara. Da wir sie bereits besucht (und markiert) haben, terminiert der Algorithmus, nachdem wir sie vom Stack genommen haben. \\
+\texttt{S = \{\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara, Cem, Tom]}
+\end{enumerate}
+Der geringe Unterschied zwischen Breiten- und Tiefensuche ist der Übungskünstlichkeit geschuldet, in der Praxis ergeben sich grundlegend andere Stacks/Queues und enstprechende Durchlaufreihenfolgen.
+\end{example}
 \pagebreak
 \part{Lösungen}
 \section{Grundlagen der Algorithmik}
@@ -1985,10 +2107,90 @@ Wir setzen zusammen und stellen die Gleichung für das Mastertheorem auf:
 \[T(n) = 2 \cdot T(\frac{n}{2}) + O(n^0)\]
 Nun tritt der dritte Fall des Mastertheorems ein, da $2 > 2^0 = 1$ gilt. Wir erhalten als Gesamtkomplexität $O(n^{log_2(2)}) = O(n)$.
 \section{Suchalgorithmen}
+\paragraph{Lösung zu Aufgabe 1}
 \label{a2.1:lsg}
+Wir teilen das Feld rekursiv und vergleichen mit dem mittleren Element (im Zweifel das kleinere). \\
+$\left[ \begin{array}{rrrrrrrrrrrrrrrrr}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 17 & 18 & 19 & 22
+\end{array} \right]$ \\\\
+$ 7 < 9$, also betrachten wir den linken Teil: \\
+$\left[ \begin{array}{rrrrrrrr}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8
+\end{array} \right]$ \\\\
+$ 7 > 4$, also betrachten wir den rechten Teil: \\
+$\left[ \begin{array}{rrrr}
+5 & 6 & 7 & 8
+\end{array} \right]$ \\\\
+$7 > 6$, also betrachten wir den rechten Teil: \\
+$\left[ \begin{array}{rr}
+7 & 8
+\end{array} \right]$ \\\\
+$7 = 7$, wir haben das Element gefunden.
+\paragraph{Lösung zu Aufgabe 2}
 \label{a2.2:lsg}
+Randbestimmung für den KMP-Suchalgorithmus. \\
+\begin{tabular}{|l|c|}
+\hline
+Zeichenkette & Rand \\
+\hline
+$\emptyset$ & -1 \\
+O & 0 \\
+OT & 0 \\
+OTT & 0 \\
+OTTO & 1 \\
+OTTOS & 0 \\
+OTTOSM & 0 \\
+OTTOSMO & 1 \\
+OTTOSMOP & 0 \\
+OTTOSMOPS & 0 \\
+OTTOSMOPSK & 0 \\
+OTTOSMOPSKO & 1 \\
+OTTOSMOPSKOT & 2 \\
+OTTOSMOPSKOTZ & 0 \\
+OTTOSMOPSKOTZT & 0 \\
+\hline
+\end{tabular} \\\\
+Die maximale Randlänge für dieses Muster beträgt 2 und diese tritt nur ein einziges Mal auf. Damit werden die Vorteile des KMP für dieses Muster unerheblich und es ergibt sich praktisch kein Vorteil gegenüber der einfachen Textsuche. \\\\
+\begin{tabular}{|l|c|}
+\hline
+Zeichenkette & Rand \\
+\hline
+$\emptyset$ & -1 \\
+A & 0 \\
+AN & 0 \\
+ANA & 1 \\
+ANAN & 2 \\
+ANANA & 1 \\
+ANANAS & 0 \\
+ANANASB & 0 \\
+ANANASBA & 1 \\
+ANANASBAN & 2 \\
+ANANASBANA & 3 \\
+ANANASBANAN & 4 \\
+ANANASBANANA & 5 \\
+\hline
+\end{tabular} \\\\
+Mit einer maximalen Randlänge von 5 ist dieses Muster deutlich besser geeignet als das erste. \\\\
+\begin{tabular}{|l|c|}
+\hline
+Zeichenkette & Rand \\
+\hline
+$\emptyset$ & -1 \\
+B & 0 \\
+BO & 0 \\
+BON & 0 \\
+BONO & 1 \\
+BONOB & 1 \\
+BONOBO & 2 \\
+\hline
+\end{tabular} \\\\
+Auch dieses Muster ist -- obwohl es sehr kurz ist und einen anderen Anschein macht -- nicht wirklich vorteilhaft im Gegensatz zur einfachen Textsuche.
+\paragraph{Lösung zu Aufgabe 3}
 \label{a2.3:lsg}
+\paragraph{Lösung zu Aufgabe 4}
 \label{a2.4:lsg}
+Hier sind selbstverständlich viele Lösungen richtig. Beispiel: \\
+Das Verfahren der binären Suche operiert auf einem bereits sortierten Suchraum und halbiert diesen in jedem Rekursionsaufruf. Anschließend wird nur der Teil weiter betrachtet, in dem das Element auf Basis eines Vergleichs mit dem mittleren Element zu erwarten wäre. Der Algorithmus terminiert, wenn das Element gefunden wurde oder der betrachtete Suchraum einelementig ist.
 \section{Sortieralgorithmen}
 \label{a3.1:lsg}
 \label{a3.2:lsg}

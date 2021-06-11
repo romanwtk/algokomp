@@ -39,7 +39,7 @@
 \tableofcontents
 \pagebreak
 \section*{Vorwort}
-Die theoretische Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer  gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür ergänzendes, motivierendes und begreifbares Material zusammenzustellen, dass mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
+Die theoretische Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer  gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür, ergänzendes, motivierendes und begreifbares Material zusammenzustellen, das mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
 Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettieren, um Beispiele ergänzen und mit Aufgaben versehen, wie ich sie in der Vorlesung oder weiteren Büchern antraf. Ich persönlich lerne durch Aufgaben einfach am besten und für diejenigen, denen es auch so geht, gibt es davon hier ausreichend. Lösungen finden sich (in einigen Wochen) im Anhang. \\\\
 \textit{Viel Erfolg!}  \\
 \begin{flushright}
@@ -2006,6 +2006,168 @@ Nun betrachten wir als zweites die \textbf{Tiefensuche}:
 \end{enumerate}
 Der geringe Unterschied zwischen Breiten- und Tiefensuche ist der Übungskünstlichkeit geschuldet, in der Praxis ergeben sich grundlegend andere Stacks/Queues und enstprechende Durchlaufreihenfolgen.
 \end{example}
+\section{Gerichtete Graphen}
+Wir erweitern unsere Definition von Graphen nun, indem wir die Wege zwischen einzelnen Knoten mit Gewichten versehen. So können wir Aussagen darüber treffen, ob ein Nachbar eines Knotens nach kürzerer Strecke erreichbar ist als ein anderer.
+\begin{definition}
+Ein (gerichteter) Graph $G = (V, E)$ mit einer Abbildung $g: E \to \mathbb{R}_{\geq 0}$ heißt \textbf{gewichteter} (gerichteter) Graph. Die Abbildung $g$ heißt Gewichtsfunktion. \\\\
+Für $e \in E$ heißt $g(e)$ das \textbf{Gewicht von $e$}. Das Gewicht von $G$ ist die Summe aller Gewichte aller Kanten, also 
+\[g(G) = \sum_{e \in E} g(e)\]
+\end{definition}
+Auch zu gewichteten Graphen können wir Adjazenzmatrizen und Adjazenzlisten nutzen:
+\begin{itemize}
+\item In einer \textbf{Adjazenzmatrix} zu tragen wir nun anstatt einer 1 bzw. 0 das Gewicht der Kante $g(e)$ ein.
+\item Auch die Elemente der \textbf{Adjazenzliste} erweitern wir um die Komponente des Gewichts jeder Kante: \\
+Beispiel: $4: \quad 2 \mid 1,5; 7 \mid 0.8$
+\end{itemize}
+Nun interessieren wir uns dafür, den kürzesten Weg von einem Knoten zu einem anderen zu finden. Dass es mehrere mögliche Wege gibt, ergibt sich aus den bestehenden Quervernetzungen. Typischerweise sind die Wege jeweils unterschiedlich gewichtet, sodass sich die Betrachtung tatsächlich lohnt. 
+\subsection{Der Algorithmus von Dijkstra}
+Der niederländische Informatiekr \textsc{Edsger W. Dijkstra} entwickelte 1959 einen Algorithmus zur Bestimmung der kürzesten Pfade in einem Graphen. Stellen Sie sich vor, Sie sind mit der Bahn unterwegs von Nord nach Süd. Sie müssen mindestens einmal umsteigen und Ihnen stehen verschiedene Strecken zur Auswahl, jeweils mit unterschiedlichen Fahrzeiten (also Gewichten). Ein Weg führt von Hamburg nach Mannheim über Bremen und Bonn, ein weiterer über Hannover und Frankfurt. Ein dritter führt über Berlin und Dresden.
+\paragraph{Idee} Der Algorithmus operiert wie folgt.
+\begin{enumerate}
+\item Zunächst initialisieren Sie die Suche, indem Sie festhalten, dass der Abstand von ihrem Startknoten zu sich selbst 0 ist und alle weiteren Knoten erst einmal in unerreichbarer Ferne (also unendlich weit entfernt) liegen.
+\item Nun wählen Sie den Knoten mit der kleinsten Entfernung -- also logischerweise den Startknoten -- und bestimmen den Abstand zu allen vom Startknoten aus erreichbaren Knoten. Diese Abstände notieren Sie sich.
+\item Aus der Menge der noch nicht bearbeiteten Knoten wählen Sie denjenigen mit dem kürzesten Abstand und aktualisieren nun die Abstände der Knoten, falls es eine Möglichkeit gibt, den Weg mit dem aktuellen Knoten zu verkürzen.
+\item So verfahren Sie, bis Sie alle Knoten betrachtet haben. Sie erhalten nun einen sogenannten \textbf{Kürzeste-Wege-Baum}.
+\begin{definition}
+Sei $G = (V, E)$ ein gewichteter Graph und $v \in V$. Ermittelt wird ein Pfad minimaler Länge von $v$ nach $w, \forall w \in V$ und es wird ein Baum $T = (V_T, E_T)$ mit Wurzel $v$ konstruiert. Dieser Baum heißt \textbf{Kürzeste-Wege-Baum}.
+\end{definition}
+\end{enumerate}
+Wenn wir diese Vorgehensweise in Pseudo-Code darstellen wollen, erhalten wir:
+\paragraph{Implementation} \quad
+\begin{lstlisting}
+Funktion Dijkstra(Graph, Startknoten):
+	initialisiere(Graph, Startknoten, abstand[], vorgaenger[], Q);
+	solange Q nicht leer:
+		u := Knoten in Q mit kleinstem Wert in abstand[];
+		Q.entferne(u);
+		falls (U == Startknoten) {
+			T := ({Startknoten}, {});		 		
+		}
+		sonst:
+			V_T.add(u);
+			E_T.add(vorgaenger[u], u);
+		fuer jeden Nachbarn v von u:
+			falls v in Q:
+				distanz_update(u, v, abstand[], vorgaenger[]);
+\end{lstlisting}
+Für die Initialisierungsfunktion ergibt sich zusätzlich:
+\begin{lstlisting}
+initialisiere(Graph, Startknoten) {
+	fuer jeden Knoten v in Graph:
+		abstand[v] = infinity;
+		vorgaenger[v] = undefined;
+	abstand[Startknoten] = 0;
+}
+\end{lstlisting}
+Das Aktualisieren der Distanzen erfolgt nun über folgende Methode:
+\begin{lstlisting}
+distanz_update(u, v, abstand[], vorgaenger[]) {
+	alternativ = abstand[u] + abstand_zwischen(u, v);
+	falls alternativ < abstand[v]:
+		abstand[v] = alternativ;
+		vorgaenger[v] = u;
+}
+\end{lstlisting}
+Hiermit erreichen wir nun, dass die Distanzen verringert werden, falls es einen kürzeren Weg geben. Am Ende dieses Durchlaufs sind die kürzesten Wege ermittelt. \\
+\pagebreak
+\begin{example}
+Gegeben ist der folgende Graph:
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+[main/.style = {draw, circle, minimum size=1cm, node distance=3cm,}]
+\node[main] (1) {Rathaus};
+\node[main] (2) [right=of 1] {Marktplatz};
+\node[main] (3) [below=of 1] {Wohngebiet};
+\node[main] (4) [right=of 3] {Hochschule};
+\node[main] (5) [right=of 4] {Supermarkt};
+\draw (1) edge node [left] {2} (3);
+\draw (1) edge node [above] {3} (2);
+\draw (1) edge node [below] {4} (5);
+\draw (2) edge node [above] {8} (3);
+\draw (3) edge node [above] {5} (4);
+\draw (2) edge node [right] {1} (5);
+\draw (5) edge node [above] {5} (4);
+\end{tikzpicture}
+\caption{Beispielgraph für den Dijkstra-Algorithmus}
+\end{figure} \\
+Wir kürzen die einzelnen Knoten für den Algorithmus nun ab mit RH, MP, WG, HS, SM und wählen das Wohngebiet als Startpunkt des Algorithmus. \\
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|l|}
+\hline
+u    & WG     & RH            & MP            & HS            & SM            & Bemerkung \\
+\hline
+init & 0 $\mid$ -- & $\infty$ $\mid$ -- & $\infty$ $\mid$ -- & $\infty$ $\mid$ -- & $\infty$ $\mid$ -- & Initialisierung \\
+\hline
+WG   &        & 2 $\mid$ WG   & 8 $\mid$ WG        & 5 $\mid$ WG        &               & Knoten mit kürzester Distanz: RH\\
+\hline
+RH   &        &               & 5 $\mid$ RH   	     &               & 6 $\mid$ RH        & Knoten mit kürzester Distanz: MP \\
+\hline
+MP   &        &               &               &               &               & Keine weiteren Knoten verblieben. \\
+\hline
+\end{tabular}
+\caption{Beispiel zum Dijkstra-Algorithmus}
+\end{table} 
+Dieses Beispiel ist zugegebenerweise nicht sonderlich spannend, da vom Wohngebiet aus bereits viele Knoten erreichbar sind und es nur zwei Abkürzungen gibt, die wir finden, nämlich der Weg zum Marktplatz über das Rathaus und der Weg zum Supermarkt über das Rathaus. \\\\
+Diese Wege lassen sich nun in einen \textbf{Kürzeste-Wege-Baum }übertragen. \\
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\tikzstyle{main}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node[main] {WG}
+    child {node[main] {HS}
+    edge from parent node[right]{5}}
+    child {node[main] {RH}
+    child {node[main] {SM}
+    edge from parent node[right]{4}}
+    child {node[main] {MP}
+    edge from parent node[right]{3}}
+    edge from parent node[right]{2}};
+\end{tikzpicture}
+\caption{Kürzeste-Wege-Baum zum Dijkstra-Beispiel}
+\end{figure}
+\end{example}
+\pagebreak
+\section*{Aufgaben}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+[main/.style = {draw, circle, minimum size=1cm, node distance=3cm,}]
+\node[main] (1) {A};
+\node[main] (2) [right=of 1] {B};
+\node[main] (3) [right=of 2] {C};
+\node[main] (4) [below=of 1] {E};
+\node[main] (5) [right=of 4] {D};
+\node[main] (6) [right=of 5] {F};
+\draw (1) edge node [right] {\quad 7} (6);
+\draw (1) edge node [left] {2} (4);
+\draw (2) edge node [above] {6} (3);
+\draw (2) edge node [left] {9} (4);
+\draw (2) edge node [left] {3} (5);
+\draw (3) edge node [right] {2} (5);
+\draw (3) edge node [right] {2} (6);
+\draw (4) edge node [below] {1} (5);
+\end{tikzpicture}
+\end{figure}
+\paragraph{Aufgabe 1} Geben Sie zu diesem Graph die Adjazenzmatrix und Adjazenzliste an.
+\begin{flushright}
+Lösung auf Seite \pageref{a6.1:lsg} \\
+\end{flushright}
+\paragraph{Aufgabe 2} Führen Sie zu diesem Graphen eine Breiten- und Tiefensuche durch. Geben Sie jeweils die Queue/den Stack und die bereits durchlaufenen Knoten an.
+\begin{flushright}
+Lösung auf Seite \pageref{a6.2:lsg} \\
+\end{flushright}
+\paragraph{Aufgabe 3} Wenden Sie den Dijkstra-Algorithmus zur Berechnung der kürzesten Wege von Knoten B ausgehend auf den Graphen an. Notieren Sie den Kürzeste-Wege-Baum.
+\begin{flushright}
+Lösung auf Seite \pageref{a6.3:lsg} \\
+\end{flushright}
+\paragraph{Aufgabe 4} Erläutern Sie den Unterschied zwischen Stack und Queue und gehen Sie darauf ein, warum die jeweilige Datenstruktur im BFS- bzw. DFS-Traversal-Algorithmus verwendet wird.
+\begin{flushright}
+Lösung auf Seite \pageref{a6.4:lsg} \\
+\end{flushright}
 \pagebreak
 \part{Lösungen}
 \section{Grundlagen der Algorithmik}
@@ -2206,6 +2368,11 @@ Das Verfahren der binären Suche operiert auf einem bereits sortierten Suchraum 
 \label{a5.2:lsg}
 \label{a5.3:lsg}
 \label{a5.4:lsg}
+\section{Graphen}
+\label{a6.1:lsg}
+\label{a6.2:lsg}
+\label{a6.3:lsg}
+\label{a6.4:lsg}
 \pagebreak
 \part{Verzeichnisse}
 \section*{Tabellen und Formeln}

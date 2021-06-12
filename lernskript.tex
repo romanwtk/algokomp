@@ -606,7 +606,7 @@ Eine Veranschaulichung der algorithmischen Rand-Bestimmung finden Sie in der Wik
 \paragraph{Der Suchalgorithmus}
 Ähnlich wie bei der einfachen Textsuche beginnen Sie, indem Sie das zu suchende Muster unter den Suchraum schreiben und vergleichen Zeichen für Zeichen. Entscheidend ist nun die erste Abweichung: Sie bestimmen den \texttt{Rand[]} der Indexposition der Abweichung im Muster und verschieben ihr Muster nun mit unterer Formel. So nutzen Sie aus, dass bis zur ersten Abweichung Gleichheit bestand -- falls bei vier gleichen Zeichen ein Rand von zwei vorliegt, können Sie ihr Muster so verschieben, dass der Beginn nun dort liegt, wo zuvor das mit dem neuen Anfang identische Enge lag. Nun fahren Sie mit den neu gewonnen Index-Positionen fort, die sich aus dem Verschiebung ergeben haben. \\\\
 Die Formel für Verschiebungen ist: \\
-\texttt{Neuer Beginn des Musters (neue Suchtextposition) = Suchtextposition (aktueller Beginn des Musters) + (Anzahl übereinstimmender Zeichen -- Randlänge)}
+\texttt{Neuer Beginn des Musters (neue Suchtextposition) = Suchtextposition (aktueller Beginn des Musters) + (Anzahl übereinstimmender Zeichen -- Randlänge[Index im Muster])}
 \begin{example}
 Sie suchen das Muster \texttt{ababaab} im Text \texttt{baabbaababaabbbabba}. \\
 \textbf{Schritt 1}: Bestimmung des Randes \\\\
@@ -625,7 +625,7 @@ b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
 a&b&a&b&a&a&b& & & & & & & & & & & & \\
 \hline
 \end{tabular} \\
-Erste Abweichung an Index 0 $\to$ Rand[0] = -1, nach Formel oben: $0+(0-(-1)) = 1$. Also verschieben wir das Muster an Indexposition 1. \\\\
+Erste Abweichung an Index 0 $\to$ Rand[0] = -1, nach Formel oben: $0+(0-(-1)) = 1$. \\Also verschieben wir das Muster an Indexposition 1. \\\\
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
@@ -635,7 +635,7 @@ b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
  &a&b&a&b&a&a&b& & & & & & & & & & &  \\
 \hline
 \end{tabular} \\
-Abweichung an Index 2, Rand[2] = 0, mit Formel: $1+(1-0) = 2$. Wir verschieben also so, dass das erste Zeichen des Musters an Index 2 steht.  \\\\
+Abweichung an Index 2 (1 im Muster), Rand[1] = 0, mit Formel: $1+(1-0) = 2$. \\Wir verschieben also so, dass das erste Zeichen des Musters an Index 2 steht.  \\\\
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
@@ -645,7 +645,7 @@ b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
  & &a&b&a&b&a&a&b& & & & & & & & & &   \\
 \hline
 \end{tabular}\\
-Abweichung an Index 4, Rand[2] = 0, mit Formel: $2+(2-0) = 4$. Neue Indexposition des Musters: 4. \\\\
+Abweichung an Index 4 (2 im Muster), Rand[2] = 0, mit Formel: $2+(2-0) = 4$. \\Neue Indexposition des Musters: 4. \\\\
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
@@ -655,7 +655,7 @@ b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
  & & & &a&b&a&b&a&a&b& & & & & & & &    \\
 \hline
 \end{tabular}\\
-Abweichung an Index 4, Rand[0] = -1, mit Formel: $4+(0-(-1)) = 5$. Neue Indexposition: 5. \\\\
+Abweichung an Index 4 (0 im Muster), Rand[0] = -1, mit Formel: $4+(0-(-1)) = 5$. \\ Neue Indexposition: 5. \\\\
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
@@ -665,7 +665,7 @@ b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
  & & & & &a&b&a&b&a&a&b& & & & & & &    \\
 \hline
 \end{tabular}\\
-Abweichung an Index 6, Rand[1] = 0, mit Formel: $5+(1-0) = 6$. \\\\
+Abweichung an Index 6 (1 im Muster), Rand[1] = 0, mit Formel: $5+(1-0) = 6$. \\\\
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
@@ -739,7 +739,7 @@ Geben Sie jeweils an, wie sehr sich der Einsatz des KMP-Algorithmus bei diesen M
 \begin{flushright}
 Lösung auf Seite \pageref{a2.2:lsg}
 \end{flushright}
-\paragraph{Aufgabe 3} Wenden Sie den KMP-Algorithmus mit dem Muster \texttt{BONOBO} auf den Suchtext \texttt{BEINAHEBOTNOCHDASBONOBONOBOHAUSPLATZ} an. Stellen Sie Ihre Zwischenergebnisse dar.
+\paragraph{Aufgabe 3} Wenden Sie den KMP-Algorithmus mit dem Muster \texttt{BONOBO} auf den Suchtext \texttt{BEINAHEBOTNOCHDASBONOBONOBOHAUSPLATZ}\footnote{Ja, der Text ist tatsächlich so gemeint, die Dopplung ist bewusst geschehen.} an. Stellen Sie Ihre Zwischenergebnisse dar.
 \begin{flushright}
 Lösung auf Seite \pageref{a2.3:lsg}
 \end{flushright}
@@ -2349,15 +2349,91 @@ BONOBO & 2 \\
 Auch dieses Muster ist -- obwohl es sehr kurz ist und einen anderen Anschein macht -- nicht wirklich vorteilhaft im Gegensatz zur einfachen Textsuche.
 \paragraph{Lösung zu Aufgabe 3}
 \label{a2.3:lsg}
+Wir suchen das Wort \textbf{Bonobo} im Suchraum \textbf{Beinahebotnochdasbonobonobohausplatz}. Dafür nutzen wir die Randbestimmung aus der oberen Aufgabe. \\\\ An dieser Stelle verzichte ich auf eine tabellarische Darstellung wie im Beispiel und stelle die Schritte im Folgenden in Textform dar:
+\begin{enumerate}
+\item Wir legen den Suchtext unter das Muster und stellen fest, dass der erste Buchstabe \textbf{B} übereinstimmt, der zweite jedoch schon nicht mehr. Nun ergibt sich durch die Formel
+\[\text{Neuer Beginn} = \text{Suchtextposition} + (\text{Übereinstimmungen} - \text{Randlaenge[Musterindex])}\] der neue Beginn $1 = 0 + (1 - 0)$.
+\item An Position 1 tritt keine Übereinstimmung auf, also $2 = 1 + (0 - (-1)$, wir verschieben unser Muster also an Position 2.
+\item Auch an Position 2 tritt keine Übereinstimmung auf: $3 = 2 + (0 - (-1)$. So gehen wir vor, bis unser Muster an Index 7 steht.
+\item Hier erkennen wir, dass das Muster \textbf{Bo} übereinstimmt. Es ergibt sich: $9 = 7 + (2 - (0)$. Von Position 9 an verschieben wir das Muster weiter in 1er-Schritten, bis wir bei \textbf{bonobonobohausplatz} ankommen, also an Index 17. \textbf{Hier ist das erste Vorkommen des Musters.} Wir verschieben zur Position $21 = 17 + (6 - 2)$, weil hier theoretisch ein weiteres Vorkommen beginnen könnte. 
+\item Wir sehen: Das tut es auch. An Position 21 erhalten wir also das zweite Vorkommen des Musters. Wir verschieben zu $25 = 21 + (6 - 2)$.
+\item Hier stimmen die ersten beiden Buchstaben überein, also gilt $27 = 25 + (2 - (0))$.
+\item An Position 27 stimmen keine Buchstaben überein, wir rücken also wieder um jeweils einen Schritt nach vorne bis zum Index 31, weil ab dort die Anzahl der verbleibenden Zeichen geringer ist als die Länge des Musters.
+\end{enumerate}
+Wir haben nun also zwei Vorkommen unseres Musters im Text ermittelt.
 \paragraph{Lösung zu Aufgabe 4}
 \label{a2.4:lsg}
 Hier sind selbstverständlich viele Lösungen richtig. Beispiel: \\
 Das Verfahren der binären Suche operiert auf einem bereits sortierten Suchraum und halbiert diesen in jedem Rekursionsaufruf. Anschließend wird nur der Teil weiter betrachtet, in dem das Element auf Basis eines Vergleichs mit dem mittleren Element zu erwarten wäre. Der Algorithmus terminiert, wenn das Element gefunden wurde oder der betrachtete Suchraum einelementig ist.
 \section{Sortieralgorithmen}
+\paragraph{Lösung zu Aufgabe 1}
 \label{a3.1:lsg}
+\begin{itemize}
+\item \textbf{Insertion Sort}
+\begin{enumerate}
+\item \texttt{[56, 10, 15, 98, 99, 12, 30, 80]}: 56 $>$ 10, also vertauschen..
+\item \texttt{[10, 56, 15, 98, 99, 12, 30, 80]}: 10 $<$ 15 $<$ 56, also 15 zw. 10 und 56 einfügen.
+\item \texttt{[10, 15, 56, 98, 99, 12, 30, 80]}: 10 $<$ 15 $<$ 56 $<$ 98, keine Änderung.
+\item \texttt{[10, 15, 56, 98, 99, 12, 30, 80]}: 10 $<$ 15 $<$ 56 $<$ 98 $<$ 99
+\item \texttt{[10, 15, 56, 98, 99, 12, 30, 80]}: 10 $<$ 12 $<$ 15, also 12 zw. 10 und 15 einfügen.
+\item \texttt{[10, 12, 15, 56, 98, 99, 30, 80]}: 15 $<$ 30 $<$ 56, also 30 zw. 15 und 56 einfügen.
+\item \texttt{[10, 12, 15, 30, 56, 98, 99, 80]}: 56 $<$ 80 $<$ 98, also 80 zw. 56 und 98 einfügen.
+\item \texttt{[10, 12, 15, 30, 56, 80, 98, 99]}: Fertig, Algorithmus terminiert.
+\end{enumerate}
+\item \textbf{Bubblesort}
+\begin{enumerate}
+\item \texttt{[56, 10, 15, 98, 99, 12, 30, 80]}: 56 $>$ 10, also vertauschen.
+\item \texttt{[10, 56, 15, 98, 99, 12, 30, 80]}: 56 $>$ 15, also vertauschen
+\item \texttt{[10, 15, 56, 98, 99, 12, 30, 80]}: 56 $<$ 98, betrachten wir 98.
+\item \texttt{[10, 15, 56, 98, 99, 12, 30, 80]}: 98 $<$ 99, betrachten wir 99.
+\item \texttt{[10, 15, 56, 98, 99, 12, 30, 80]}: 99 $>$ 12, wir vertauschen.
+\item \texttt{[10, 15, 56, 98, 12, 99, 30, 80]}: 99 $>$ 30, wir vertauschen.
+\item \texttt{[10, 15, 56, 98, 12, 30, 99, 80]}: 99 $>$ 80, wir vertauschen.
+\item \texttt{[10, 15, 56, 98, 12, 30, 80, 99]}: Ende des Feldes erreicht, da vertauscht wurde, beginnen wir erneut.
+\item \texttt{[10, 15, 56, 98, 12, 30, 80, 99]}: 10 $<$ 15 $<$ 56 $<$ 98, aber 98 $>$ 12 (jeweils einzeln!).
+\item \texttt{[10, 15, 56, 12, 98, 30, 80, 99]}: 98 $>$ 30, vertauschen.
+\item \texttt{[10, 15, 56, 12, 30, 98, 80, 99]}: 98 $>$ 80, vertauschen.
+\item \texttt{[10, 15, 56, 12, 30, 80, 98, 99]}: 98 $<$ 99, nächste Iteration.
+\item \texttt{[10, 15, 56, 12, 30, 80, 98, 99]}: ..., 56 $>$ 12, vertauschen.
+\item \texttt{[10, 15, 12, 56, 30, 80, 98, 99]}: 56 $>$ 30, vertauschen.
+\item \texttt{[10, 15, 12, 30, 56, 80, 98, 99]}: ..., nächste Iteration.
+\item \texttt{[10, 15, 12, 30, 56, 80, 98, 99]}: 15 $>$ 12, vertauschen.
+\item \texttt{[10, 12, 15, 30, 56, 80, 98, 99]}: ..., nächste Iteration.
+\item \texttt{[10, 12, 15, 30, 56, 80, 98, 99]}: ..., Fertig, Algorithmus terminiert (keine Vertauschungen in dieser Iteration).
+\end{enumerate}
+\item \textbf{Quicksort}
+\begin{enumerate}
+\item \texttt{[56, 10, 15, 98, 99, 12, 30, 80]}: 56 ist 1.Element, alle $p < 56$ vor 56 und alle $p > 56$ hinter 56 (unsortiert).
+\item \texttt{[10, 15, 12, 30, 56, 98, 99, 80]}: Wir betrachten 10 und 98 und verfahren ebenso.
+\item \texttt{[10, 15, 12, 30, 56, 80, 98, 99]}: Wir betrachten 15 und 80 und verfahren ebenso.
+\item \texttt{[10, 12, 15, 30, 56, 80, 98, 99]}: Fertig, Algorithmus terminiert.
+\end{enumerate}
+\item \textbf{Mergesort}
+\begin{enumerate}
+\item \texttt{[56, 10, 15, 98, 99, 12, 30, 80]}: Zerteilen in Hälften.
+\item \texttt{[56, 10, 15, 98][99, 12, 30, 80]}: Zerteilen.
+\item \texttt{[56, 10][15, 98][99, 12][30, 80]}: Zerteilen und verbinden.
+\item \texttt{[56][10][15][98][99][12][30][80]}: Sortieren und verbinden.
+\item \texttt{[10, 56][15, 98][12, 99][30, 80]}: Sortieren und verbinden.
+\item \texttt{[10, 15, 56, 98][12, 30, 80, 99]}: Sortieren und verbinden.
+\item \texttt{[10, 12, 15, 30, 56, 80, 98, 99]}: Fertig, Algorithmus terminiert.
+\end{enumerate}
+\end{itemize}
+\paragraph{Lösung zu Aufgabe 2}
 \label{a3.2:lsg}
+Auch hier sind natürlich wieder mehrere Lösungen richtig. \\\\
+Beim Quicksort-Algorithmus wählen wir ein Vergleichselement (Pivot) und richten unser Array zunächst an diesem Element aus, d.h. alle kleineren Elemente notieren wir links dieses Pivots und alle größeren rechts. Nun suchen wir in dieser linken bzw. rechten Teilmenge wieder je ein Pivot und ordnen entsprechend um. Das wiederholen wir solange, bis die aufgespannten Mengen nur ein Element umfassen. Dann ist das Feld/die Menge sortiert.
+\paragraph{Lösung zu Aufgabe 3}
 \label{a3.3:lsg}
+Anzugeben ist, mit welchem Algorithmus die Felder jeweils am besten zu sortieren sind. 
+\begin{itemize}
+\item Das Feld \texttt{[1, 9, 2, 8, 3, 7, 4, 6, 5]} ist über Insertion Sort am effizientesten zu sortieren, da wir in diesem Feld ein Muster erkennen: Alle Elemente mit geraden Index-Positionen (1, 2, 3, 4, 5) stehen für sich jeweils in einer richtigen Reihenfolge während alle Elemente auf geraden Index-Positionen (9, 8, 7, 6) in inverser Reihenfolge stehen. Würden wir Bubblesort verwenden, gäbe es einige Iterationen mit Vertauschungen, sodass sich der Aufwand insgesamt erhöht. Für Mergesort und Quicksort ist der Mehraufwand höher als der Nutzen, da die Datenmenge vergleichsweise klein und unkomplex ist.
+\item Das Feld \texttt{[9, 7, 7, 2, 5, 4, 7, 3, 1]} wäre aufgrund der häufig vertretenen 7 für einen modifizierten Quicksort optimal (3-Way-Partitioning). Die 7 würde im zweiten rekursiven Aufruf Pivot werden und damit wären sehr schnell viele Elemente abgearbeitet.
+\item Das Feld \texttt{[9, 8, 7, 6, 5, 4, 3, 2, 1]} liegt in der genau umgekehrten Reihenfolge vor und sollte daher unbedingt mit einem rekursiven Verfahren sortiert werden. Hier bietet sich Mergesort an, da bei Quicksort die Pivot-Elemente sehr ungünstigerweise jeweils die größten wären. Mergesort ist durch die Parallelität optimal.
+\end{itemize}
+\paragraph{Lösung zu Aufgabe 4}
 \label{a3.4:lsg}
+Bei Mergesort und Quicksort handelt es sich um rekursiv operierende Verfahren, die parallel bearbeitet werden. Hierfür bietet sich die Darstellung als Baum an: Für jede Menge, die halbiert wird, zeichnen wir ein Kindelment. Im Fall Mergesort spiegeln wir die Struktur des Baums im Mergeschritt und erhalten als Blatt die sortierte Gesamtmenge.
 \section{Bäume}
 \label{a4.1:lsg}
 \label{a4.2:lsg}

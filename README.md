@@ -11,6 +11,7 @@ Dem Aufbau der Vorlesung folgend, besteht dieses Skript aus folgenden Themen:
 - Sortieralgorithmen: Insertionsort, Bubblesort, Mergesort, Quicksort
 - Bäume: Wurzelbaum, binäre Bäume, Operationen auf Bäumen
 - Heaps (inkl. Heapsort)
+- Graphentheorie: Adjazenzmatrizen/-listen, BFS-/DFS-Traversal, Dijkstra-Algorithmus 
 
 Weitere Themen folgen im Laufe der Zeit.
 

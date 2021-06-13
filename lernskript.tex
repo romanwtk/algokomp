@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{hyperref}
+\usepackage{colortbl}
 \usepackage{listings}
 \usepackage{chngcntr}
 \usepackage{upgreek}
@@ -177,7 +178,7 @@ Neben der $O$-Notation gibt es zwei weitere Notationen, die im Folgenden vorgest
 \subsection{$\Omega$-Notation}
 Neben der Menge aller Funktionen, die höchstens so schnell wächst wie die betrachtete Funktion, bezeichnen wir die Menge der Funktionen, die mindestens so schnell wächst wie die Funktion als $\Omega(n)$.
 \begin{definition} Sei $g \in \mathbb{R_{+}}$. Die Menge aller Funktionen, die mindestens so schnell wachsen wie $g$ ist: 
-\[\Omega(n) := \{ f \in \mathbb{R_{+}^{\mathbb{N}}} \mid \exists n_{0} \in \mathbb{N}: \exists c \in \mathbb{R_{+}}: \forall n \in \mathbb{N}: (n \geq n_{0} \Rightarrow F(n) \geq c \cdot g(n))\}\]
+\[\Omega(n) := \{ f \in \mathbb{R_{+}^{\mathbb{N}}} \mid \exists n_{0} \in \mathbb{N}: \exists c \in \mathbb{R_{+}}: \forall n \in \mathbb{N}: (n \geq n_{0} \Rightarrow f(n) \geq c \cdot g(n))\}\]
 \end{definition}
 Diese Notation fristet ein Schattendasein: In der Regel ist die $O$-Notation geeigneter, da eine Orientierung am {\glqq}Worst-Case-Szenario{\grqq} üblicher ist.
 \subsection{$\Theta$-Notation}
@@ -193,7 +194,7 @@ Aus $O$-Notation und $\Omega$-Notation ergibt sich nun die Menge der Funktionen,
 \end{itemize}
 \begin{lemma}
 \begin{itemize}
-\item $f \in O(g) \text{ und } g \in O(f), \text{ also } f \in O(g) und f \in \Omega (g), \text{ wenn } \lim \limits_{n \to \infty} \frac{f(n)}{g(n)} = c, c \neq 0, \text{ also: } f \in \Theta (g)$
+\item $f \in O(g) \text{ und } g \in O(f), \text{ also } f \in O(g) \text{ und } f \in \Omega (g), \text{ wenn } \lim \limits_{n \to \infty} \frac{f(n)}{g(n)} = c, c \neq 0, \text{ also: } f \in \Theta (g)$
 \item $f \in O(g) \text{ und } g \notin O(f), \text{ wenn } \lim \limits_{n \to \infty} \frac{f(n)}{g(n)} = 0, \text{ also: } g \in \Omega (f) \text{ und } f \notin \Omega (g)$
 \item $ f \notin O(g) \text{ und } g \in O(f), \text{ also } g \notin \Omega (f) \text{ und } f \in \Omega (g), \text{ wenn } \lim \limits_{n \to \infty} \frac{f(n)}{g(n)} = \infty$
 \end{itemize}
@@ -227,7 +228,7 @@ Mithilfe dieses Theorems kann nun die Komplexität eines rekursiven Algorithmus 
 \begin{example}
 Gegegeben sei \[f(n) = 2 \cdot f(\frac{n}{2}) + O(n^{2})\] 
 Daraus folgt $ a = 2, b = 2, d = 2$. \\\\
-Da $2 < 2^{2}$ trifft der erste Fall ein und wir halten fest: $f(n) \in O(n^{2})$.
+Da $2 < 2^{2}$ tritt der erste Fall ein und wir halten fest: $f(n) \in O(n^{2})$.
 \end{example}
 Über das Mastertheorem sind eine Zahl an Rekursionsgleichungen entscheidbar, jedoch nicht jede. Für die Rekursionsgleichungen, deren Form nicht der für das Mastertheorem benötigten entspricht, werden andere Verfahren nötig.
 \subsection{Auflösungsverfahren}
@@ -399,7 +400,7 @@ Neben Schleifen, deren Komplexitätsbetrachtung wir nun in aller Ausführlichkei
 Die Komplexität von rekursiven Algorithmen zu bestimmen ist im Allgemeinen aufwendiger. Wir betrachten verschiedene Fälle:
 \begin{itemize}
 \item Falls in jedem Schritt die betrachtete Datenmenge um eins kürzer wird und die zusätzlich ausgeführte Operation einen konstanten Zeitbedarf hat, so liegt die Komplexität in $O(n)$.
-\item Ist dieser Zufallsaufwand nun nicht konstant sondern linear (verändert sich also in Abhängigkeit von $n$, so verändert sich der Aufwand und wir erhalten eine Komplexität von $O(\frac{n^2}{2}$.
+\item Ist dieser Zufallsaufwand nun nicht konstant sondern linear (verändert sich also in Abhängigkeit von $n$, so verändert sich der Aufwand und wir erhalten eine Komplexität von $O(\frac{n^2}{2})$.
 \end{itemize}
 An dieser Stelle sei auch noch einmal auf das \textbf{Master-Theorem} verwiesen, das bei Rekursionsgleichungen Anwendung findet, die gemäß {\glqq}Divide and Conquer{\grqq} (Teile und Herrsche) Probleme in kleinere Teilprobleme zerteilen, diese getrennt voneinander verarbeiten und anschließend wieder zusammensetzen. ($\to$ Mergesort, S.  \pageref{mergesort})
 \vspace{1cm}
@@ -517,7 +518,7 @@ Die Parameter \texttt{indexLeft} und \texttt{indexRight} schränken jeweils das 
 Hier handelt es sich um ein rekursives Verfahren, folglich werden wir eine Rekursionsgleichung erhalten und diese mit den bekannten Verfahren auswerten. Doch zunächst betrachten wir wieder Fälle: \\
 \textit{günstigster Fall}: \quad E ist das mittlere Element $\to$ 1 Vergleich\\
 \textit{ungünstigster Fall}: \quad E ist nicht im Feld \\
-Die Rekursionsgleichung mit den Parametern $a, b \text{und} d$ ergibt sich nun wie folgt:
+Die Rekursionsgleichung mit den Parametern $a, b \text{ und } d$ ergibt sich nun wie folgt:
 \begin{itemize}
 \item Es gibt einen rekursiven Aufruf, d.h. $a = 1$.
 \item Pro Rekursionsaufruf halbieren wir das Feld, daraus folgt $b = 2$.
@@ -611,18 +612,20 @@ Die Formel für Verschiebungen ist: \\
 Sie suchen das Muster \texttt{ababaab} im Text \texttt{baabbaababaabbbabba}. \\
 \textbf{Schritt 1}: Bestimmung des Randes \\\\
 \begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
  0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
 \hline
 -1 & 0 & 0 & 1 & 2 & 1 & 1 & 2 \\
+\hline
 \end{tabular} \\\\
 \textbf{Schritt 2}: Suche \\\\
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
 \hline
 0 & 1 & 2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
 \hline
-b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+\cellcolor{red}b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
 \hline
-a&b&a&b&a&a&b& & & & & & & & & & & & \\
+\cellcolor{red}a&b&a&b&a&a&b& & & & & & & & & & & & \\
 \hline
 \end{tabular} \\
 Erste Abweichung an Index 0 $\to$ Rand[0] = -1, nach Formel oben: $0+(0-(-1)) = 1$. \\Also verschieben wir das Muster an Indexposition 1. \\\\
@@ -630,9 +633,9 @@ Erste Abweichung an Index 0 $\to$ Rand[0] = -1, nach Formel oben: $0+(0-(-1)) = 
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
 \hline
-b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+b&\cellcolor{green}a&\cellcolor{red}a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
 \hline
- &a&b&a&b&a&a&b& & & & & & & & & & &  \\
+ &\cellcolor{green}a&\cellcolor{red}b&a&b&a&a&b& & & & & & & & & & &  \\
 \hline
 \end{tabular} \\
 Abweichung an Index 2 (1 im Muster), Rand[1] = 0, mit Formel: $1+(1-0) = 2$. \\Wir verschieben also so, dass das erste Zeichen des Musters an Index 2 steht.  \\\\
@@ -640,9 +643,9 @@ Abweichung an Index 2 (1 im Muster), Rand[1] = 0, mit Formel: $1+(1-0) = 2$. \\W
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
 \hline
-b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+b&a&\cellcolor{green}a&\cellcolor{green}b&\cellcolor{red}b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
 \hline
- & &a&b&a&b&a&a&b& & & & & & & & & &   \\
+ & &\cellcolor{green}a&\cellcolor{green}b&\cellcolor{red}a&b&a&a&b& & & & & & & & & &   \\
 \hline
 \end{tabular}\\
 Abweichung an Index 4 (2 im Muster), Rand[2] = 0, mit Formel: $2+(2-0) = 4$. \\Neue Indexposition des Musters: 4. \\\\
@@ -650,9 +653,9 @@ Abweichung an Index 4 (2 im Muster), Rand[2] = 0, mit Formel: $2+(2-0) = 4$. \\N
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
 \hline
-b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+b&a&a&b&\cellcolor{red}b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
 \hline
- & & & &a&b&a&b&a&a&b& & & & & & & &    \\
+ & & & &\cellcolor{red}a&b&a&b&a&a&b& & & & & & & &    \\
 \hline
 \end{tabular}\\
 Abweichung an Index 4 (0 im Muster), Rand[0] = -1, mit Formel: $4+(0-(-1)) = 5$. \\ Neue Indexposition: 5. \\\\
@@ -660,9 +663,9 @@ Abweichung an Index 4 (0 im Muster), Rand[0] = -1, mit Formel: $4+(0-(-1)) = 5$.
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
 \hline
-b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+b&a&a&b&b&\cellcolor{green}a&\cellcolor{red}a&b&a&b&a&a&b&b&b&a&b&b&a \\
 \hline
- & & & & &a&b&a&b&a&a&b& & & & & & &    \\
+ & & & & &\cellcolor{green}a&\cellcolor{red}b&a&b&a&a&b& & & & & & &    \\
 \hline
 \end{tabular}\\
 Abweichung an Index 6 (1 im Muster), Rand[1] = 0, mit Formel: $5+(1-0) = 6$. \\\\
@@ -670,9 +673,9 @@ Abweichung an Index 6 (1 im Muster), Rand[1] = 0, mit Formel: $5+(1-0) = 6$. \\\
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
 \hline
-b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+b&a&a&b&b&a&\cellcolor{green}a&\cellcolor{green}b&\cellcolor{green}a&\cellcolor{green}b&\cellcolor{green}a&\cellcolor{green}a&\cellcolor{green}b&b&b&a&b&b&a \\
 \hline
- & & & & & &a&b&a&b&a&a&b& & & & & &    \\
+ & & & & & &\cellcolor{green}a&\cellcolor{green}b&\cellcolor{green}a&\cellcolor{green}b&\cellcolor{green}a&\cellcolor{green}a&\cellcolor{green}b& & & & & &    \\
 \hline
 \end{tabular}\\
 Nun tritt keine Abweichung ein, das erste Vorkommen des Musters im Suchtext ist gefunden. Da wir nun an allen Vorkommen interessiert sind, führen wir unsere Suche fort. Dafür bestimmen wir zunächst den Rand[7] = 2. Mit der Formel folgt: $6+(7-2) = 11$. An Position 11 können wir nun unsere Suche fortsetzen.\\\\
@@ -680,9 +683,9 @@ Nun tritt keine Abweichung ein, das erste Vorkommen des Musters im Suchtext ist 
 \hline
 0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18 \\
 \hline
-b&a&a&b&b&a&a&b&a&b&a&a&b&b&b&a&b&b&a \\
+b&a&a&b&b&a&a&b&a&b&a&\cellcolor{green}a&\cellcolor{green}b&\cellcolor{red}b&b&a&b&b&a \\
 \hline
- & & & & & & & & & & &a&b&a&b&a&a&b&    \\
+ & & & & & & & & & & &\cellcolor{green}a&\cellcolor{green}b&\cellcolor{red}a&b&a&a&b&    \\
 \hline
 \end{tabular}\\
 $11+(2-0) = 13$. Damit verlassen wir den Suchtext, der Algorithmus terminiert, da kein weiteres Vorkommen gefunden wurde.
@@ -1306,13 +1309,13 @@ Rotation ist möglich, da ein vormals linkes Kind -- das kleiner als die Wurzel 
  \node {7}
     child {node {2}}
     child {node {42}
-    child {node {24}
+    child {node[fill=yellow] {24}
     child {node {15}}}
     child {node {72}}};
 \hspace{4cm} $\text{RR(24)} \Rightarrow$ \hspace{4cm}
 \node {7}
     child {node {2}}
-    child {node {24}
+    child {node[fill=yellow] {24}
     child {node {15}}
     child {node {42}
     child {node {72}}}};
@@ -1327,12 +1330,12 @@ Der hier vorliegende Baum wurde am Knoten 24 nach rechts rotiert. Dadurch ist di
 \tikzstyle{level 2}=[sibling distance=20mm]
  \node {7}
     child {node {2}}
-    child {node {24}
+    child {node[fill=yellow] {24}
     child {node {15}}
     child {node {42}
     child {node {72}}}};
 \hspace{4cm} $\text{LR(24)} \Rightarrow$ \hspace{4cm}
-\node {24}
+\node[fill=yellow] {24}
     child {node {7}
     child {node {2}}
     child {node {15}}}
@@ -1393,8 +1396,8 @@ Die Operationen Suchen, Einfügen und Löschen eines Schlüssels können in $O(l
 \begin{flushright}
 Lösung auf Seite \pageref{a4.1:lsg} \\
 \end{flushright}
-\paragraph{Aufgabe 2} 
-Untersuchen und begründen Sie, ob es sich bei diesem Baum um einen AVL-Baum handelt. Fügen Sie hierzu die Balancen jedes Knotens ein. 
+\paragraph{Aufgabe 2}
+Untersuchen und begründen Sie, ob es sich bei diesem Baum (wie gegeben, vor Aufgabe 1) um einen AVL-Baum handelt. Fügen Sie hierzu die Balancen jedes Knotens ein. 
 \begin{flushright}
 Lösung auf Seite \pageref{a4.2:lsg}
 \end{flushright}
@@ -1508,7 +1511,7 @@ Um sicherzustellen, dass es sich bei einem gegebenen Baum um einen Heap handelt,
     child {node {N}
     child {node {E}}
     child {node {I}}}
-    child {node {T}
+    child {node[fill=yellow] {T}
     child {node {H}}
     child {node {G}}}}
     child {node {R}
@@ -1516,7 +1519,7 @@ Um sicherzustellen, dass es sich bei einem gegebenen Baum um einen Heap handelt,
     child {node {A}}};
 \hspace{4.5cm} $\Rightarrow$ \hspace{4.5cm}
 \node {S}
-    child {node {T}
+    child {node[fill=yellow] {T}
     child {node {N}
     child {node {E}}
     child {node {I}}}
@@ -2435,9 +2438,121 @@ Anzugeben ist, mit welchem Algorithmus die Felder jeweils am besten zu sortieren
 \label{a3.4:lsg}
 Bei Mergesort und Quicksort handelt es sich um rekursiv operierende Verfahren, die parallel bearbeitet werden. Hierfür bietet sich die Darstellung als Baum an: Für jede Menge, die halbiert wird, zeichnen wir ein Kindelment. Im Fall Mergesort spiegeln wir die Struktur des Baums im Mergeschritt und erhalten als Blatt die sortierte Gesamtmenge.
 \section{Bäume}
+\paragraph{Lösung zu Aufgabe 1}
 \label{a4.1:lsg}
+Zu dem gegebenen Baum sind zunächst Definitionen anzuwenden und anschließend zwei Operationen auszuführen.
+\begin{itemize}
+\item Die Wurzel ist der Knoten $F$.
+\item Die Höhe des Baums beträgt 3.
+\item Der Knoten $E$ hat die Höhe 1.
+\item Die Ordnung des Baumes beträgt 2.
+\item Die Balance des Knotens $K$ beträgt 1.
+\end{itemize}
+Nun ist der Knoten $J$ hinzuzufügen. Da $F < J$, fahren wir im rechten Teilbaum fort. $J < K$, also betrachten wir den linken Teilbaum von $K$ mit $H$ als Wurzel. $J > H$, also betrachten wir den rechten Teilbaum von $H$, der leer ist, also fügen wir dort als neuen Knoten $J$ ein.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {F}
+    child {node {B}
+    child {node {A}}
+    child {node {D}
+    child {node {C}}
+    child {node {E}}}}
+    child {node {K}
+    child {node {H}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node[fill=yellow] {J}}}
+    child {node {T}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {W}}}};
+\end{tikzpicture}
+\caption{Baum aus Aufgabe 1 nach Einfügen des Knotens $J$}
+\end{figure} \\\\
+Abschließend löschen wir den Knoten $B$. Wir stellen fest, dass $B$ zwei Kinder hat. Also ersetzen wir $B$ durch den kleinsten Schlüssel des rechten Teilbaums, also in unserem Fall $C$. Wir erhalten:
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {F}
+    child {node[fill=yellow] {C}
+    child {node {A}}
+    child {node {D}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {E}}}}
+    child {node {K}
+    child {node {H}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {J}}}
+    child {node {T}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {W}}}};
+\end{tikzpicture}
+\caption{Baum aus Aufgabe 1 nach Löschen des Knotens $B$}
+\end{figure}
+\paragraph{Lösung zu Aufgabe 2}
 \label{a4.2:lsg}
+Wir bestimmen zunächst die Balancen jedes Knotens.
+\begin{itemize}
+\item Knoten $A, C, E, H, W$ sind Blätter und haben daher die Balance 0.
+\item Der Knoten $D$ hat die Balance 0.
+\item Der Knoten $T$ hat die Balance 1.
+\item Die Knoten $B, K$ haben die Balance 1.
+\item Der Knoten $F$ hat die Balance 0.
+\end{itemize}
+Folglich ist die Balance an keinem Knoten des Baumes größer als $1$, womit dieses Kriterium erfüllt ist. Betrachten wir nun, ob es sich überhaupt um einen binären Suchbaum handelt. Da alle Knoten maximal zwei Kinder haben, ist der Baum binär. Dass es sich um einen Suchbaum handelt, ergibt sich aus der Anordnung der Knoten. \textbf{Also handelt es sich bei diesem Baum um einen AVL-Baum.}
+\paragraph{Lösung zu Aufgabe 3}
 \label{a4.3:lsg}
+Da wir festgestellt haben, dass es sich um einen AVL-Baum handelt, können wir direkt beginnen, den Knoten $A$ zu löschen. Der Knoten $A$ ist ein Blatt, daher kann der entsprechende Zeiger einfach gleich null gesetzt werden. \\\\
+Dies hat nun zur Folge, dass die Balance am Knoten $B$ 2 beträgt und der Baum daher rotiert werden muss. Dies ist am Knoten $D$ sinnvoll und möglich. Wir erhalten:
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {F}
+    child {node[fill=yellow] {D}
+    child {node {C}
+    child {node[fill=yellow] {B}}
+    child[fill=none] {edge from parent[draw=none]}}
+    child {node {E}}}
+    child {node {K}
+    child {node {H}}
+    child {node {T}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node {W}}}};
+\end{tikzpicture}
+\caption{AVL-Baum nach Löschen des Knotens $A$ und Rotation um $D$}
+\end{figure}
+\\\\
+Im nächsten Schritt fügen wir in den letzten Baum, den wir erhalten haben, den Knoten $Z$ hinzu. Da $Z$ der letzte Buchstabe des Alphabets ist, wird dieser Knoten also ein rechtes Kind vom Knoten $W$. Damit verliert der Baum erneut die AVL-Eigenschaft und Rotationen werden erforderlich. Wir rotieren den Baum um den Knoten $T$.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node {F}
+    child {node {D}
+    child {node {C}
+    child {node {B}}
+    child[fill=none] {edge from parent[draw=none]}}
+    child {node {E}}}
+    child {node[fill=yellow] {T}
+    child {node {K}
+    child {node {H}}
+    child[fill=none] {edge from parent[draw=none]}}
+    child {node {W}
+    child[fill=none] {edge from parent[draw=none]}
+    child {node[fill=yellow] {Z}}}};
+\end{tikzpicture}
+\caption{AVL-Baum nach Hinzufügen des Knotens $Z$ und Rotation um $T$}
+\end{figure}
 \label{a4.4:lsg}
 \section{Heaps}
 \label{a5.1:lsg}

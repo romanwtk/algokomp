@@ -893,14 +893,18 @@ Merge: \\
 \end{example}
 \paragraph{Implementierung} als Pseudo-Code
 \begin{lstlisting}
-MergeSort(Array) {
-	if (Array.length <= 1) {
-		return Array  ;
-  	}
-  	else {
-		leftHalf = MergeSort(Array[0:(Array.length-2)]);
-		rightHalf = MergeSort(Array[(Array.length-a):-1]);
-		return merge(leftHalf, rightHalf);
+MergeSort(int A[], int al, int ar) {
+	if (ar>al) {
+		int m = (ar+al) / 2;
+		MergeSort(A[], al, m);
+		MergeSort(A[], m+1, ar);
+		
+		int B[] = new int[ar-al+a];
+		merge(A, al, m, a, m+1, ar, B);
+		
+		for (int i = 0; i < ar-al+1; i++) {
+			A{al+1] = B[i];		
+		}
 	}
 }
 merge(A[], B[], al, ar, bl, br, C[]) {
@@ -1176,6 +1180,7 @@ Neben den drei genannten Vorgehenweisen betrachten wir noch die klassische, den 
 \subsection{Operationen}
 Auf binären Bäumen lassen sich nun drei Operationen konstruieren: \textbf{Suchen, Einfügen} und \textbf{Löschen}.
 \paragraph{Suchen}
+\label{searchBinTree}
 Ein Baum wird durchsucht, in dem jeweils das Suchelement mit dem Wert des Knotens verglichen und anschließend mit dem linken Sohn, falls das gesuchte Element kleiner ist, oder dem rechten Sohn, falls das gesuchte Element größer ist, als neuen Knoten rekursiv fortgefahren.
 \begin{lstlisting}
 node Search(int k, node Tree) {
@@ -1924,8 +1929,8 @@ Wir nennen dieses Verfahren Breitensuche oder \textbf{Breadth First Search}-Trav
 Die Tiefensuche hat zum Ziel, zuerst die Knoten in der Tiefe zu besuchen. Sie heißt daher auch \textbf{Depth First Search}-Traversal. Die Grundlage dieses Algorithmus bildet die Datenstruktur \texttt{Stack}, auf der nach dem LIFO-Prinzip (Last in, first out) gearbeitet wird.
 \paragraph{Idee}
 \begin{enumerate}
-\item Beginnend von einem Startknoten $S$ wird der erste Nachbar von $S$ besucht. Anschließend besuchen wir dessen ersten Nachbarn und gehen soweit in die Tiefe, bis es keinen unbesuchten Nachbarn mehr auf diesem Pfad gibt.
-\item Nun kehren wir zum ersten Knoten zurück, bei dem es einen noch unbesuchten Nachbarn gibt und gehen von hier in die Tiefe, in dem wir jeweils den ersten Nachbarn des ersten Nachbarn besuchen.
+\item Beginnend von einem Startknoten $S$ wird der letzte Nachbar von $S$ besucht. Anschließend besuchen wir dessen letzten Nachbarn und gehen soweit in die Tiefe, bis es keinen unbesuchten Nachbarn mehr auf diesem Pfad gibt.
+\item Nun kehren wir zum ersten Knoten zurück, bei dem es einen noch unbesuchten Nachbarn gibt und gehen von hier in die Tiefe, in dem wir jeweils den letzten Nachbarn des letzten Nachbarn besuchen.
 \item Dieses Verfahren führen wir fort, bis wir alle Nachbarn besucht haben.
 \end{enumerate}
 \paragraph{Implementierung} als Pseudo-Code
@@ -1996,16 +2001,14 @@ Nun betrachten wir als zweites die \textbf{Tiefensuche}:
 \texttt{S = \{Otto\}}, durchlaufene Knoten: \texttt{[]}
 \item Wir nehmen das erste Element vom Stack, besuchen und markieren es. Nun fügen wir alle Nachbarn dem Stack hinzu. \\
 \texttt{S = \{Anna, Sara\}}, durchlaufene Knoten: \texttt{[Otto]}
-\item Wir nehmen das erste Element vom Stack, besuchen und markieren es. Nun fügen wir alle Nachbarn dem Stack hinzu. \\
-\texttt{S = \{Sara, Tom, Sara\}}, durchlaufene Knoten: \texttt{[Otto, Anna]}
-\item Wir fahren entsprechend fort. \\
-\texttt{S = \{Cem, Tom, Sara\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara]}
-\item Nun betrachten wir Cem. Cem hat keine Nachbarn (oder Verwandten) mehr. Also entfernen wir ihn vom Stack. \\
-\texttt{S = \{Tom, Sara\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara, Cem]}
-\item Nun ist Tom das nächste Element, das wir vom Stack nehmen. Tom hat als einzigen Nachbarn Cem, den wir schon markiert haben. Also fügen wir ihn nicht mehr dem Stack hinzu. \\
-\texttt{S = \{Sara\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara, Cem, Tom]}
-\item Im Stack steht als letztes noch Sara. Da wir sie bereits besucht (und markiert) haben, terminiert der Algorithmus, nachdem wir sie vom Stack genommen haben. \\
-\texttt{S = \{\}}, durchlaufene Knoten: \texttt{[Otto, Anna, Sara, Cem, Tom]}
+\item Wir entfernen das zuletzt hinzugefügte Element vom Stack, besuchen und markieren es. Nun fügen wir alle Nachbarn dem Stack hinzu. \\
+\texttt{S = \{Anna, Cem\}}, durchlaufene Knoten: \texttt{[Otto, Sara]}
+\item Wir fahren entsprechend fort. Da Cem keine Nachbarn hat, wird dem Stack nichts hinzugefügt.\\
+\texttt{S = \{Anna\}}, durchlaufene Knoten: \texttt{[Otto, Sara, Cem]}
+\item Nun betrachten wir Anna, nehmen sie vom Stack und fügen ihren Nachbarn Tom hinzu. Nachbarin Sara ist bereits markiert worden und wird deshalb nicht erneut hinzugefügt. \\
+\texttt{S = \{Tom\}}, durchlaufene Knoten: \texttt{[Otto, Sara, Cem, Anna]}
+\item Nun ist Tom das nächste Element, das wir vom Stack nehmen. Tom hat keinen weiteren unmarkierten Nachbarn. Der Algorithmus terminiert.\\
+\texttt{S = \{\}}, durchlaufene Knoten: \texttt{[Otto, Sara, Cem, Anna, Tom]}
 \end{enumerate}
 Der geringe Unterschied zwischen Breiten- und Tiefensuche ist der Übungskünstlichkeit geschuldet, in der Praxis ergeben sich grundlegend andere Stacks/Queues und enstprechende Durchlaufreihenfolgen.
 \end{example}
@@ -2553,9 +2556,58 @@ Im nächsten Schritt fügen wir in den letzten Baum, den wir erhalten haben, den
 \end{tikzpicture}
 \caption{AVL-Baum nach Hinzufügen des Knotens $Z$ und Rotation um $T$}
 \end{figure}
+\paragraph{Lösung zu Aufgabe 4}
 \label{a4.4:lsg}
+\textit{Beschreibung und Pseudocode siehe Seite \pageref{searchBinTree}} \\
+In einem Baum der Ordnung 3 müsste zunächst definiert werden, was diese Kategorie dann inhaltlich aussagt. Dies könnten Knoten sein, die gleich der Wurzel sind -- jedoch ergibt sich dadurch keinen Einsatzzweck eine Algorithmenerweiterung, weil nicht zwischen Knoten mit gleichem Wert unterschieden wird und werden sollte. Somit sind Sie gut beraten, nur auf binären Suchbäumen zu operieren (auch wenn es Spezialfälle geben mag).
 \section{Heaps}
+\paragraph{Lösung zu Aufgabe 1} Zu bestimmen ist, ob es sich bei diesem Baum um einen Heap handelt.
 \label{a5.1:lsg}
+\begin{enumerate}
+\item Es handelt sich nicht um einen Heap, da der Knoten $R$ größer ist als der Knoten $M$. 
+\item Um die Heap-Eigenschaft herzustellen, muss folglich der Knoten $R$ {\glqq}hochschwimmen{\grqq}. $M$ und $R$ tauschen also.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=50mm]
+\tikzstyle{level 2}=[sibling distance=30mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+ \node {S}
+    child {node {K}
+    child {node {D}
+    child {node {A}}
+    child {node {B}}}
+    child {node {G}
+    child {node {F}}
+    child[fill=none] {edge from parent[draw=none]}}}
+    child {node[fill=yellow] {R}
+    child {node[fill=yellow] {M}}
+    child {node {N}}};
+\end{tikzpicture}
+\end{figure}
+\item Nun ist der Knoten $X$ hinzuzufügen. Wir fügen ihn an der nächsten freien Position im Heap (bzw. dessen Array) ein, also als rechtes Kind von $G$. Nun stellen wir fest, dass $G < X$, also führen wir \texttt{swim{\_}up(X)} aus. 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=50mm]
+\tikzstyle{level 2}=[sibling distance=30mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+ \node[fill=yellow] {X}
+    child {node[fill=yellow] {S}
+    child {node {D}
+    child {node {A}}
+    child {node {B}}}
+    child {node[fill=yellow] {K}
+    child {node {F}}
+    child {node[fill=yellow] {G}}}}
+    child {node {R}
+    child {node {M}}
+    child {node {N}}};
+\end{tikzpicture}
+\end{figure}
+\end{enumerate}
 \label{a5.2:lsg}
 \label{a5.3:lsg}
 \label{a5.4:lsg}

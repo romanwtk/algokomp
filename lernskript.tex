@@ -1707,7 +1707,7 @@ Wie alle anderen Sortieralgorithmen ist auch Heapsort nicht laufzeiteffizienter 
 Lösung auf Seite \pageref{a5.1:lsg} \\
 \end{flushright}
 \paragraph{Aufgabe 2} 
-Sortieren Sie den Baum aus Aufgabe 1 mittels \texttt{heapsort()} absteigend.
+Sortieren Sie den Baum aus Aufgabe 1 mittels \texttt{heapsort()} aufsteigend.
 \begin{flushright}
 Lösung auf Seite \pageref{a5.2:lsg}
 \end{flushright}
@@ -2175,6 +2175,76 @@ Lösung auf Seite \pageref{a6.3:lsg} \\
 Lösung auf Seite \pageref{a6.4:lsg} \\
 \end{flushright}
 \pagebreak
+\part{Hashing}
+In den vergangenen Abschnitten und Kapiteln haben wir eine Vielzahl von Datenstrukturen kennengelernt: Bäume, Stacks, Queues, Graphen und Arrays. Alle dienten sie dem Zweck, Daten und ihre Beziehungen zueinander zu visualisieren. In diesem letzten Abschnitt widmen wir uns nun wieder \textbf{Arrays}, der Datenstruktur, die Grundlage für viele andere ist. \\\\
+Betrachten wir also eine Menge, beispielsweise jene der natürlichen Zahlen $\mathbb{N}$ oder Mitgliedsstaaten der europäischen Union. Eine Teilmenge davon stellen die Elemente eines Feldes (Arrays) dar. In diesem Array ist die Anordnung zu berücksichtigen, so kann es also durchaus sein, dass die Feldelemente nicht alphabetisch oder ihrer Größe nach geordnet sind. Uns interessiert, an welcher Stelle des Arrays ein gewisses Element seinen Platz gefunden hat. \\\\
+Vielleicht denken Sie jetzt, dass sei gar kein so großes Problem, schließlich haben wir ja bereits Suchalgorithmen kennengelernt, doch denken Sie daran, dass dieses Feld ruhig beliebig groß sein kann und die Elemente nicht sortiert sind, sodass der Gedanke an die Binäre Suche Sie nicht zum Ziel führt. \\\\
+Stattdessen suchen wir einen mathematischen Weg, eine Abbildung, die uns den Platz eines Elementes unseres Feldes mitteilt: \textbf{Eine Hashfunktion}. Diese Funktion berechnet zu jedem Feldelement einen Speicherort. Wir legen nun eine \textbf{Hashtabelle} an, in der je nach Hash-Wert die Ursprungselemente enthalten sind. Diese Tabelle löst unser Problem und ermöglicht es uns, die Elemente zu finden.
+\begin{definition}
+Eine Abbildung $H: K \to A$ mit $K$ = Schlüsselraum und $A$ = Adressraum heißt \textbf{Hashfunktion} \parencite[][S. 296]{Wirth}.
+\end{definition}
+Wir stellen an diese Hashfunktion einige Anforderungen:
+\begin{itemize}
+\item Die Abbildung soll effizient zu berechnen sein, also idealerweise mit Grundrechenarten auskommen.
+\item Die Abbildung soll surjektiv sein, also alle möglichen Hashwerte sollen auch als Ergebnis zustande kommen.
+\item Die Schlüssel sollen möglichst gleichmäßig auf den Bereich der Indexwerte verteilt werden.
+\end{itemize}
+\begin{example}
+Beispielsweise könnte diese Abbildung eine Hashfunktion sein:
+\[H(k) = ord(k) \text{mod} n\] mit $ord(k)$ = Ordinalzahl des Schlüssels in der Ursprungsmenge.
+\end{example}
+Nun könnte alles perfekt sein: Jedes Element unseres Feldes wird eindeutig auf einen Hashwert abgebildet, von dort in trivialer Weise gefunden und weiterverwendet. So perfekt ist es leider nicht -- es gibt einen großen Haken:
+\section{Kollisionsvermeidung}
+\begin{definition}
+Als \textbf{Kollision} bezeichnen wir den Fall, dass zu einem Hashwert mehrere Ausgangswerte existieren. 
+\end{definition}
+Theoretisch könnte es also passieren, dass die Elemente $2$ und $17$ mit einer gegebenen Hashfunktion den gleichen Hashwert ergeben. Dann können wir beide Werte nicht ohne Weiteres in der Hashtabelle speichern. \\\\
+Folgende Optionen ergeben sich:
+\begin{itemize}
+\item \textbf{Direkte Verkettung} -- Anstatt eines Eintrages in der Hashtabelle könnten wir auch eine Menge an Hashwerten als Eintrag speichern. Diese Lösung ist zwar pragmatisch und effizient, birgt jedoch den Nachteil, dass wir eine zusätzliche Liste mit Informationen über diese Sekundärtabelle benötigen, um weiterhin jedes Element finden zu können.
+\item \textbf{Offene Adressierung} -- Alternativ suchen wir für unser abzuspeicherndes (also einzutragendes) Element einfach einen anderen, noch freien Platz. Diesen Vorgang nennen wir \textbf{Sondieren}. Falls unsere erste Wahl also durch ein anderes Element belegt sein sollte, berechnen wir mittels einer Sondierungsvorschrift einen alternativen Platz und probieren es dort. Falls wir auch dort scheitern sollten, haben wir immer noch weitere Möglichkeiten.
+\end{itemize}
+Im Folgenden wollen wir uns näher mit drei Kollisionsvermeidungsstrategien aus dem Bereich der offenen Adressierung beschäftigen.
+\subsection{Lineares Sondieren}
+Der triviale Ansatz wäre, im Falle einer Kollision den Hashwert einfach um 1 zu erhöhen. Wir gehen also in unserer Hashtabelle einen Schritt weiter und prüfen dort, ob dieser Hashwert noch frei ist. Falls ja, haben wir das Problem gelöst.
+\begin{align*}
+h[0] &= H(k) \\
+h[i] &= (h[0] + 1) \text{ mod } n
+\end{align*}
+\paragraph{Probleme} Dieser Ansatz birgt den großen Nachteil, dass sich primäre Cluster bilden. Nehmen wir beispielsweise an, fünf Elemente erhalten durch eine Hashfunktion den Hashwert $8$. Nach dieser Methode sind nun -- sofern es sich um die ersten gehashten Werte handelt -- die Einträge 8 -- 12 belegt. Ein sechstes Element ebenfalls mit $h(k) = 8$ müsste nun schon sechs Schritte weitergehen, um einen freien Platz zu finden.
+\subsection{Quadratisches Sondieren}
+Ein bisschen erfolgsversprechender erscheint der folgende Ansatz: Hier gehen wir nicht nur 1er-Schritte in eine Richtung, sondern verändert Schrittrichtung und Schrittgröße in jeder Iteration.
+\begin{align*}
+h[0] &= H(k) \\
+h[i] &= (h[0] + (-1)^{i+1} \cdot \lfloor (\frac{i+1}{2})^2 \rfloor) \text{ mod } n \\
+&= h(k), h(k) + 1^2, h(k) - 1^2, h(k) + 2^2, h(k) - 2^2, ..., h(k) + (\frac{m-1}{2})^2, h(k) - (\frac{m-1}{2})^2
+\end{align*} 
+\paragraph{Probleme} Auch dieser Ansatz ist nicht unproblematisch: Zwar treten hier keine primären Cluster auf, dafür aber sekundäre. Für zwei Schlüssel mit demselben Hashwert sind auch die folgenden Positionen in der Hashtabelle gleich.
+\subsection{Doppeltes Hashing}
+Wir suchen also eine Lösung, dasssich für Elemente mit gleichem Hashwert unterschiedliche Sondierungsreihenfolgen ergeben. Dies erreichen wir, indem wir eine zweite Hashfunktion konstruieren und verwenden.
+\begin{align*}
+h[0] = H(k) \\
+h[i] = (h[0] + i \cdot D(k)) \text{ mod } n
+\end{align*}
+Damit ergeben sich nun also unterschiedliche Sondierungsreihenfolgen auch in dem Fall, dass $H(k_1) = H(k_2)$ ist. Mit diesem Vorgehen approximieren wir das ideale Hashing.
+\section*{Aufgabe}
+Gegeben seien das Feld \\
+\begin{center}
+$\left[ \begin{array}{rrrrrrrr}
+12 & 15 & 18 & 3 & 5 & 99 & 23 & 1
+\end{array} \right]$ \\ und die Hashfunktionen 
+\[h(x) = x \text{ mod } 9\] und
+\[d(x) = x + 2 \text{ mod } 13\]
+\end{center}
+\begin{enumerate}
+\item Berechnen Sie die Hashtabelle mit $m = 9$ durch \textbf{Lineares Sondieren}.
+\item Berechnen Sie die Hashtabelle mit $m = 9$ durch \textbf{Quadratisches Sondieren}.
+\item Berechnen Sie die Hashtabelle mit $m = 9$ durch \textbf{Doppeltes Hashing}.
+\end{enumerate}
+\begin{flushright}
+Lösung auf Seite \pageref{a7:lsg}
+\end{flushright}
+\pagebreak
 \part{Lösungen}
 \section{Grundlagen der Algorithmik}
 \paragraph{Lösung zu Aufgabe 1} \label{a1:lsg}Gesucht sind die Landau-Notationen $O, \Omega, \Theta$ zur Funktion $3n^3 + 7n^2 + 16$. Zunächst bestimmen wir die $O$-Komplexitätsklasse: Da der höchste Grad des Polynoms $3$ ist und sämtliche konstanten Faktoren oder Summanden entfallen, liegt die Funktion in $O(n^3)$. \\\\Für die $\Omega$-Notation überlegen wir uns Folgendes: Der kleinste Grad des Polynoms ist $0$ ($16 \cdot n^0$). Dies ist unsere Unterschranke: Da auch hier konstante Faktoren und Summanden unberücksichtigt bleiben, erhalten wir $\Omega(1)$. \\\\Die $\Theta$-Notation umfasst nun alle Funktionen, die sowohl Teil von $O(n^3)$ als auch von $\Omega(1)$ sind. Dies ist nun keine zeichenbare Funktion, sondern viel mehr der Flächeninhalt zwischen beiden Graphen. \\\\Wir zeichnen nun ein:
@@ -2608,17 +2678,465 @@ In einem Baum der Ordnung 3 müsste zunächst definiert werden, was diese Katego
 \end{tikzpicture}
 \end{figure}
 \end{enumerate}
-\label{a5.2:lsg}
+\paragraph{Aufgabe 2} \label{a5.2:lsg}
+Zunächst bilden wir den letzten aus Aufgabe 1 gewonnenen Heap als Array ab. Anschließend vertauschen wir erstes und letztes Element und lassen den neuen ersten Knoten absinken. \\
+\begin{center}
+$\left[ \begin{array}{rrrrrrrrrrr}
+X & S & R & D & K & M & N & A & B & F & G \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrrrrr}
+G & S & R & D & K & M & N & A & B & F & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrrrr|r}
+S & G & R & D & K & M & N & A & B & F & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrrrr|r}
+S & K & R & D & G & M & N & A & B & F & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrrrr|r}
+F & K & R & D & G & M & N & A & B & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrrr|rr}
+R & K & F & D & G & M & N & A & B & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrrr|rr}
+R & K & N & D & G & M & F & A & B & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrrr|rr}
+B & K & N & D & G & M & F & A & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrr|rrr}
+N & K & B & D & G & M & F & A & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrr|rrr}
+N & K & M & D & G & B & F & A & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrrr|rrr}
+A & K & M & D & G & B & F & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrr|rrrr}
+M & K & A & D & G & B & F & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrr|rrrr}
+M & K & F & D & G & B & A & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrrr|rrrr}
+A & K & F & D & G & B & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrr|rrrrr}
+K & A & F & D & G & B & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrr|rrrrr}
+K & G & F & D & A & B & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrrr|rrrrr}
+B & G & F & D & A & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrr|rrrrrr}
+G & B & F & D & A & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrr|rrrrrr}
+G & D & F & B & A & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrrr|rrrrrr}
+A & D & F & B & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrr|rrrrrrr}
+F & D & A & B & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrrr|rrrrrrr}
+B & D & A & F & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrr|rrrrrrrr}
+D & B & A & F & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rrr|rrrrrrrr}
+A & B & D & F & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rr|rrrrrrrrr}
+B & A & D & F & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{rr|rrrrrrrrr}
+A & B & D & F & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+$\left[ \begin{array}{r|rrrrrrrrrr}
+A & B & D & F & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+Wir erhalten das fertig sortierte Feld: \\
+$\left[ \begin{array}{rrrrrrrrrrr}
+A & B & D & F & G & K & M & N & R & S & X \\
+\end{array} \right]$ \\
+\end{center}
+\paragraph{Lösung zu Aufgabe 3}
 \label{a5.3:lsg}
+Erneut sind zwei Arrays gegeben, die mittels Heapsort aufsteigend sortiert werden sollen. Beim Herstellen der Heap-Eigenschaft wird -- eventuell anders als hier dargestellt -- bei $\frac{n}{2}$ begonnen.
+\begin{itemize}
+\item
+\begin{center}
+$ \left[ \begin{array}{rrrrrrrr}
+7 & 1 & 3 & 9 & 4 & 6 & 5 & 8
+\end{array} \right]$ \\ 
+Herstellen der Heap-Eigenschaft: \\
+$ \left[ \begin{array}{rrrrrrrr}
+7 & 9 & 3 & 1 & 4 & 6 & 5 & 8
+\end{array} \right]$ \\ 
+$ \left[ \begin{array}{rrrrrrrr}
+7 & 9 & 6 & 1 & 4 & 3 & 5 & 8
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrrrrrr}
+7 & 9 & 6 & 8 & 4 & 3 & 5 & 1
+\end{array} \right]$ \\ 
+$ \left[ \begin{array}{rrrrrrrr}
+9 & 8 & 6 & 7 & 4 & 3 & 5 & 1
+\end{array} \right]$ \\
+Nun beginnt das Sortieren: \\
+$ \left[ \begin{array}{rrrrrrrr}
+1 & 8 & 6 & 7 & 4 & 3 & 5 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrrrrr|r}
+8 & 1 & 6 & 7 & 4 & 3 & 5 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrrrrr|r}
+8 & 7 & 6 & 1 & 4 & 3 & 5 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrrrrr|r}
+5 & 7 & 6 & 1 & 4 & 3 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrrrr|rr}
+7 & 5 & 6 & 1 & 4 & 3 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrrrr|rr}
+3 & 5 & 6 & 1 & 4 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrrr|rrr}
+6 & 5 & 3 & 1 & 4 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrrr|rrr}
+4 & 5 & 3 & 1 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrr|rrrr}
+5 & 4 & 3 & 1 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrrr|rrrr}
+1 & 4 & 3 & 5 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrr|rrrrr}
+4 & 1 & 3 & 5 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rrr|rrrrr}
+3 & 1 & 4 & 5 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rr|rrrrrr}
+3 & 1 & 4 & 5 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{rr|rrrrrr}
+1 & 3 & 4 & 5 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+$ \left[ \begin{array}{r|rrrrrrr}
+1 & 3 & 4 & 5 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+Wir erhalten das fertig sortierte Array: \\
+$ \left[ \begin{array}{rrrrrrrr}
+1 & 3 & 4 & 5 & 6 & 7 & 8 & 9
+\end{array} \right]$ \\
+\end{center}
+\item
+\begin{center}
+$ \left[ \begin{array}{rrrrrrrr}
+H & S & G & A & V & D & J & K
+\end{array} \right] $ \\
+Herstellen der Heap-Eigenschaft: \\
+$ \left[ \begin{array}{rrrrrrrr}
+S & H & G & A & V & D & J & K
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrrrr}
+S & V & G & A & H & D & J & K
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrrrr}
+V & S & G & A & H & D & J & K
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrrrr}
+V & S & J & A & H & D & G & K
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrrrr}
+V & S & J & K & H & D & G & A
+\end{array} \right] $ \\
+Nun beginnen wir das Sortieren: \\
+$ \left[ \begin{array}{rrrrrrrr}
+A & S & J & K & H & D & G & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrrr|r}
+S & A & J & K & H & D & G & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrrr|r}
+S & K & J & A & H & D & G & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrrr|r}
+G & K & J & A & H & D & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrr|rr}
+K & G & J & A & H & D & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrr|rr}
+K & H & J & A & G & D & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrrr|rr}
+D & H & J & A & G & K & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrr|rrr}
+J & H & D & A & G & K & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrrr|rrr}
+G & H & D & A & J & K & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrr|rrrr}
+H & G & D & A & J & K & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrrr|rrrr}
+A & G & D & H & J & K & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrr|rrrrr}
+G & A & D & H & J & K & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{rrr|rrrrr}
+D & A & G & H & J & K & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{r|rrrrrrr}
+A & D & G & H & J & K & S & V
+\end{array} \right] $ \\
+$ \left[ \begin{array}{r|rrrrrrr}
+A & D & G & H & J & K & S & V
+\end{array} \right] $ \\
+Wir erhalten das sortierte Array: \\
+$ \left[ \begin{array}{rrrrrrrr}
+A & D & G & H & J & K & S & V
+\end{array} \right] $ \\
+\end{center}
+\end{itemize}
+\paragraph{Lösung zu Aufgabe 4}
 \label{a5.4:lsg}
+Grundsätzlich lassen sich alle Aufrufe von \texttt{sink()} durch \texttt{swim{\_}up()} austauschen. Im Falle des Heapsort werden bei jeder Vertauschung kleinere Knoten in die Wurzel eingefügt, also müssen diese Knoten sukzessive nach unten wandern bzw. alle anderen Knoten müssen entsprechend nach oben schwimmen. Wir müssten also für alle in Bezug zur Wurzel stehenden Elemente \texttt{swim{\_}up()} aufrufen. Das ist aufwendiger und weniger sinnvoll als \texttt{sink()} zu nutzen.
+\begin{lstlisting}
+void heapsort(A[]) {
+	int n = A.length;
+	for (int k = n/2; k >= 1; k--) {
+		swim_up(A, k, n);
+	}
+	while (n > 1) {
+		exchange(A[1], A[n]);
+		n--;
+		for (element in A[]) {
+			swim_up(A, A[element], n);
+		}	
+	}
+}
+\end{lstlisting}
 \section{Graphen}
+\paragraph{Lösung zu Aufgabe 1}
 \label{a6.1:lsg}
-\label{a6.2:lsg}
+Anzugeben sind die Adjazenzmatrix und -liste zum gegebenen Graphen. \\
+\begin{center}
+$\left( \begin{array}{rrrrrr}
+0 & 0 & 0 & 0 & 2 & 3 \\
+0 & 0 & 6 & 3 & 9 & 0 \\
+0 & 6 & 0 & 2 & 0 & 2 \\
+0 & 3 & 2 & 0 & 1 & 0 \\
+2 & 9 & 0 & 1 & 0 & 0 \\
+3 & 0 & 2 & 0 & 0 & 0 
+\end{array} \right)$ \\
+Und die dazugehörige Adjazenzliste: \\
+\begin{tabular}{l | l}
+A & E: 2, F: 7 \\
+B & C: 6, D: 3, E: 9 \\
+C & B: 6, D: 2, F: 2 \\
+D & B: 3, C: 2, E: 1 \\
+E & A: 2, B: 9, D: 1 \\
+F & A: 3, C: 2
+\end{tabular}
+\end{center}
+\paragraph{Lösung zu Aufgabe 2} \label{a6.2:lsg} Durchzuführen sind hier sowohl die Breiten- als auch Tiefensuche.
+\begin{itemize}
+\item Breitensuche 
+\begin{enumerate}
+\item Wir wählen als Startknoten $B$, markieren ihn und fügen ihn der Queue hinzu. \\
+\texttt{Q = \{B\}}, durchlaufene Knoten: []
+\item Wir besuchen $B$, fügen alle Nachbarn hinzu. \\
+\texttt{Q = \{C, D, E\}}, durchlaufene Knoten: [B]
+\item Wir besuchen den Knoten $C$, markieren ihn und fügen alle noch unmarkierten Nachbarn der Queue hinzu. \\
+\texttt{Q = \{D, E, F\}}, durchlaufene Knoten: [B, C]
+\item Wir besuchen den Knoten $D$, markieren ihn und fügen alle noch unmarkierten Nachbarn hinzu. \\
+\texttt{Q = \{E, F\}}, durchlaufene Knoten: [B, C, D]
+\item Wir besuchen den Knoten $E$ und verfahren ebenso. \\
+\texttt{Q = \{F, A\}}, durchlaufene Knoten: [B, C, D, E]
+\item Wir besuchen den Knoten $F$, stellen fest, dass es keine weiteren Nachbarn gibt. \\
+\texttt{Q = \{A\}}, durchlaufene Knoten: [B, C, D, E, F]
+\item Nun besuchen wir abschließend $A$. Auch $A$ hat keine weiteren unmarkierten Nachbarn. Damit sind wir fertig. \\
+\texttt{Q = \{\}}, durchlaufene Knoten: [B, C, D, E, F, A]
+\end{enumerate}
+\item Tiefensuche
+\begin{enumerate}
+\item Wir wählen wieder $B$ als Startknoten und fügen ihn dem Stack hinzu. \\
+\texttt{S = \{B\}}, durchlaufene Knoten: []
+\item Wir nehmen $B$ vom Stapel, markieren es und fügen die Nachbarn hinzu. \\
+\texttt{S = \{C, D, E\}}, durchlaufene Knoten: [B]
+\item Nun nehmen wir das letzte Element vom Stapel, besuchen und markieren es und fügen die Nachbarn hinzu. \\
+\texttt{S = \{C, D, A, D\}}, durchlaufene Knoten: [B, E]
+\item Wir besuchen nun erneut den letzten Knoten des Stapels und markieren ihn. \\
+\texttt{S = \{C, D, A, C\}}, durchlaufene Knoten: [B, E, D]
+\item Nächstes Element ist folglich $C$. \\
+\texttt{S = \{C, D, A, F\}}, durchlaufene Knoten: [B, E, D, C]
+\item Nächstes Element ist der Knoten $F$. \\
+\texttt{S = \{C, D, A, A\}}, durchlaufene Knoten: [B, E, D, C, F]
+\item Nächstes Element ist der Knoten $A$. $A$ hat keine weiteren Nachbarn, die noch nicht markiert wurden. \\
+\texttt{S = \{C, D, A\}}, durchlaufene Knoten: [B, E, D, C, F, A]
+\item Selbiges gilt für das nächste $A$ des Stacks. \\
+\texttt{S = \{C, D\}}, durchlaufene Knoten: [B, E, D, C, F, A]
+\item Auch Knoten $D$ wurde bereits besucht. \\
+\texttt{S = \{C\}}, durchlaufene Knoten: [B, E, D, C, F, A]
+\item Der letzte verbleibende Knoten $C$ wurde bereits markiert und kann damit ebenfalls entfernt werden. \\
+\texttt{S = \{\}}, durchlaufene Knoten: [B, E, D, C, F, A]
+\end{enumerate}
+Damit ist die gewünschte Suchreihenfolge gefunden.
+\end{itemize} 
+\paragraph{Lösung zu Aufgabe 3}
 \label{a6.3:lsg}
-\label{a6.4:lsg}
+Nun ist der Dijkstra-Algorithmus auf diesen Graphen anzuwenden. 
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+u    & A 				& B 			& C 			& D 			& E 		& F \\
+\hline
+init & $\infty \mid$ -- 	& $0 \mid$ B &  $\infty \mid$ -- &  $\infty \mid$ --  &  $\infty \mid$ -- &  $\infty \mid$ --  \\
+\hline
+B 	&					&			& 6 $\mid$ B	& 3 $\mid$ B	& 9 $\mid$ B & \\
+\hline
+D	&					&			& 5 $\mid$ D&			& 4 $\mid$ D & \\
+\hline
+E   	& 6 $\mid$ E			&			&			&			&		&	\\
+\hline
+A	& 					&			&			&			&		& 13 $\mid$ A\\
+\hline
+F 	&					&			&			&			&		& \\
+\hline
+C 	&					&			&			&			&		& 8 $\mid$ C \\	
+\hline	
+\end{tabular}
+\caption{Dijkstra-Algorithmus zum Graphen}
+\end{table}
+Daraus ergibt sich nun auch der Kürzeste-Wege-Baum:
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\tikzstyle{main}=[circle,draw,inner sep=1pt, minimum size=1cm]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=20mm]
+ \node[main] {B}
+    child {node[main] {D}
+    child {node[main] {C}
+    child {node[main] {F}
+    edge from parent node[right]{2}}
+    edge from parent node[right]{2}}
+    child {node[main] {E}
+    child {node[main] {A}
+    edge from parent node[right]{2}}
+    edge from parent node[right]{1}}
+    edge from parent node[right]{3}};
+\end{tikzpicture}
+\caption{Kürzeste-Wege-Baum zum Graphen}
+\end{figure}
+\paragraph{Lösung zu Aufgabe 4}\label{a6.4:lsg}
+Der hauptsächliche Unterschied liegt im \textit{LIFO}-Prinzip bei der Queue und im \textit{FIFO}-Prinip beim Stack. Während die Queue immer das Element ausgibt, was am längsten Teil der Queue ist (also wartet), gibt der Stack das Element zurück, dass als letztes hinzugefügt wurde. Darüber wird erreicht, dass die Tiefensuche immer weiter in die Tiefe geht und nicht in großen Schritten zu weiter entfernt liegenden Knoten zurück und die Breitensuche eben auf dem Weg nichts außer Acht lässt. Algorithmen mit anderen Datenstrukturen sind denkbar, wenn auch nicht sinnvoll.
+\section{Hashing}
+\paragraph{Lösung zur Aufgabe} \label{a7:lsg} Zu ermitteln sind drei Hashtabellen.
+\begin{itemize}
+\item \textbf{Lineares Sondieren}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+k & h(k) \\
+\hline
+12 & 3 \\
+15 & 6 \\
+18 & 0 \\
+3 & 3, 4 \\
+5 & 5 \\
+99 & 0, 1 \\
+23 & 5, 6, 7 \\
+1 & 1, 2 \\
+\hline
+\end{tabular} \\
+\end{center}
+Dazugehörige Hash-Tabelle:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+18 & 99 & 1 & 12 & 3 & 5 & 15 & 23 & \\
+\hline
+\end{tabular}
+\end{center}
+\item \textbf{Quadratisches Sondieren}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+k & h(k) \\
+\hline
+12 & 3 \\
+15 & 6 \\
+18 & 0 \\
+3 & 3, 4 \\
+5 & 5 \\
+99 & 0, 1 \\
+23 & 5, 6, 4, 1, 1, 5, 5, 3, 7 \\
+1 & 1, 2 \\
+\hline
+\end{tabular} \\
+\end{center}
+Dazugehörige Hash-Tabelle:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+18 & 99 & 1 & 12 & 3 & 5 & 15 & 23 & \\
+\hline
+\end{tabular}
+\end{center}
+\item \textbf{Doppeltes Hashing}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+k & h(k) \\
+\hline
+12 & 3 \\
+15 & 6 \\
+18 & 0 \\
+3 & 3, 8 \\
+5 & 5 \\
+99 & 0, 1 \\
+23 & 5, 8, 3, 5, 8, 2 \\
+1 & 1, 4 \\
+\hline
+\end{tabular} \\
+\end{center} 
+Dazugehörige Hash-Tabelle:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+18 & 99 & 23 & 12 & 1 & 5 & 15 & & 3 \\
+\hline
+\end{tabular}
+\end{center}
+\end{itemize}
 \pagebreak
 \part{Verzeichnisse}
-\section*{Tabellen und Formeln}
+\listoftables
 \listoffigures
+\section*{Weiterführende Übungsaufgaben}
+Falls Sie weitere Aufgaben suchen, finden Sie bei \cite{GrUeb} zu nahezu allen Themen dieses Moduls mehrere, gut ausgearbeitete Übungen und Lösungen. Hilfreich ist es ebenso aber auch, wenn Sie sich eigene Übungsaufgaben ausdenken und diese dann lösen. Dann stoßen Sie unweigerlich auf Fallstricke, Hürden und entwickeln eine Routine, die Sie vermutlich einigermaßen sicher durch die Klausur/Prüfung bringt.
 \printbibliography
 \end{document}

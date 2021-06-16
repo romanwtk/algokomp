@@ -2937,12 +2937,12 @@ void heapsort(A[]) {
 Anzugeben sind die Adjazenzmatrix und -liste zum gegebenen Graphen. \\
 \begin{center}
 $\left( \begin{array}{rrrrrr}
-0 & 0 & 0 & 0 & 2 & 3 \\
-0 & 0 & 6 & 3 & 9 & 0 \\
-0 & 6 & 0 & 2 & 0 & 2 \\
-0 & 3 & 2 & 0 & 1 & 0 \\
-2 & 9 & 0 & 1 & 0 & 0 \\
-3 & 0 & 2 & 0 & 0 & 0 
+- & - & - & - & 2 & 3 \\
+- & - & 6 & 3 & 9 & - \\
+- & 6 & - & 2 & - & 2 \\
+- & 3 & 2 & - & 1 & - \\
+2 & 9 & - & 1 & - & - \\
+3 & - & 2 & - & - & - 
 \end{array} \right)$ \\
 Und die dazugehörige Adjazenzliste: \\
 \begin{tabular}{l | l}
@@ -3015,12 +3015,12 @@ D	&					&			& 5 $\mid$ D&			& 4 $\mid$ D & \\
 \hline
 E   	& 6 $\mid$ E			&			&			&			&		&	\\
 \hline
+C 	&					&			&			&			&		& 8 $\mid$ C \\
+\hline
 A	& 					&			&			&			&		& 13 $\mid$ A\\
 \hline
 F 	&					&			&			&			&		& \\
 \hline
-C 	&					&			&			&			&		& 8 $\mid$ C \\	
-\hline	
 \end{tabular}
 \caption{Dijkstra-Algorithmus zum Graphen}
 \end{table}

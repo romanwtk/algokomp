@@ -12,8 +12,7 @@ Dem Aufbau der Vorlesung folgend, besteht dieses Skript aus folgenden Themen:
 - Bäume: Wurzelbaum, binäre Bäume, Operationen auf Bäumen
 - Heaps (inkl. Heapsort)
 - Graphentheorie: Adjazenzmatrizen/-listen, BFS-/DFS-Traversal, Dijkstra-Algorithmus 
-
-Weitere Themen folgen im Laufe der Zeit.
+- Hashing (insbesondere Kollisionsvermeidung/-behandlung)
 
 ## Lizenz, Verbreitung
 Öffentlich verfügbar und verwendbar für alle und für alle Zwecke - bei Bearbeitung/Kommerzialisierung bitte ich um Namensnennung und Mitteilung.

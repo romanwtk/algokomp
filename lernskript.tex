@@ -48,6 +48,10 @@ Roman Wetenkamp \\
 Mannheim, den \today
 \end{flushright}  
 \vfill
+\paragraph{Fehlerfinder} Mein Dank für das Fehlerfinden und gemeinsame Korrigieren gebührt:
+\begin{itemize}
+\item Jonathan Lelek
+\end{itemize}
 \paragraph{Warnung}
 Das Studium an einer Dualen Hochschule unterscheidet sich von dem Studium an Universitäten oder regulären Fachhochschulen insbesondere dadurch, dass aufgrund der Dualität zwischen Theorie und Praxis meist nur die Hälfte der Zeit zur Vermittlung des Stoffes zur Verfügung steht (wenn dann auch intensiver). Daher gehen Sie bitte nicht davon aus, dass Sie dieses Skript für Klausuren in regulären Vollzeitstudiengängen vorbereitet!
 \paragraph{Hinweis}
@@ -690,7 +694,7 @@ b&a&a&b&b&a&a&b&a&b&a&\cellcolor{green}a&\cellcolor{green}b&\cellcolor{red}b&b&a
 \end{tabular}\\
 $11+(2-0) = 13$. Damit verlassen wir den Suchtext, der Algorithmus terminiert, da kein weiteres Vorkommen gefunden wurde.
 \end{example}
-Die Stärken des KMP-Algorithmus liegen folglich in der Berücksichtigung von Rändern an Anfang und Ende des Musters, die größere Sprünge als eins (im Vergleich zur einfachen Textsuche) ermöglichen. Liegt nun ein Muster ohne jegliche oder mit wenigen Rändern vor, ist der Laufzeitgewinn marginal.
+Die Stärken des KMP-Algorithmus liegen folglich in der Berücksichtigung von Rändern an Anfang und Ende des Musters, die größere Sprünge als eins (im Vergleich zur einfachen Textsuche) ermöglichen. Entscheidend ist das Zusammenspiel aus Rand und Anzahl an Übereinstimmungen.
 \paragraph{Implementierung}
 als Pseudo-Code
 \begin{lstlisting}
@@ -738,7 +742,6 @@ Lösung auf Seite \pageref{a2.1:lsg}
 \item \texttt{ANANASBANANA}
 \item \texttt{BONOBO}
 \end{itemize}
-Geben Sie jeweils an, wie sehr sich der Einsatz des KMP-Algorithmus bei diesen Mustern lohnt.
 \begin{flushright}
 Lösung auf Seite \pageref{a2.2:lsg}
 \end{flushright}
@@ -752,7 +755,7 @@ Lösung auf Seite \pageref{a2.4:lsg}
 \end{flushright}
 \pagebreak
 \part{Sortieralgorithmen}
-Nach langen, qualvollen Stunden vor dem Bücherregal hassen Sie ihr Leben, ihr Studium und Sie beschließen, es wegzuwerfen -- Sie fangen in der Bibliothek als Fachkraft für Lagerlogistik an und sind nun für die korrekte Anordnung der Bücher im Regal verantwortlich. Auch hier zeigen Sie ihre geistige Brillianz, indem Sie das Problem des Sortierens auf abstrakter Ebene betrachten.
+Nach langen, qualvollen Stunden vor dem Bücherregal hassen Sie ihr Leben, ihr Studium und Sie beschließen, es wegzuwerfen -- Sie fangen in der Bibliothek als Fachkraft für Lagerlogistik an und sind nun für die korrekte Anordnung der Bücher im Regal verantwortlich. Auch hier zeigen Sie ihre geistige Brillanz, indem Sie das Problem des Sortierens auf abstrakter Ebene betrachten.
 \section{Allgemeines und Eigenschaften}
 \begin{definition}
 Ein Sortieralgorithmus verarbeitet eine Folge von Elementen $e_{1}, ..., e_{n}$ so, dass am Ende eine Ausgabe $e_{1}, ..., e_{n}$ mit $e_{1} \leq e_{2} \leq ... \leq e_{n}$ erzeugt wird.
@@ -2367,6 +2370,7 @@ $7 = 7$, wir haben das Element gefunden.
 \paragraph{Lösung zu Aufgabe 2}
 \label{a2.2:lsg}
 Randbestimmung für den KMP-Suchalgorithmus. \\
+\begin{center}
 \begin{tabular}{|l|c|}
 \hline
 Zeichenkette & Rand \\
@@ -2387,28 +2391,26 @@ OTTOSMOPSKOT & 2 \\
 OTTOSMOPSKOTZ & 0 \\
 OTTOSMOPSKOTZT & 0 \\
 \hline
-\end{tabular} \\\\
-Die maximale Randlänge für dieses Muster beträgt 2 und diese tritt nur ein einziges Mal auf. Damit werden die Vorteile des KMP für dieses Muster unerheblich und es ergibt sich praktisch kein Vorteil gegenüber der einfachen Textsuche. \\\\
-\begin{tabular}{|l|c|}
+\end{tabular} \\
+\begin{tabular}{|l|c|l|}
 \hline
-Zeichenkette & Rand \\
+Zeichenkette & Rand & Bemerkung \\
 \hline
 $\emptyset$ & -1 \\
-A & 0 \\
-AN & 0 \\
-ANA & 1 \\
-ANAN & 2 \\
-ANANA & 1 \\
-ANANAS & 0 \\
-ANANASB & 0 \\
-ANANASBA & 1 \\
-ANANASBAN & 2 \\
-ANANASBANA & 3 \\
-ANANASBANAN & 4 \\
-ANANASBANANA & 5 \\
+A & 0 &\\
+AN & 0 &\\
+ANA & 1 &\\
+ANAN & 2 &\\
+ANANA & 3 & A darf sowohl zum Pre- als auch Postfix gehören  \\
+ANANAS & 0 &\\
+ANANASB & 0 &\\
+ANANASBA & 1 &\\
+ANANASBAN & 2 &\\
+ANANASBANA & 3 &\\
+ANANASBANAN & 4 &\\
+ANANASBANANA & 5 &\\
 \hline
-\end{tabular} \\\\
-Mit einer maximalen Randlänge von 5 ist dieses Muster deutlich besser geeignet als das erste. \\\\
+\end{tabular} \\
 \begin{tabular}{|l|c|}
 \hline
 Zeichenkette & Rand \\
@@ -2417,23 +2419,24 @@ $\emptyset$ & -1 \\
 B & 0 \\
 BO & 0 \\
 BON & 0 \\
-BONO & 1 \\
+BONO & 0 \\
 BONOB & 1 \\
 BONOBO & 2 \\
 \hline
-\end{tabular} \\\\
-Auch dieses Muster ist -- obwohl es sehr kurz ist und einen anderen Anschein macht -- nicht wirklich vorteilhaft im Gegensatz zur einfachen Textsuche.
+\end{tabular} \\
+\end{center}
+Anders als in einer vorherigen Version dieser Datei angegeben, ist eine Bewertung der Ränder für den KMP-Algorithmus nicht sinnvoll. Durch das Zusammenspiel von Rand und Anzahl an Übereinstimmungen werden diese größeren Sprünge ermöglicht. Tatsächlich ist bei einer hohen Anzahl von Übereinstimmungen ein großer Rand eher hinderlich -- der Sprung minimiert sich so, weil schon früher ein neues Vorkommen des Musters möglich wäre.
 \paragraph{Lösung zu Aufgabe 3}
 \label{a2.3:lsg}
 Wir suchen das Wort \textbf{Bonobo} im Suchraum \textbf{Beinahebotnochdasbonobonobohausplatz}. Dafür nutzen wir die Randbestimmung aus der oberen Aufgabe. \\\\ An dieser Stelle verzichte ich auf eine tabellarische Darstellung wie im Beispiel und stelle die Schritte im Folgenden in Textform dar:
 \begin{enumerate}
 \item Wir legen den Suchtext unter das Muster und stellen fest, dass der erste Buchstabe \textbf{B} übereinstimmt, der zweite jedoch schon nicht mehr. Nun ergibt sich durch die Formel
 \[\text{Neuer Beginn} = \text{Suchtextposition} + (\text{Übereinstimmungen} - \text{Randlaenge[Musterindex])}\] der neue Beginn $1 = 0 + (1 - 0)$.
-\item An Position 1 tritt keine Übereinstimmung auf, also $2 = 1 + (0 - (-1)$, wir verschieben unser Muster also an Position 2.
-\item Auch an Position 2 tritt keine Übereinstimmung auf: $3 = 2 + (0 - (-1)$. So gehen wir vor, bis unser Muster an Index 7 steht.
-\item Hier erkennen wir, dass das Muster \textbf{Bo} übereinstimmt. Es ergibt sich: $9 = 7 + (2 - (0)$. Von Position 9 an verschieben wir das Muster weiter in 1er-Schritten, bis wir bei \textbf{bonobonobohausplatz} ankommen, also an Index 17. \textbf{Hier ist das erste Vorkommen des Musters.} Wir verschieben zur Position $21 = 17 + (6 - 2)$, weil hier theoretisch ein weiteres Vorkommen beginnen könnte. 
+\item An Position 1 tritt keine Übereinstimmung auf, also $2 = 1 + (0 - (-1))$, wir verschieben unser Muster also an Position 2.
+\item Auch an Position 2 tritt keine Übereinstimmung auf: $3 = 2 + (0 - (-1))$. So gehen wir vor, bis unser Muster an Index 7 steht.
+\item Hier erkennen wir, dass das Muster \textbf{Bo} übereinstimmt. Es ergibt sich: $9 = 7 + (2 - 0)$. Von Position 9 an verschieben wir das Muster weiter in 1er-Schritten, bis wir bei \textbf{bonobonobohausplatz} ankommen, also an Index 17. \textbf{Hier ist das erste Vorkommen des Musters.} Wir verschieben zur Position $21 = 17 + (6 - 2)$, weil hier theoretisch ein weiteres Vorkommen beginnen könnte. 
 \item Wir sehen: Das tut es auch. An Position 21 erhalten wir also das zweite Vorkommen des Musters. Wir verschieben zu $25 = 21 + (6 - 2)$.
-\item Hier stimmen die ersten beiden Buchstaben überein, also gilt $27 = 25 + (2 - (0))$.
+\item Hier stimmen die ersten beiden Buchstaben überein, also gilt $27 = 25 + (2 - 0)$.
 \item An Position 27 stimmen keine Buchstaben überein, wir rücken also wieder um jeweils einen Schritt nach vorne bis zum Index 31, weil ab dort die Anzahl der verbleibenden Zeichen geringer ist als die Länge des Musters.
 \end{enumerate}
 Wir haben nun also zwei Vorkommen unseres Musters im Text ermittelt.

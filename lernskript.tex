@@ -2311,9 +2311,9 @@ Hier wenden wir das Master-Theorem an.
 \begin{itemize}
 \item $f(n) = 2 \cdot f(\frac{n}{2n+1}) + n^{2}$, daraus folgt: $a = 2, b = 2n + 1, d = 2$. Nun prüfen wir, ob gilt: \[a < b^d \to 2 < (2n+1)^2 \to 2 < 4n^2 + 2n + 1\]
 Offensichtlich gilt die Aussage und somit tritt Fall 1 des Mastertheorems ein und wir erhalten: $O(n^2)$.
-\item $g(n) = log(n) \cdot g(\frac{n}{2}) + 3$, also: $a = log(n), b = 2, d = 1$. Wir prüfen, ob die Bedingung des ersten Falls des Master-Theorems gilt:
-\[a < b^d \to log(n) < 2^1 \to log(n) < 2\]
-Offensichtlich gilt diese Bedingung nicht, da $log(n)$ für alle $n \geq 100$ größer ist als $2$. Also tritt Fall 3 des Mastertheorems ein und wir erhalten: $O(n^{log_2(log(n))})$.
+\item $g(n) = log(n) \cdot g(\frac{n}{2}) + 3$, also: $a = log(n), b = 2, d = 0$. Wir prüfen, ob die Bedingung des ersten Falls des Master-Theorems gilt:
+\[a < b^d \to log(n) < 2^0 \to log(n) < 1\]
+Offensichtlich gilt diese Bedingung nicht, da $log(n)$ für alle $n \geq 100$ größer ist als $1$. Also tritt Fall 3 des Mastertheorems ein und wir erhalten: $O(n^{log_2(log(n))})$.
 \item $h(n) = sin(n) \cdot h(\frac{n}{\frac{n}{2}}) + O(n^{3})$, also $a = sin(n), b = \frac{n}{2}, d = 3$. Wir prüfen erneut: \[
 a < b^d \to sin(n) < (\frac{n}{2})^3\]
 Da $sin(n)$ nur Werte zwischen $-1$ und $1$ annimmt, ist die Bedingung für hinreichend große $n$ erfüllt. Damit erhalten wir: $O(n^3)$.

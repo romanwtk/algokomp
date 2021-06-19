@@ -1,0 +1,350 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {ngerman}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Fehlerfinder}{5}{paragraph*.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Warnung}{5}{paragraph*.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Hinweis}{5}{paragraph*.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {I}Grundlagen der Algorithmik}{6}{part.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Der Algorithmusbegriff}{6}{section.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Wortherkunft}{6}{paragraph*.10}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Einfachheit}{6}{paragraph*.12}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Korrektheit}{7}{paragraph*.14}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Effizienz / Komplexität}{7}{section.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Maß der Komplexität: $O$-Notation}{8}{section.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1}$\Omega $-Notation}{9}{subsection.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2}$\Theta $-Notation}{10}{subsection.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.3}Zusammenfassung}{10}{subsection.3.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Rekursionsgleichungen}{10}{section.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1}Mastertheorem}{10}{subsection.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2}Auflösungsverfahren}{11}{subsection.4.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 1}{13}{paragraph*.17}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 2}{13}{paragraph*.19}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 3}{13}{paragraph*.21}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 4}{13}{paragraph*.23}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Hinweis}{13}{paragraph*.25}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Bestimmung von Komplexitäten}{14}{section.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.1}Rechengesetze der $O$-Notation}{14}{subsection.5.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2}Komplexitätsklassen}{14}{subsection.5.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.3}Komplexität von Programmierkonzepten}{15}{subsection.5.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Schleifen}{15}{paragraph*.27}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Rekursion}{16}{paragraph*.29}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 1}{17}{paragraph*.32}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 2}{17}{paragraph*.34}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 3}{17}{paragraph*.36}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {II}Suchalgorithmen}{18}{part.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Lineare Suche}{18}{section.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{18}{paragraph*.38}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{18}{paragraph*.42}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Binäre Suche}{19}{section.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{19}{paragraph*.44}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{19}{paragraph*.48}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {8}Textsuche}{20}{section.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.1}Einfache Textsuche}{20}{subsection.8.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{20}{paragraph*.50}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{21}{paragraph*.54}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.2}Knuth-Morris-Pratt-Algorithmus (KMP)}{21}{subsection.8.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung}{22}{paragraph*.56}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Der Suchalgorithmus}{22}{paragraph*.58}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung}{23}{paragraph*.60}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{24}{paragraph*.62}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.3}Boyer-Moore-Algorithmus}{24}{subsection.8.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 1}{25}{paragraph*.65}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 2}{25}{paragraph*.67}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 3}{25}{paragraph*.69}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 4}{25}{paragraph*.71}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {III}Sortieralgorithmen}{26}{part.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {9}Allgemeines und Eigenschaften}{26}{section.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {10}Insertion Sort}{27}{section.10}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung}{27}{paragraph*.73}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{27}{paragraph*.75}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Eigenschaften}{27}{paragraph*.77}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {11}Bubblesort}{28}{section.11}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{28}{paragraph*.79}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementation}{29}{paragraph*.81}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{29}{paragraph*.83}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Eigenschaften}{29}{paragraph*.85}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {12}Mergesort}{29}{section.12}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung}{30}{paragraph*.87}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{30}{paragraph*.89}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Eigenschaften}{31}{paragraph*.91}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {13}Quicksort}{31}{section.13}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{31}{paragraph*.93}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung}{31}{paragraph*.95}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{32}{paragraph*.97}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Eigenschaften}{32}{paragraph*.99}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {14}Weitere Sortieralgorithmen}{32}{section.14}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {15}Allgemeine Komplexitätsbetrachtung von Sortieralgorithmen}{33}{section.15}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Beweisidee}{33}{paragraph*.101}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 1}{34}{paragraph*.104}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 2}{34}{paragraph*.106}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 3}{34}{paragraph*.108}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 4}{34}{paragraph*.110}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {IV}Bäume}{35}{part.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {16}Der Wurzelbaum}{35}{section.16}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {17}Binäre Bäume}{37}{section.17}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung}{37}{paragraph*.112}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {17.1}Traversierung von Binärbäumen}{37}{subsection.17.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {17.2}Operationen}{38}{subsection.17.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Suchen}{38}{paragraph*.114}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Einfügen}{39}{paragraph*.116}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Löschen}{39}{paragraph*.118}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{39}{paragraph*.120}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {18}AVL-Bäume}{39}{section.18}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Suche}{41}{paragraph*.122}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Einfügen}{41}{paragraph*.124}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Rotation}{41}{paragraph*.126}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Löschen}{42}{paragraph*.128}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 1}{43}{paragraph*.131}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 2}{43}{paragraph*.133}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 3}{43}{paragraph*.135}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 4}{43}{paragraph*.137}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {V}Heaps}{44}{part.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung eines Heaps als Array}{44}{paragraph*.139}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {19}Herstellen der Heap-Eigenschaft}{45}{section.19}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {20}Einfügen eines Elementes}{46}{section.20}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {21}Löschen des größten Elements}{47}{section.21}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {22}Heapsort}{47}{section.22}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{47}{paragraph*.141}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementation}{47}{paragraph*.143}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Komplexität}{48}{paragraph*.145}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 1}{49}{paragraph*.148}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 2}{49}{paragraph*.150}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 3}{49}{paragraph*.152}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 4}{49}{paragraph*.154}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {VI}Graphentheorie}{50}{part.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {23}Typisierung und Eigenschaften}{50}{section.23}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {24}Adjazenzmatrizen und -listen}{52}{section.24}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Eigenschaften}{53}{paragraph*.156}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {25}Suchverfahren in Graphen}{53}{section.25}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {25.1}Breitensuche}{53}{subsection.25.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{53}{paragraph*.158}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung}{54}{paragraph*.160}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {25.2}Tiefensuche}{54}{subsection.25.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{54}{paragraph*.162}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementierung}{54}{paragraph*.164}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {26}Gewichtete Graphen}{57}{section.26}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {26.1}Der Algorithmus von Dijkstra}{57}{subsection.26.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Idee}{57}{paragraph*.166}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Implementation}{58}{paragraph*.168}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 1}{60}{paragraph*.171}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 2}{60}{paragraph*.173}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 3}{60}{paragraph*.175}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 4}{60}{paragraph*.177}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {VII}Hashing}{61}{part.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {27}Kollisionsvermeidung}{62}{section.27}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {27.1}Lineares Sondieren}{62}{subsection.27.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Probleme}{62}{paragraph*.179}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {27.2}Quadratisches Sondieren}{62}{subsection.27.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Probleme}{63}{paragraph*.181}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {27.3}Doppeltes Hashing}{63}{subsection.27.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {VIII}Lösungen}{64}{part.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {28}Grundlagen der Algorithmik}{64}{section.28}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 1}{64}{paragraph*.184}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 2}{64}{paragraph*.186}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 3}{65}{paragraph*.188}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 4}{65}{paragraph*.190}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 5}{66}{paragraph*.192}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 6}{66}{paragraph*.194}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 7}{66}{paragraph*.196}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {29}Suchalgorithmen}{67}{section.29}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 1}{67}{paragraph*.198}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 2}{67}{paragraph*.200}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 3}{68}{paragraph*.202}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 4}{69}{paragraph*.204}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {30}Sortieralgorithmen}{69}{section.30}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 1}{69}{paragraph*.206}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 2}{70}{paragraph*.208}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 3}{70}{paragraph*.210}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 4}{71}{paragraph*.212}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {31}Bäume}{71}{section.31}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 1}{71}{paragraph*.214}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 2}{72}{paragraph*.216}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 3}{72}{paragraph*.218}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 4}{72}{paragraph*.220}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {32}Heaps}{73}{section.32}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 1}{73}{paragraph*.222}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Aufgabe 2}{73}{paragraph*.224}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 3}{75}{paragraph*.226}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 4}{76}{paragraph*.228}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {33}Graphen}{76}{section.33}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 1}{76}{paragraph*.230}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 2}{76}{paragraph*.232}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 3}{78}{paragraph*.234}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zu Aufgabe 4}{78}{paragraph*.236}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {34}Hashing}{78}{section.34}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\nonumberline Lösung zur Aufgabe}{78}{paragraph*.238}%
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {IX}Verzeichnisse}{80}{part.9}%
+\defcounter {refsection}{0}\relax 
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

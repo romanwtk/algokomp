@@ -1,0 +1,18 @@
+[0] Config.pm:311> INFO - This is Biber 2.16
+[1] Config.pm:314> INFO - Logfile is 'lernskript.blg'
+[293] biber-MSWIN64:340> INFO - === 
+[375] Biber.pm:415> INFO - Reading 'lernskript.bcf'
+[723] Biber.pm:952> INFO - Found 8 citekeys in bib section 0
+[776] Biber.pm:4340> INFO - Processing section 0
+[803] Biber.pm:4531> INFO - Looking for bibtex format file 'literature.bib' for section 0
+[904] bibtex.pm:1689> INFO - LaTeX decoding ...
+[933] bibtex.pm:1494> INFO - Found BibTeX data source 'literature.bib'
+[1089] Utils.pm:395> WARN - BibTeX subsystem: C:\Users\weten\AppData\Local\Temp\biber_tmp_hYwN\a42497fa0f805ce74b9af7d16715cbd8_15240.utf8, line 33, warning: 1 characters of junk seen at toplevel
+[1089] Utils.pm:395> WARN - BibTeX subsystem: C:\Users\weten\AppData\Local\Temp\biber_tmp_hYwN\a42497fa0f805ce74b9af7d16715cbd8_15240.utf8, line 40, warning: 1 characters of junk seen at toplevel
+[1141] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1141] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1142] Biber.pm:4168> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'de-DE'
+[1142] Biber.pm:4174> INFO - No sort tailoring available for locale 'de-DE'
+[1171] bbl.pm:654> INFO - Writing 'lernskript.bbl' with encoding 'UTF-8'
+[1186] bbl.pm:757> INFO - Output to lernskript.bbl
+[1187] Biber.pm:128> INFO - WARNINGS: 2

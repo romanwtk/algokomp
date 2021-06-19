@@ -1,0 +1,46 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {ngerman}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1}{\ignorespaces Wurzelbaum}}{35}{figure.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2}{\ignorespaces Beispielbaum}}{36}{figure.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3}{\ignorespaces Allgemeiner binärer Baum}}{38}{figure.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4}{\ignorespaces Beispiel für einen AVL-Baum}}{40}{figure.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5}{\ignorespaces Kein Beispiel für einen AVL-Baum}}{40}{figure.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6}{\ignorespaces AVL-Baum mit Rechtsrotation des Knotens 24}}{41}{figure.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {7}{\ignorespaces AVL-Baum mit Linksrotation des Knotens 24}}{42}{figure.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {8}{\ignorespaces Binärer Max-Heap}}{44}{figure.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {9}{\ignorespaces Binärer Max-Heap in Array-Darstellung}}{45}{figure.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {10}{\ignorespaces Herstellen der Heap-Eigenschaft durch swim{\_}up(T) im ersten Schritt}}{45}{figure.10}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {11}{\ignorespaces Gerichteter Graph}}{50}{figure.11}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {12}{\ignorespaces Ungerichteter Graph zur Veranschaulichung der Adjazenzmatrix}}{52}{figure.12}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {13}{\ignorespaces Gerichteter Beispielgraph für Breiten-/Tiefensuche}}{55}{figure.13}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {14}{\ignorespaces Beispielgraph für den Dijkstra-Algorithmus}}{59}{figure.14}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {15}{\ignorespaces Kürzeste-Wege-Baum zum Dijkstra-Beispiel}}{59}{figure.15}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {16}{\ignorespaces Skizze zu Aufgabe 1.1}}{64}{figure.16}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {17}{\ignorespaces Baum aus Aufgabe 1 nach Einfügen des Knotens $J$}}{71}{figure.17}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {18}{\ignorespaces Baum aus Aufgabe 1 nach Löschen des Knotens $B$}}{72}{figure.18}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {19}{\ignorespaces AVL-Baum nach Löschen des Knotens $A$ und Rotation um $D$}}{73}{figure.19}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {20}{\ignorespaces AVL-Baum nach Hinzufügen des Knotens $Z$ und Rotation um $T$}}{73}{figure.20}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {21}{\ignorespaces Kürzeste-Wege-Baum zum Graphen}}{78}{figure.21}%
+\defcounter {refsection}{0}\relax 
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

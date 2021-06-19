@@ -1,0 +1,289 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{anyt/global//global/global}
+    \entry{brockhaus:algorithmus}{online}{}
+      \name{author}{1}{}{%
+        {{hash=47a3f2b6167eeeb054e2b8010a5f5449}{%
+           family={Enzyklopädie},
+           familyi={E\bibinitperiod},
+           given={Brockhaus},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{47a3f2b6167eeeb054e2b8010a5f5449}
+      \strng{fullhash}{47a3f2b6167eeeb054e2b8010a5f5449}
+      \strng{bibnamehash}{47a3f2b6167eeeb054e2b8010a5f5449}
+      \strng{authorbibnamehash}{47a3f2b6167eeeb054e2b8010a5f5449}
+      \strng{authornamehash}{47a3f2b6167eeeb054e2b8010a5f5449}
+      \strng{authorfullhash}{47a3f2b6167eeeb054e2b8010a5f5449}
+      \field{labelalpha}{Enz20}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Mohammed Ibn Musa Charismi}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://brockhaus.de/ecs/enzy/article/charismi-mohammed-ibn-musa
+      \endverb
+      \verb{url}
+      \verb https://brockhaus.de/ecs/enzy/article/charismi-mohammed-ibn-musa
+      \endverb
+    \endentry
+    \entry{Grundkurs}{book}{}
+      \name{author}{3}{}{%
+        {{hash=7f22a2fe02b3c9e71496e10263e17e39}{%
+           family={Ernst},
+           familyi={E\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=12b671e73ce9fe1c664efeaf7a509ae9}{%
+           family={Schmidt},
+           familyi={S\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=3ce3ef9c6e6b5557871be304515ba1d0}{%
+           family={Beneken},
+           familyi={B\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{c8c0700503e9ccfc47b96684574c59b0}
+      \strng{fullhash}{c8c0700503e9ccfc47b96684574c59b0}
+      \strng{bibnamehash}{c8c0700503e9ccfc47b96684574c59b0}
+      \strng{authorbibnamehash}{c8c0700503e9ccfc47b96684574c59b0}
+      \strng{authornamehash}{c8c0700503e9ccfc47b96684574c59b0}
+      \strng{authorfullhash}{c8c0700503e9ccfc47b96684574c59b0}
+      \field{labelalpha}{ESB16}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Grundkurs Informatik}
+      \field{year}{2016}
+    \endentry
+    \entry{UniHH}{online}{}
+      \name{author}{1}{}{%
+        {{hash=da0f140965d18fe5dc80e78e45647293}{%
+           family={Jantzen},
+           familyi={J\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{da0f140965d18fe5dc80e78e45647293}
+      \strng{fullhash}{da0f140965d18fe5dc80e78e45647293}
+      \strng{bibnamehash}{da0f140965d18fe5dc80e78e45647293}
+      \strng{authorbibnamehash}{da0f140965d18fe5dc80e78e45647293}
+      \strng{authornamehash}{da0f140965d18fe5dc80e78e45647293}
+      \strng{authorfullhash}{da0f140965d18fe5dc80e78e45647293}
+      \field{labelalpha}{Jan03}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Berechenbarkeit und Komplexität}
+      \field{year}{2003}
+      \verb{urlraw}
+      \verb https://www.informatik.uni-hamburg.de/TGI/lehre/vl/WS0304/F3/F3-slides10-268-293.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.informatik.uni-hamburg.de/TGI/lehre/vl/WS0304/F3/F3-slides10-268-293.pdf
+      \endverb
+    \endentry
+    \entry{GrUeb}{book}{}
+      \name{author}{1}{}{%
+        {{hash=96b5dbb1e0b7434389230a521dea46bb}{%
+           family={Schmidt},
+           familyi={S\bibinitperiod},
+           given={Jochen},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{96b5dbb1e0b7434389230a521dea46bb}
+      \strng{fullhash}{96b5dbb1e0b7434389230a521dea46bb}
+      \strng{bibnamehash}{96b5dbb1e0b7434389230a521dea46bb}
+      \strng{authorbibnamehash}{96b5dbb1e0b7434389230a521dea46bb}
+      \strng{authornamehash}{96b5dbb1e0b7434389230a521dea46bb}
+      \strng{authorfullhash}{96b5dbb1e0b7434389230a521dea46bb}
+      \field{labelalpha}{Sch19}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Grundkurs Informatik - Das Übungsbuch}
+      \field{year}{2019}
+    \endentry
+    \entry{Taschenbuch}{book}{}
+      \name{author}{7}{}{%
+        {{hash=22f3412b22a105f66dbcb6fe4ad27aa8}{%
+           family={Vöcking},
+           familyi={V\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+        {{hash=e2bbff5283f16b18d79203eb89805a0b}{%
+           family={Alt},
+           familyi={A\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=9af96878340a4b7929956126c9e14117}{%
+           family={Ditzfelbinger},
+           familyi={D\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=07fbaa182b318910e33c164156bcb7a8}{%
+           family={Reischuk},
+           familyi={R\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e117710734acf0aa74e19aa6a4dc9b98}{%
+           family={Schneideler},
+           familyi={S\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=1c2686a25685ee9caab7adfcf1489fce}{%
+           family={Vollmer},
+           familyi={V\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=4b2fa3a8d45766a5aaafe9c01bd7c28e}{%
+           family={Wagner},
+           familyi={W\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{c717a1f4c12c96e42b779a2c8e40064b}
+      \strng{fullhash}{7206d60413da0bd247e5b1756163d792}
+      \strng{bibnamehash}{c717a1f4c12c96e42b779a2c8e40064b}
+      \strng{authorbibnamehash}{c717a1f4c12c96e42b779a2c8e40064b}
+      \strng{authornamehash}{c717a1f4c12c96e42b779a2c8e40064b}
+      \strng{authorfullhash}{7206d60413da0bd247e5b1756163d792}
+      \field{labelalpha}{Vöc+08}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Taschenbuch der Algorithmen}
+      \field{year}{2008}
+    \endentry
+    \entry{KMPRand}{online}{}
+      \name{author}{1}{}{%
+        {{hash=9c677286866aad38f8e9b660f5411814}{%
+           family={Wikipedia},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \strng{bibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorbibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authornamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorfullhash}{9c677286866aad38f8e9b660f5411814}
+      \field{labelalpha}{Wik20}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Knuth-Morris-Pratt-Algorithmus}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://de.wikipedia.org/wiki/Knuth-Morris-Pratt-Algorithmus
+      \endverb
+      \verb{url}
+      \verb https://de.wikipedia.org/wiki/Knuth-Morris-Pratt-Algorithmus
+      \endverb
+    \endentry
+    \entry{Wirth}{book}{}
+      \name{author}{1}{}{%
+        {{hash=adb5cb357bd35f89888522cf765e576c}{%
+           family={Wirth},
+           familyi={W\bibinitperiod},
+           given={Niklaus},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Stuttgart}%
+      }
+      \list{publisher}{1}{%
+        {B. G. Teubner}%
+      }
+      \strng{namehash}{adb5cb357bd35f89888522cf765e576c}
+      \strng{fullhash}{adb5cb357bd35f89888522cf765e576c}
+      \strng{bibnamehash}{adb5cb357bd35f89888522cf765e576c}
+      \strng{authorbibnamehash}{adb5cb357bd35f89888522cf765e576c}
+      \strng{authornamehash}{adb5cb357bd35f89888522cf765e576c}
+      \strng{authorfullhash}{adb5cb357bd35f89888522cf765e576c}
+      \field{labelalpha}{Wir83}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Algorithmen und Datenstrukturen}
+      \field{year}{1983}
+    \endentry
+    \entry{AlgInfTheo}{book}{}
+      \name{author}{2}{}{%
+        {{hash=1f15e3082f9acf07dd51fb817f0be978}{%
+           family={Witt},
+           familyi={W\bibinitperiod},
+           given={Kurt-Ulrich},
+           giveni={K\bibinithyphendelim U\bibinitperiod}}}%
+        {{hash=598f9422dda6b2adc05fd427447f8034}{%
+           family={Müller},
+           familyi={M\bibinitperiod},
+           given={Martin\bibnamedelima Eric},
+           giveni={M\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{ad70841dc7801e1d66350e70fc9b7c64}
+      \strng{fullhash}{ad70841dc7801e1d66350e70fc9b7c64}
+      \strng{bibnamehash}{ad70841dc7801e1d66350e70fc9b7c64}
+      \strng{authorbibnamehash}{ad70841dc7801e1d66350e70fc9b7c64}
+      \strng{authornamehash}{ad70841dc7801e1d66350e70fc9b7c64}
+      \strng{authorfullhash}{ad70841dc7801e1d66350e70fc9b7c64}
+      \field{labelalpha}{WM20}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Algorithmische Informationstheorie}
+      \field{year}{2020}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

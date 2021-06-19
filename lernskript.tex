@@ -582,7 +582,7 @@ Teilzeichenkette & Länge & Rand & Bemerkung \\
 \texttt{a} & 1 & 0 & per Definition \\ 
 \texttt{ab} & 2 & 0 & $a \neq b$ \\
 \texttt{abb} & 3 & 0 & \\
-\texttt{abba} & 4 & 0 & $ab \neq ba$, Palindrome haben den Rand 0 \\
+\texttt{abba} & 4 & 1 & gleich: $a$, Länge: 1 \\
 \texttt{abbab} & 5 & 2 & gleich: $ab$, Länge: 2 \\
 \texttt{abbaba} & 6 & 1 & gleich: a, Länge: 1 \\
 \texttt{abbabab} & 7 & 2 & gleich: ab, Länge: 2 \\
@@ -2396,7 +2396,7 @@ OTTOSMOPSKOTZT & 0 \\
 \hline
 Zeichenkette & Rand & Bemerkung \\
 \hline
-$\emptyset$ & -1 \\
+$\emptyset$ & -1 &\\
 A & 0 &\\
 AN & 0 &\\
 ANA & 1 &\\
@@ -2584,7 +2584,7 @@ Folglich ist die Balance an keinem Knoten des Baumes größer als $1$, womit die
 \paragraph{Lösung zu Aufgabe 3}
 \label{a4.3:lsg}
 Da wir festgestellt haben, dass es sich um einen AVL-Baum handelt, können wir direkt beginnen, den Knoten $A$ zu löschen. Der Knoten $A$ ist ein Blatt, daher kann der entsprechende Zeiger einfach gleich null gesetzt werden. \\\\
-Dies hat nun zur Folge, dass die Balance am Knoten $B$ 2 beträgt und der Baum daher rotiert werden muss. Dies ist am Knoten $D$ sinnvoll und möglich. Wir erhalten:
+Dies hat nun zur Folge, dass die Balance am Knoten $B$ 2 beträgt und der Baum daher rotiert werden muss. Dies ist am Knoten $D$ sinnvoll und möglich. Wir erhalten Abbildung \ref{fig:abb19}.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
@@ -2604,6 +2604,7 @@ Dies hat nun zur Folge, dass die Balance am Knoten $B$ 2 beträgt und der Baum d
     child {node {W}}}};
 \end{tikzpicture}
 \caption{AVL-Baum nach Löschen des Knotens $A$ und Rotation um $D$}
+\label{fig:abb19}
 \end{figure}
 \\\\
 Im nächsten Schritt fügen wir in den letzten Baum, den wir erhalten haben, den Knoten $Z$ hinzu. Da $Z$ der letzte Buchstabe des Alphabets ist, wird dieser Knoten also ein rechtes Kind vom Knoten $W$. Damit verliert der Baum erneut die AVL-Eigenschaft und Rotationen werden erforderlich. Wir rotieren den Baum um den Knoten $T$.

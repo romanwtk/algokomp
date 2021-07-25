@@ -15,7 +15,7 @@ Dem Aufbau der Vorlesung folgend, besteht dieses Skript aus folgenden Themen:
 - Hashing (insbesondere Kollisionsvermeidung/-behandlung)
 
 ## Lizenz, Verbreitung
-Öffentlich verfügbar und verwendbar für alle und für alle Zwecke - bei Bearbeitung/Kommerzialisierung bitte ich um Namensnennung und Mitteilung.
+Öffentlich verfügbar und verwendbar für alle und alle freien, persönlichen und akademischen Zwecke. Eine Kommerzialisierung ist ausgeschlossen - dafür ist das mittlerweile zu viel Arbeit gewesen ;)
 
 ## Mitwirken
 Fehler gerne als Issue posten! Andere Mitwirkung in Form von Commits und Pull requests ist jederzeit ebenfalls willkommen! :wink:

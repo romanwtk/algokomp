@@ -18,6 +18,7 @@
 \usepackage{graphicx}
 \usetikzlibrary{positioning}
 \usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+
 \usepackage[backend=biber, style=alphabetic]{biblatex}
 \addbibresource{literature.bib}
 \author{Roman Wetenkamp}
@@ -30,6 +31,8 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{example}{Beispiel}
+
+
 \begin{document}
 \vspace{3cm}
 \maketitle
@@ -41,22 +44,21 @@
 \pagebreak
 \section*{Vorwort}
 Die theoretische Informatik ist genau das Thema, vor dem ich vor Beginn meines Studiums am meisten Respekt hatte ... Und das ist es neben den anderen Mathematik-Vorlesungen bis heute: Theoreme, Kalküle und Formeln sind nun einmal nicht die Dinge, mit denen sich die Masse der Informatikstudierenden gerne befasst, mich eingeschlossen. Mit einer  gerade eben bestandenen Logikklausur im ersten Semester sind dies Gründe genug dafür, ergänzendes, motivierendes und begreifbares Material zusammenzustellen, das mich einerseits akut durch die Klausur dieses Semesters bringt und hoffentlich auch für andere einen Nutzen hat. Geteiltes Leid ist halbes Leid! \\\\
-Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettieren, um Beispiele ergänzen und mit Aufgaben versehen, wie ich sie in der Vorlesung oder weiteren Büchern antraf. Ich persönlich lerne durch Aufgaben einfach am besten und für diejenigen, denen es auch so geht, gibt es davon hier ausreichend. Lösungen finden sich (in einigen Wochen) im Anhang. \\\\
+Hier möchte ich den Vorlesungsstoff auf meine Art zusammenfassen und komplettieren, um Beispiele ergänzen und mit Aufgaben versehen, wie ich sie in der Vorlesung oder weiteren Büchern antraf. Ich persönlich lerne durch Aufgaben einfach am besten und für diejenigen, denen es auch so geht, gibt es davon hier viele. Meine Lösungen finden Sie im Anhang. \\\\
+An dieser Stelle möchte ich noch \textbf{Jonathan Lelek} und \textbf{Vincent Degenhart} ausdrücklich danken, die mich auf Fehler hingewiesen und diese mit mir zusammen korrigiert haben. \\\\
 \textit{Viel Erfolg!}  \\
 \begin{flushright}
 Roman Wetenkamp \\
 Mannheim, den \today
 \end{flushright}  
+\subsection*{Geschafft}
+Nun liegt die Klausur mir. Meine Strategie, mich durch das Schreiben dieses Skripts vorzubereiten, ist aufgegangen. Als Hinweis sei Ihnen mitgegeben, dass Sie Ihren Fokus auf die \textbf{Landau-Notation} und die einzelnen Such- und Sortieralgorithmen legen sollten. Die Wahrscheinlichkeit, dass Sie einzelne Algorithmen auf eine gegebene Datenmenge anwenden müssen, ist hoch. Überlegen und üben Sie auch im Vorfeld schon, wie Sie (Zwischen-) Ergebnisse notieren. Hier gibt es unterschiedliche Vorstellungen der Dozierenden.
+Ebenso sind die Datenstrukturen in den hinteren Kapiteln gut geeignet für Prüfungsaufgaben: Erwarten Sie Bäume, die Sie rotieren sollen und in die Sie Knoten bearbeiten. Die Aufgaben in diesem Skript liefern Ansätze für mögliche Prüfungsaufgaben. 
 \vfill
-\paragraph{Fehlerfinder} Mein Dank für das Fehlerfinden und gemeinsame Korrigieren gebührt:
-\begin{itemize}
-\item Jonathan Lelek
-\item Vincent Degenhart
-\end{itemize}
 \paragraph{Warnung}
-Das Studium an einer Dualen Hochschule unterscheidet sich von dem Studium an Universitäten oder regulären Fachhochschulen insbesondere dadurch, dass aufgrund der Dualität zwischen Theorie und Praxis meist nur die Hälfte der Zeit zur Vermittlung des Stoffes zur Verfügung steht (wenn dann auch intensiver). Daher gehen Sie bitte nicht davon aus, dass Sie dieses Skript für Klausuren in regulären Vollzeitstudiengängen vorbereitet!
+Das Studium an einer Dualen Hochschule unterscheidet sich von dem Studium an Universitäten oder regulären Fachhochschulen insbesondere dadurch, dass aufgrund der Dualität von Theorie und Praxis meist nur die Hälfte der Zeit zur Vermittlung des Stoffes zur Verfügung steht (wenn dann auch intensiver). Daher gehen Sie bitte nicht davon aus, dass Sie dieses Skript ausreichend auf Klausuren in regulären Vollzeitstudiengängen vorbereitet!
 \paragraph{Hinweis}
-Dieses Dokument ist kein Vorlesungsmaterial, hat keineswegs den Anspruch auf Vollständigkeit und enthält mit Sicherheit Fehler. Desweiteren ist es noch lange nicht vollendet (es ist infrage zustellen, ob es das je sein wird), und doch möchte ich Sie ermutigen, beizutragen! Jegliche Fehler, Probleme oder Anmerkungen können Sie mir gerne über das dazugehörige GitHub-Repository unter der URL \url{https://github.com/RWetenkamp/algokomp} zukommen lassen. Ebenso sind Sie völlig frei darin, dieses Dokument für Ihre legitimen Zwecke zu nutzen -- bitte beachten Sie dennoch Ihr Gewissen. Danke!
+Dieses Dokument ist kein Vorlesungsmaterial, hat nicht den Anspruch auf {Voll}\-{ständigkeit} und enthält mit Sicherheit Fehler. Desweiteren ist es noch lange nicht vollendet (es ist infrage zustellen, ob es das je sein wird), und doch möchte ich Sie ermutigen, beizutragen! Jegliche Fehler, Probleme oder Anmerkungen können Sie mir gerne über das dazugehörige GitHub-Repository unter der URL \url{https://github.com/RWetenkamp/algokomp} zukommen lassen. Danke!
 \pagebreak
 \part{Grundlagen der Algorithmik}
 \section{Der Algorithmusbegriff}
@@ -3143,5 +3145,6 @@ Dazugehörige Hash-Tabelle:
 \listoffigures
 \section*{Weiterführende Übungsaufgaben}
 Falls Sie weitere Aufgaben suchen, finden Sie bei \cite{GrUeb} zu nahezu allen Themen dieses Moduls mehrere, gut ausgearbeitete Übungen und Lösungen. Hilfreich ist es ebenso aber auch, wenn Sie sich eigene Übungsaufgaben ausdenken und diese dann lösen. Dann stoßen Sie unweigerlich auf Fallstricke, Hürden und entwickeln eine Routine, die Sie vermutlich einigermaßen sicher durch die Klausur/Prüfung bringt.
+
 \printbibliography
 \end{document}

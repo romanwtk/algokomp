@@ -2,7 +2,7 @@
 ## Ursprung
 Theoretische Informatik ist theoretisch - und Komplexität komplex. Oh wow. 
 Natürlich war mir das bewusst, als ich in diese Module startete, doch ich hatte die Hoffung, es trotzdem leicht verstehen zu können - Leider nicht ganz.
-Um mir selbst und anderen eine Hilfestellung für dieses Modul zu liefern, begann ich, mir selbst ein Skript zu schreiben, in der Hoffnung so die Klausur zu bestehen.
+Um mir selbst und anderen eine Hilfestellung für dieses Modul zu liefern, begann ich, mir selbst ein Vorlesungsskript zu schreiben, in der Hoffnung, so die Klausur zu bestehen.
 
 ## Inhalt
 Dem Aufbau der Vorlesung folgend, besteht dieses Skript aus folgenden Themen:
@@ -15,7 +15,7 @@ Dem Aufbau der Vorlesung folgend, besteht dieses Skript aus folgenden Themen:
 - Hashing (insbesondere Kollisionsvermeidung/-behandlung)
 
 ## Lizenz, Verbreitung
-Öffentlich verfügbar und verwendbar für alle und alle freien, persönlichen und akademischen Zwecke. Eine Kommerzialisierung ist ausgeschlossen - dafür ist das mittlerweile zu viel Arbeit gewesen ;)
+Öffentlich verfügbar und verwendbar für alle und alle freien, persönlichen und akademischen Zwecke.
 
 ## Mitwirken
 Fehler gerne als Issue posten! Andere Mitwirkung in Form von Commits und Pull requests ist jederzeit ebenfalls willkommen! :wink:
